@@ -176,12 +176,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\sky.jpg" />
     <Content Include="img\body-bg.png" />
     <Content Include="img\glyphicons-halflings-white.html" />
     <Content Include="img\glyphicons-halflings.html" />
     <Content Include="img\icons-sa7c41345d9.png" />
     <Content Include="img\message_avatar1.png" />
     <Content Include="img\message_avatar2.png" />
+    <Content Include="img\sky2.jpg" />
     <Content Include="Scripts\base.js" />
     <Content Include="Scripts\External\bootstrap.js" />
     <Content Include="Scripts\External\bootstrap.min.js" />
