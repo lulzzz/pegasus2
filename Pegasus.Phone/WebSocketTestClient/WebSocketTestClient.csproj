@@ -55,9 +55,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pegasus2.Data\Pegasus2.Data.csproj">
-      <Project>{bd64eb38-79c8-4e58-9239-91d64d91544b}</Project>
-      <Name>Pegasus2.Data</Name>
+    <ProjectReference Include="..\..\Shared\Pegasus.Data\Pegasus.Data.csproj">
+      <Project>{f3033e0c-1db5-406e-b6a7-e1c794fad7f3}</Project>
+      <Name>Pegasus.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Piraeus.ServiceModel.Protocols\Piraeus.ServiceModel.Protocols.csproj">
       <Project>{c69483aa-827c-4115-a6ae-1161c02da628}</Project>

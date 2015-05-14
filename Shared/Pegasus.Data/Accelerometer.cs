@@ -5,19 +5,20 @@ namespace Pegasus2.Data
     using Newtonsoft.Json;
     using System;
 
+#if !(SILVERLIGHT || WINDOWS_PHONE || NETFX_CORE || PORTABLE)
     [Serializable]
+#endif
     [JsonObject]
-    public class Magnetometer : DimensionalMeasurements
+    public class Accelerometer : DimensionalMeasurements
     {
-        public Magnetometer()
+        public Accelerometer()
             : base()
         {
         }
 
-        public Magnetometer(double x, double y, double z)
+        public Accelerometer(double x, double y, double z)
             : base(x, y, z)
         {
         }
-
     }
 }

@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace Pegasus2.Data
 {
+#if !(SILVERLIGHT || WINDOWS_PHONE || NETFX_CORE || PORTABLE)
     [Serializable]
+#endif
     [JsonObject]
     public class GroundTelemetry : PegasusMessage
     {       

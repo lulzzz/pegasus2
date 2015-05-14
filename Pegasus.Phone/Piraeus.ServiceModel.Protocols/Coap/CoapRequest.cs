@@ -39,7 +39,7 @@ namespace Piraeus.ServiceModel.Protocols.Coap
             this.Payload = payload;
         }     
      
-        public RequestMessageType MessageType { get; set; }
+        public new RequestMessageType MessageType { get; set; }
         
         public MethodType Method { get; set; }
         

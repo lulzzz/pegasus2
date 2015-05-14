@@ -1,19 +1,22 @@
 ﻿
+
 namespace Pegasus2.Data
 {
     using Newtonsoft.Json;
     using System;
 
+#if !(SILVERLIGHT || WINDOWS_PHONE || NETFX_CORE || PORTABLE)
     [Serializable]
+#endif
     [JsonObject]
-    public class Gyroscope : DimensionalMeasurements
+    public class Magnetometer : DimensionalMeasurements
     {
-        public Gyroscope()
+        public Magnetometer()
             : base()
         {
         }
 
-        public Gyroscope(double x, double y, double z)
+        public Magnetometer(double x, double y, double z)
             : base(x, y, z)
         {
         }

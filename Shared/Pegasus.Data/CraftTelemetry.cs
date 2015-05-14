@@ -6,7 +6,9 @@ namespace Pegasus2.Data
     using System;
     using System.Collections.Generic;
 
+#if !(SILVERLIGHT || WINDOWS_PHONE || NETFX_CORE || PORTABLE)
     [Serializable]
+#endif
     [JsonObject]
     public class CraftTelemetry : PegasusMessage
     {

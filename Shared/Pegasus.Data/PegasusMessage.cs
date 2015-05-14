@@ -37,7 +37,8 @@ namespace Pegasus2.Data
                 return null;
             }
 
-            checkSum = (byte)Encoding.ASCII.GetBytes(message.Substring(0, message.Length-4)).Sum(x => (int)x);
+            checkSum = (byte)Encoding.UTF8.GetBytes(message.Substring(0, message.Length-4)).Sum(x => (int)x);
+            // checkSum = (byte)Encoding.ASCII.GetBytes(message.Substring(0, message.Length-4)).Sum(x => (int)x);
             
             //get the last byte of the checksum 
             if(checkSum != (byte)checkValue)

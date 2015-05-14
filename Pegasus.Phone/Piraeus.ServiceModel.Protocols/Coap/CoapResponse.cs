@@ -44,7 +44,7 @@ namespace Piraeus.ServiceModel.Protocols.Coap
         }
 
 
-        public ResponseMessageType MessageType { get; set; }
+        public new ResponseMessageType MessageType { get; set; }
 
 
         public ResponseCodeType ResponseCode { get; set; }
