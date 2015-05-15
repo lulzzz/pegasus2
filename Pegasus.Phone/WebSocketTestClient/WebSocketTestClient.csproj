@@ -59,9 +59,13 @@
       <Project>{f3033e0c-1db5-406e-b6a7-e1c794fad7f3}</Project>
       <Name>Pegasus.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Piraeus.ServiceModel.Protocols\Piraeus.ServiceModel.Protocols.csproj">
-      <Project>{c69483aa-827c-4115-a6ae-1161c02da628}</Project>
-      <Name>Piraeus.ServiceModel.Protocols</Name>
+    <ProjectReference Include="..\Piraeus.ServiceModel.Protocols.Coap.Phone.PCLTimer\Piraeus.ServiceModel.Protocols.Coap.Phone.PCLTimer.csproj">
+      <Project>{990c1d79-a460-40b9-aa26-f8790fe3bd6b}</Project>
+      <Name>Piraeus.ServiceModel.Protocols.Coap.Phone.PCLTimer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Piraeus.ServiceModel.Protocols.Coap.Phone\Piraeus.ServiceModel.Protocols.Coap.Phone.csproj">
+      <Project>{f4297d99-d786-4f0d-944b-77ea9e4b13a9}</Project>
+      <Name>Piraeus.ServiceModel.Protocols.Coap.Phone</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.projitems" Label="Shared" />
