@@ -63,11 +63,8 @@
       <Project>{c69483aa-827c-4115-a6ae-1161c02da628}</Project>
       <Name>Piraeus.ServiceModel.Protocols</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.csproj">
-      <Project>{c5dac4a2-b8e7-4e70-9230-c7a94a537c0b}</Project>
-      <Name>Piraeus.Web.WebSockets</Name>
-    </ProjectReference>
   </ItemGroup>
+  <Import Project="..\Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
