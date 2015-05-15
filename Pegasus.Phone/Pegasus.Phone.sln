@@ -26,6 +26,7 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Pegasus.Phone.XF\Pegasus.Phone.XF\Pegasus.Phone.XF.projitems*{1bcd305a-1cfc-4a8a-bbf9-922418b6b10b}*SharedItemsImports = 4
+		Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.projitems*{1bcd305a-1cfc-4a8a-bbf9-922418b6b10b}*SharedItemsImports = 4
 		Pegasus.Phone.XF\Pegasus.Phone.XF\Pegasus.Phone.XF.projitems*{1dee1854-10eb-4253-b1aa-d9c8b2c8021c}*SharedItemsImports = 13
 		Pegasus.Phone.XF\Pegasus.Phone.XF\Pegasus.Phone.XF.projitems*{d3782df7-5f0c-4a30-b403-58b3c7df037f}*SharedItemsImports = 4
 		Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.projitems*{c16c92ff-abaa-4bef-aa25-9964c1007ad6}*SharedItemsImports = 4
