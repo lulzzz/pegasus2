@@ -55,6 +55,10 @@
     </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1-beta3\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -91,6 +95,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Pegasus.Data\Pegasus.Data.csproj">
+      <Project>{f3033e0c-1db5-406e-b6a7-e1c794fad7f3}</Project>
+      <Name>Pegasus.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Piraeus.ServiceModel.Protocols.Coap.Phone.PCLTimer\Piraeus.ServiceModel.Protocols.Coap.Phone.PCLTimer.csproj">
+      <Project>{990c1d79-a460-40b9-aa26-f8790fe3bd6b}</Project>
+      <Name>Piraeus.ServiceModel.Protocols.Coap.Phone.PCLTimer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Piraeus.ServiceModel.Protocols.Coap.Phone\Piraeus.ServiceModel.Protocols.Coap.Phone.csproj">
+      <Project>{f4297d99-d786-4f0d-944b-77ea9e4b13a9}</Project>
+      <Name>Piraeus.ServiceModel.Protocols.Coap.Phone</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\Pegasus.Phone.XF\Pegasus.Phone.XF.projitems" Label="Shared" Condition="Exists('..\Pegasus.Phone.XF\Pegasus.Phone.XF.projitems')" />
   <Import Project="..\..\Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.projitems" Label="Shared" />
