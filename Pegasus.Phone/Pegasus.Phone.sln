@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.22823.1
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pegasus.Phone.XF.WinPhone", "Pegasus.Phone.XF\Pegasus.Phone.XF.WinPhone\Pegasus.Phone.XF.WinPhone.csproj", "{D3782DF7-5F0C-4A30-B403-58B3C7DF037F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pegasus.Phone.XF.iOS", "Pegasus.Phone.XF\Pegasus.Phone.XF.iOS\Pegasus.Phone.XF.iOS.csproj", "{15FBD54F-2265-4169-98DB-48B54942584D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pegasus.Phone.XF.Droid", "Pegasus.Phone.XF\Pegasus.Phone.XF.Droid\Pegasus.Phone.XF.Droid.csproj", "{1BCD305A-1CFC-4A8A-BBF9-922418B6B10B}"
 EndProject
@@ -25,8 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pegasus.Phone.XF.WinPhone81
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.projitems*{1bcd305a-1cfc-4a8a-bbf9-922418b6b10b}*SharedItemsImports = 4
 		Pegasus.Phone.XF\Pegasus.Phone.XF\Pegasus.Phone.XF.projitems*{1bcd305a-1cfc-4a8a-bbf9-922418b6b10b}*SharedItemsImports = 4
+		Pegasus.Phone.XF\Pegasus.Phone.XF\Pegasus.Phone.XF.projitems*{1e9127a6-a3cf-4f94-92fe-13fb4252da0e}*SharedItemsImports = 4
 		Pegasus.Phone.XF\Pegasus.Phone.XF\Pegasus.Phone.XF.projitems*{1dee1854-10eb-4253-b1aa-d9c8b2c8021c}*SharedItemsImports = 13
 		Pegasus.Phone.XF\Pegasus.Phone.XF\Pegasus.Phone.XF.projitems*{d3782df7-5f0c-4a30-b403-58b3c7df037f}*SharedItemsImports = 4
 		Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.projitems*{c16c92ff-abaa-4bef-aa25-9964c1007ad6}*SharedItemsImports = 4
@@ -115,34 +113,6 @@ Global
 		{D3782DF7-5F0C-4A30-B403-58B3C7DF037F}.Release|x86.ActiveCfg = Release|x86
 		{D3782DF7-5F0C-4A30-B403-58B3C7DF037F}.Release|x86.Build.0 = Release|x86
 		{D3782DF7-5F0C-4A30-B403-58B3C7DF037F}.Release|x86.Deploy.0 = Release|x86
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Ad-Hoc|Any CPU.ActiveCfg = Ad-Hoc|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Ad-Hoc|ARM.ActiveCfg = Ad-Hoc|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Ad-Hoc|iPhoneSimulator
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Ad-Hoc|iPhoneSimulator.Build.0 = Ad-Hoc|iPhoneSimulator
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Ad-Hoc|x86.ActiveCfg = Ad-Hoc|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.AppStore|Any CPU.ActiveCfg = AppStore|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.AppStore|ARM.ActiveCfg = AppStore|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.AppStore|iPhone.Build.0 = AppStore|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.AppStore|iPhoneSimulator.ActiveCfg = AppStore|iPhoneSimulator
-		{15FBD54F-2265-4169-98DB-48B54942584D}.AppStore|iPhoneSimulator.Build.0 = AppStore|iPhoneSimulator
-		{15FBD54F-2265-4169-98DB-48B54942584D}.AppStore|x86.ActiveCfg = AppStore|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Debug|Any CPU.ActiveCfg = Debug|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Debug|ARM.ActiveCfg = Debug|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Debug|iPhone.ActiveCfg = Debug|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Debug|iPhone.Build.0 = Debug|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Debug|x86.ActiveCfg = Debug|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Release|Any CPU.ActiveCfg = Release|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Release|ARM.ActiveCfg = Release|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Release|iPhone.ActiveCfg = Release|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Release|iPhone.Build.0 = Release|iPhone
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
-		{15FBD54F-2265-4169-98DB-48B54942584D}.Release|x86.ActiveCfg = Release|iPhone
 		{1BCD305A-1CFC-4A8A-BBF9-922418B6B10B}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
 		{1BCD305A-1CFC-4A8A-BBF9-922418B6B10B}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
 		{1BCD305A-1CFC-4A8A-BBF9-922418B6B10B}.Ad-Hoc|Any CPU.Deploy.0 = Release|Any CPU

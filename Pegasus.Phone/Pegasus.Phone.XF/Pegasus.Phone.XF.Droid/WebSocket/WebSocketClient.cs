@@ -1,21 +1,37 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Net.WebSockets;
 
-namespace Piraeus.Web.WebSockets
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
+using Pegasus.Phone.XF.WebSocket;
+using System.Net.WebSockets;
+using System.Threading.Tasks;
+using System.Threading;
+using Pegasus.Phone.XF.Droid.WebSocket;
+
+[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_Android))]
+namespace Pegasus.Phone.XF.Droid.WebSocket
 {
-    public delegate void WebSocketEventHandler(object sender, string message);
-    public delegate void WebSocketErrorHandler(object sender, Exception ex);
-    public delegate void WebSocketMessageHandler(object sender, byte[] message);
-    public class WebSocketClient
+
+    //[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_Android))]
+    public class WebSocketClient_Android : IWebSocketClient
     {
-        public WebSocketClient()
+        private const int receiveChunkSize = 1024;
+        private ClientWebSocket client;
+
+        public event WebSocketEventHandler OnOpen;
+        public event WebSocketEventHandler OnClose;
+        public event WebSocketErrorHandler OnError;
+        public event WebSocketMessageHandler OnMessage;
+
+        private Queue<byte[]> messageQueue;
+        public WebSocketClient_Android()
         {
             this.client = new ClientWebSocket();
             this.messageQueue = new Queue<byte[]>();
@@ -37,13 +53,6 @@ namespace Piraeus.Web.WebSockets
             }
         }
 
-        private const int receiveChunkSize = 1024;
-        private ClientWebSocket client;
-        public event WebSocketEventHandler OnOpen;
-        public event WebSocketEventHandler OnClose;
-        public event WebSocketErrorHandler OnError;
-        public event WebSocketMessageHandler OnMessage;
-        private Queue<byte[]> messageQueue;
         public async Task ConnectAsync(string host)
         {
             await ConnectAsync(host, null, null);
@@ -68,8 +77,8 @@ namespace Piraeus.Web.WebSockets
             }
             catch(Exception ex)
             {
-                Trace.TraceWarning("Web socket client failed to connect.");
-                Trace.TraceError(ex.Message);
+                //Trace.TraceWarning("Web socket client failed to connect.");
+                //Trace.TraceError(ex.Message);
                 throw;
             }
 
@@ -142,8 +151,8 @@ namespace Piraeus.Web.WebSockets
                 catch(Exception ex)
                 {
                     exception = ex;
-                    Trace.TraceWarning("Web socket receive faulted.");
-                    Trace.TraceError(ex.Message);
+                    //Trace.TraceWarning("Web socket receive faulted.");
+                    //Trace.TraceError(ex.Message);
                 }
             }
 
@@ -187,8 +196,8 @@ namespace Piraeus.Web.WebSockets
                         }
                         catch (Exception ex)
                         {
-                            Trace.TraceWarning("Web Socket send fault.");
-                            Trace.TraceError(ex.Message);
+                            //Trace.TraceWarning("Web Socket send fault.");
+                            //Trace.TraceError(ex.Message);
                             throw;
                             
                         }
@@ -202,8 +211,8 @@ namespace Piraeus.Web.WebSockets
             catch (Exception ex)
             {
                 exception = ex;
-                Trace.TraceWarning("Web Socket exception during send.");
-                Trace.TraceError(ex.Message);                
+                //Trace.TraceWarning("Web Socket exception during send.");
+                //Trace.TraceError(ex.Message);                
             }
 
             if (exception != null)
@@ -215,7 +224,6 @@ namespace Piraeus.Web.WebSockets
                     OnClose(this, "Client forced to close.");
                 }
             }
-
         }
     }
 }

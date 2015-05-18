@@ -1,49 +1,40 @@
-﻿using System;
+﻿using Pegasus.Phone.XF.WebSocket;
+using Pegasus.Phone.XF.WinPhone81.WebSocket;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Net.WebSockets;
+using Windows.Networking.Sockets;
+using Windows.Storage.Streams;
+using Windows.Web;
 
-namespace Piraeus.Web.WebSockets
+[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_WinPhone))]
+namespace Pegasus.Phone.XF.WinPhone81.WebSocket
 {
-    public delegate void WebSocketEventHandler(object sender, string message);
-    public delegate void WebSocketErrorHandler(object sender, Exception ex);
-    public delegate void WebSocketMessageHandler(object sender, byte[] message);
-    public class WebSocketClient
+    //[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_WinPhone))]
+    public class WebSocketClient_WinPhone : IWebSocketClient
     {
-        public WebSocketClient()
-        {
-            this.client = new ClientWebSocket();
-            this.messageQueue = new Queue<byte[]>();
-        }
-
-
-        public bool IsConnected
-        {
-            get
-            {
-                if(this.client == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    return this.client.State == WebSocketState.Open;
-                }
-            }
-        }
-
         private const int receiveChunkSize = 1024;
-        private ClientWebSocket client;
+        private StreamWebSocket client;
+        private DataWriter messageWriter;
+        private DataReader messageReader;
+        private bool connected = false;
+
         public event WebSocketEventHandler OnOpen;
         public event WebSocketEventHandler OnClose;
         public event WebSocketErrorHandler OnError;
         public event WebSocketMessageHandler OnMessage;
+
         private Queue<byte[]> messageQueue;
+
+        public WebSocketClient_WinPhone()
+        {
+            this.client = new StreamWebSocket();
+            this.messageQueue = new Queue<byte[]>();
+        }
+        
         public async Task ConnectAsync(string host)
         {
             await ConnectAsync(host, null, null);
@@ -51,29 +42,31 @@ namespace Piraeus.Web.WebSockets
 
         public async Task ConnectAsync(string host, string subprotocol, string securityToken)
         {
-            client.Options.SetBuffer(1024, 1024);
+            //client.Options.SetBuffer(1024, 1024);
+            this.client.Control.OutboundBufferSizeInBytes = 1024;
             
             if(!string.IsNullOrEmpty(subprotocol))
             {
-                this.client.Options.AddSubProtocol(subprotocol);
+                //this.client.Options.AddSubProtocol(subprotocol);
+                this.client.Control.SupportedProtocols.Add(subprotocol);
             }
 
             if (!string.IsNullOrEmpty(securityToken))
             {
-                client.Options.SetRequestHeader("Authorization", String.Format("Bearer {0}", securityToken));
+                this.client.SetRequestHeader("Authorization", String.Format("Bearer {0}", securityToken));
             }
             try
             {
-                await client.ConnectAsync(new Uri(host), CancellationToken.None);
+                await client.ConnectAsync(new Uri(host));
             }
             catch(Exception ex)
             {
-                Trace.TraceWarning("Web socket client failed to connect.");
-                Trace.TraceError(ex.Message);
+                System.Diagnostics.Debug.WriteLine("Web socket client failed to connect.");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
                 throw;
             }
 
-            ReceiveAsync();
+            await ReceiveAsync();
 
             if (OnOpen != null)
             {
@@ -81,9 +74,10 @@ namespace Piraeus.Web.WebSockets
             }                      
         }
 
-        public async Task CloseAsync()
+        public void Close()
         {
-            await client.CloseAsync(WebSocketCloseStatus.NormalClosure, "Web Socket closed by client.", CancellationToken.None);
+            // 1000: The purpose of the connection has been fulfilled and the connection is no longer needed.
+            this.client.Close(1000, "Web Socket closed by client.");
 
             if(OnClose != null)
             {
@@ -96,17 +90,20 @@ namespace Piraeus.Web.WebSockets
             Exception exception = null;
             byte[] prefix = null;
             int offset = 0;
-            WebSocketReceiveResult result = null;
             int remainingLength = 0;
 
-            while(client.State == WebSocketState.Open)
+            while(connected)
             {
                 try
                 {
+                    messageReader = new DataReader(client.InputStream);
+                    messageReader.InputStreamOptions = InputStreamOptions.Partial;
                     if (prefix == null)
                     {
                         prefix = new byte[4];
-                        result = await client.ReceiveAsync(new ArraySegment<byte>(prefix), CancellationToken.None);
+                        //result = await client.ReceiveAsync(new ArraySegment<byte>(prefix), CancellationToken.None);
+                        await messageReader.LoadAsync(4);
+                        messageReader.ReadBytes(prefix);
                         prefix = BitConverter.IsLittleEndian ? prefix.Reverse().ToArray() : prefix;
                         remainingLength = BitConverter.ToInt32(prefix, 0);
                     }
@@ -116,22 +113,18 @@ namespace Piraeus.Web.WebSockets
                         byte[] message = new byte[remainingLength];
                         do
                         {
-                            int bufferSize = remainingLength > receiveChunkSize ? receiveChunkSize : remainingLength;
+                            uint bufferSize =(uint) (remainingLength > receiveChunkSize ? receiveChunkSize : remainingLength);
                             byte[] buffer = new byte[bufferSize];
-                            result = await client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                            await messageReader.LoadAsync(bufferSize);
+                            messageReader.ReadBytes(buffer);
                             
-                            Buffer.BlockCopy(buffer, 0, message, index, buffer.Length);
-                            index += bufferSize;
+                            System.Buffer.BlockCopy(buffer, 0, message, index, buffer.Length);
+                            index += (int) bufferSize;
                             remainingLength = buffer.Length - index;
                         } while (remainingLength > 0);
 
 
                         prefix = null;
-
-                        if(!result.EndOfMessage)
-                        {
-                            throw new WebSocketException("Expected EOF for Web Socket message received.");
-                        }
 
                         if(OnMessage != null)
                         {
@@ -141,19 +134,13 @@ namespace Piraeus.Web.WebSockets
                 }
                 catch(Exception ex)
                 {
-                    exception = ex;
-                    Trace.TraceWarning("Web socket receive faulted.");
-                    Trace.TraceError(ex.Message);
-                }
-            }
+                    WebErrorStatus status = WebSocketError.GetStatus(ex.GetBaseException().HResult);
+                    //Trace.TraceWarning("Web Socket exception during send.");
+                    System.Diagnostics.Debug.WriteLine(ex.Message);   
 
-            if (exception != null)
-            {
-                await CloseAsync();
-
-                if (OnClose != null)
-                {
-                    OnClose(this, "Client forced to close.");
+                    client.Dispose();
+                    client = null;
+                    connected = false;
                 }
             }
         }
@@ -163,14 +150,15 @@ namespace Piraeus.Web.WebSockets
             Exception exception = null;
             try
             {
+                messageWriter = new DataWriter(this.client.OutputStream);
                 this.messageQueue.Enqueue(message);
 
                 while (this.messageQueue.Count > 0)
                 {
                     byte[] prefix = BitConverter.IsLittleEndian ? BitConverter.GetBytes(message.Length).Reverse().ToArray() : BitConverter.GetBytes(message.Length);
                     byte[] messageBuffer = new byte[message.Length + prefix.Length];
-                    Buffer.BlockCopy(prefix, 0, messageBuffer, 0, prefix.Length);
-                    Buffer.BlockCopy(message, 0, messageBuffer, prefix.Length, message.Length);
+                    System.Buffer.BlockCopy(prefix, 0, messageBuffer, 0, prefix.Length);
+                    System.Buffer.BlockCopy(message, 0, messageBuffer, prefix.Length, message.Length);
 
                     int remainingLength = messageBuffer.Length;
                     int index = 0;
@@ -178,19 +166,20 @@ namespace Piraeus.Web.WebSockets
                     {
                         int bufferSize = remainingLength > receiveChunkSize ? receiveChunkSize : remainingLength;
                         byte[] buffer = new byte[bufferSize];
-                        Buffer.BlockCopy(messageBuffer, index, buffer, 0, bufferSize);
+                        System.Buffer.BlockCopy(messageBuffer, index, buffer, 0, bufferSize);
                         index += bufferSize;
                         remainingLength = messageBuffer.Length - index;
                         try
                         {
-                            await client.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Binary, remainingLength == 0, CancellationToken.None);
+                            messageWriter.WriteString(buffer.ToString());
+                            await messageWriter.StoreAsync();
                         }
                         catch (Exception ex)
                         {
-                            Trace.TraceWarning("Web Socket send fault.");
-                            Trace.TraceError(ex.Message);
+                            //Trace.TraceWarning("Web Socket send fault.");
+                            System.Diagnostics.Debug.WriteLine(ex.Message);
                             throw;
-                            
+
                         }
                         finally
                         {
@@ -201,21 +190,14 @@ namespace Piraeus.Web.WebSockets
             }
             catch (Exception ex)
             {
-                exception = ex;
-                Trace.TraceWarning("Web Socket exception during send.");
-                Trace.TraceError(ex.Message);                
+                WebErrorStatus status = WebSocketError.GetStatus(ex.GetBaseException().HResult);
+                //Trace.TraceWarning("Web Socket exception during send.");
+                System.Diagnostics.Debug.WriteLine(ex.Message);   
+
+                client.Dispose();
+                client = null;
+                connected = false;
             }
-
-            if (exception != null)
-            {
-                await CloseAsync();
-
-                if (OnClose != null)
-                {
-                    OnClose(this, "Client forced to close.");
-                }
-            }
-
         }
     }
 }

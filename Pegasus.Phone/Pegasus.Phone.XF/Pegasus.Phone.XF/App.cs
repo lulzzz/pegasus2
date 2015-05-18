@@ -1,7 +1,8 @@
 ﻿using Newtonsoft.Json;
+using Pegasus.Phone.XF.WebSocket;
 using Pegasus2.Data;
 using Piraeus.ServiceModel.Protocols.Coap;
-using Piraeus.Web.WebSockets;
+//using Piraeus.Web.WebSockets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace Pegasus.Phone.XF
 
         private void ConnectWebSocket(object sender, EventArgs e)
         {
-            WebSocketClient client = new WebSocketClient();
+            //WebSocketClient client = new WebSocketClient();
+            var client = DependencyService.Get<IWebSocketClient>();
             client.OnError += client_OnError;
             client.OnOpen += client_OnOpen;
             client.OnClose += client_OnClose;
@@ -37,7 +39,7 @@ namespace Pegasus.Phone.XF
         private void client_OnMessage(object sender, byte[] message)
         {
             CoapMessage coapMessage = CoapMessage.DecodeMessage(message);
-            string jsonString = Encoding.UTF8.GetString(coapMessage.Payload);
+            string jsonString = Encoding.UTF8.GetString(coapMessage.Payload, 0, coapMessage.Payload.Length);
             CraftTelemetry telemetry = JsonConvert.DeserializeObject<CraftTelemetry>(jsonString);
             Device.BeginInvokeOnMainThread(() => myLabel.Text = String.Format("{0} ({1} messages)", telemetry.AtmosphericPressure, ++messageCount));
         }
