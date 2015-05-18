@@ -66,12 +66,14 @@ namespace Pegasus.Phone.XF.WinPhone81.WebSocket
                 throw;
             }
 
-            await ReceiveAsync();
+            connected = true;
 
             if (OnOpen != null)
             {
                 OnOpen(this, "Web socket is opened.");
             }                      
+
+            await ReceiveAsync();
         }
 
         public void Close()
