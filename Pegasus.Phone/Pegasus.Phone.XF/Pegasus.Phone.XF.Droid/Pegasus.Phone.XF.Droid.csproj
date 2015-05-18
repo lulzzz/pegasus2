@@ -97,6 +97,11 @@
     <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\websocket4net\WebSocket4Net.MonoTouch\WebSocket4Net.MonoTouch.csproj">
+      <Project>{3a42609f-0dc8-4f4e-9069-8d7782592577}</Project>
+      <Name>WebSocket4Net.MonoTouch</Name>
+      <IsAppExtension>false</IsAppExtension>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Pegasus.Data\Pegasus.Data.csproj">
       <Project>{f3033e0c-1db5-406e-b6a7-e1c794fad7f3}</Project>
       <Name>Pegasus.Data</Name>

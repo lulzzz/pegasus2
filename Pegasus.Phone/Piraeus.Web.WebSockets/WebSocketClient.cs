@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+
+using WebSocket4Net;
 
 namespace Piraeus.Web.WebSockets
 {
@@ -17,7 +18,6 @@ namespace Piraeus.Web.WebSockets
     {
         public WebSocketClient()
         {
-            this.client = new ClientWebSocket();
             this.messageQueue = new Queue<byte[]>();
         }
 
@@ -38,7 +38,7 @@ namespace Piraeus.Web.WebSockets
         }
 
         private const int receiveChunkSize = 1024;
-        private ClientWebSocket client;
+        private WebSocket client;
         public event WebSocketEventHandler OnOpen;
         public event WebSocketEventHandler OnClose;
         public event WebSocketErrorHandler OnError;
@@ -51,62 +51,60 @@ namespace Piraeus.Web.WebSockets
 
         public async Task ConnectAsync(string host, string subprotocol, string securityToken)
         {
-            client.Options.SetBuffer(1024, 1024);
-            
-            if(!string.IsNullOrEmpty(subprotocol))
+            await Task.Run(() =>
             {
-                this.client.Options.AddSubProtocol(subprotocol);
-            }
+                this.client = new WebSocket(host, subprotocol ?? String.Empty);
 
-            if (!string.IsNullOrEmpty(securityToken))
-            {
-                client.Options.SetRequestHeader("Authorization", String.Format("Bearer {0}", securityToken));
-            }
-            try
-            {
-                await client.ConnectAsync(new Uri(host), CancellationToken.None);
-            }
-            catch(Exception ex)
-            {
-                Trace.TraceWarning("Web socket client failed to connect.");
-                Trace.TraceError(ex.Message);
-                throw;
-            }
+                // TODO: securityToken!
+                //                if (!string.IsNullOrEmpty(securityToken))
+                //                {
+                //                    client.Options.SetRequestHeader("Authorization", String.Format("Bearer {0}", securityToken));
+                //                }
 
-            ReceiveAsync();
+                this.client.DataReceived += Client_DataReceived;
+                this.client.Open();
 
-            if (OnOpen != null)
-            {
-                OnOpen(this, "Web socket is opened.");
-            }                      
+                if (OnOpen != null)
+                {
+                    OnOpen(this, "Web socket is opened.");
+                }
+            });
         }
 
-        public async Task CloseAsync()
+       public async Task CloseAsync()
         {
-            await client.CloseAsync(WebSocketCloseStatus.NormalClosure, "Web Socket closed by client.", CancellationToken.None);
-
-            if(OnClose != null)
+            if (this.client != null)
             {
-                OnClose(this, "Web socket is closed.");
+                await Task.Run(() =>
+                {
+                    this.client.Close();
+                    this.client = null;
+
+                    if (OnClose != null)
+                    {
+                        OnClose(this, "Web socket is closed.");
+                    }
+                });
             }
         }
 
-        public async Task ReceiveAsync()
+        private void Client_DataReceived(object sender, WebSocket4Net.DataReceivedEventArgs e)
         {
             Exception exception = null;
             byte[] prefix = null;
             int offset = 0;
-            WebSocketReceiveResult result = null;
+            int sourceOffset = 0;
             int remainingLength = 0;
 
-            while(client.State == WebSocketState.Open)
+            while(sourceOffset < e.Data.Length)
             {
                 try
                 {
                     if (prefix == null)
                     {
                         prefix = new byte[4];
-                        result = await client.ReceiveAsync(new ArraySegment<byte>(prefix), CancellationToken.None);
+                        Array.Copy(e.Data, sourceOffset, prefix, 0, 4);
+                        sourceOffset += 4;
                         prefix = BitConverter.IsLittleEndian ? prefix.Reverse().ToArray() : prefix;
                         remainingLength = BitConverter.ToInt32(prefix, 0);
                     }
@@ -114,26 +112,18 @@ namespace Piraeus.Web.WebSockets
                     {
                         int index = 0;
                         byte[] message = new byte[remainingLength];
-                        do
+                        do // this whole loop is bad!
                         {
                             int bufferSize = remainingLength > receiveChunkSize ? receiveChunkSize : remainingLength;
-                            byte[] buffer = new byte[bufferSize];
-                            result = await client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                            
-                            Buffer.BlockCopy(buffer, 0, message, index, buffer.Length);
+                            Array.Copy(e.Data, sourceOffset, message, index, bufferSize);
+                            sourceOffset += bufferSize;
                             index += bufferSize;
-                            remainingLength = buffer.Length - index;
+                            remainingLength = bufferSize - index; // TODO: doesn't seem right
                         } while (remainingLength > 0);
-
 
                         prefix = null;
 
-                        if(!result.EndOfMessage)
-                        {
-                            throw new WebSocketException("Expected EOF for Web Socket message received.");
-                        }
-
-                        if(OnMessage != null)
+                        if (OnMessage != null)
                         {
                             OnMessage(this, message);
                         }
@@ -142,14 +132,14 @@ namespace Piraeus.Web.WebSockets
                 catch(Exception ex)
                 {
                     exception = ex;
-                    Trace.TraceWarning("Web socket receive faulted.");
-                    Trace.TraceError(ex.Message);
+//                    Trace.TraceWarning("Web socket receive faulted.");
+//                    Trace.TraceError(ex.Message);
                 }
             }
 
             if (exception != null)
             {
-                await CloseAsync();
+//                await CloseAsync();
 
                 if (OnClose != null)
                 {
@@ -160,6 +150,12 @@ namespace Piraeus.Web.WebSockets
 
         public async Task SendAsync(byte[] message)
         {
+            await Task.Run(() =>
+                {
+                    client.Send(message, 0, message.Length);
+                }
+            );
+#if false
             Exception exception = null;
             try
             {
@@ -215,7 +211,7 @@ namespace Piraeus.Web.WebSockets
                     OnClose(this, "Client forced to close.");
                 }
             }
-
+#endif
         }
     }
 }
