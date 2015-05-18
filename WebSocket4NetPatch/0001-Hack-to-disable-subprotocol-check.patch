@@ -1,0 +1,25 @@
+From ff08d2cd777001ee0da4afacb0caf8d5b343adc3 Mon Sep 17 00:00:00 2001
+From: Randy Chapman <randyc@microsoft.com>
+Date: Mon, 18 May 2015 12:58:10 -0700
+Subject: [PATCH] Hack to disable subprotocol check
+
+---
+ WebSocket4Net/Protocol/DraftHybi10Processor.cs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/WebSocket4Net/Protocol/DraftHybi10Processor.cs b/WebSocket4Net/Protocol/DraftHybi10Processor.cs
+index e438d6b..0c17a6d 100644
+--- a/WebSocket4Net/Protocol/DraftHybi10Processor.cs
++++ b/WebSocket4Net/Protocol/DraftHybi10Processor.cs
+@@ -268,7 +268,7 @@ namespace WebSocket4Net.Protocol
+                 return false;
+             }
+ 
+-            if (!string.IsNullOrEmpty(websocket.SubProtocol))
++if(false)            if (!string.IsNullOrEmpty(websocket.SubProtocol))
+             {
+                 var protocol = websocket.Items.GetValue("Sec-WebSocket-Protocol", string.Empty);
+ 
+-- 
+1.9.5.msysgit.0
+
