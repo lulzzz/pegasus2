@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pegasus.Phone.XF.WebSocket
+namespace Piraeus.Web.WebSockets
 {
     public delegate void WebSocketEventHandler(object sender, string message);
     public delegate void WebSocketErrorHandler(object sender, Exception ex);

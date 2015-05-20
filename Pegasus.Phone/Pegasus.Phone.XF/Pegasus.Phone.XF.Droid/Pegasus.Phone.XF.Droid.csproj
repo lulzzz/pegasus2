@@ -86,7 +86,6 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebSocket\WebSocketClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -103,6 +102,14 @@
     <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\WebSockets\Piraeus.Web.WebSockets.Net45\Piraeus.Web.WebSockets.Net45.csproj">
+      <Project>{9d95e266-ce63-41fe-976e-2aa3abf6564a}</Project>
+      <Name>Piraeus.Web.WebSockets.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\WebSockets\Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.csproj">
+      <Project>{01108527-bd86-4172-8206-f5aab861e293}</Project>
+      <Name>Piraeus.Web.WebSockets</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pegasus.Phone.XF\Pegasus.Phone.XF.csproj">
       <Name>Pegasus.Phone.XF</Name>
     </ProjectReference>

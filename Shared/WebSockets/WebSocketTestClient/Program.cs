@@ -2,6 +2,7 @@
 using Pegasus2.Data;
 using Piraeus.ServiceModel.Protocols.Coap;
 using Piraeus.Web.WebSockets;
+using Piraeus.Web.WebSockets.Net45;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace WebSocketTestClient
             Console.WriteLine("press any key to start");
             Console.ReadKey();
 
-            WebSocketClient client = new WebSocketClient();
+            IWebSocketClient client = new WebSocketClient_Net45();
             client.OnError += client_OnError;
             client.OnOpen += client_OnOpen;
             client.OnClose += client_OnClose;

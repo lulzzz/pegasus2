@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Pegasus.Phone.XF.WebSocket;
+using Piraeus.Web.WebSockets;
 using Pegasus2.Data;
 using Piraeus.ServiceModel.Protocols.Coap;
 //using Piraeus.Web.WebSockets;

@@ -90,7 +90,6 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebSocket\WebSocketClient_WinPhone.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -119,6 +118,14 @@
     <ProjectReference Include="..\..\..\Shared\Pegasus.Data\Pegasus.Data.csproj">
       <Project>{f3033e0c-1db5-406e-b6a7-e1c794fad7f3}</Project>
       <Name>Pegasus.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\WebSockets\Piraeus.Web.WebSockets.WinRT\Piraeus.Web.WebSockets.WinRT.csproj">
+      <Project>{0c83443f-1196-425c-89f2-370c03c0a5d1}</Project>
+      <Name>Piraeus.Web.WebSockets.WinRT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\WebSockets\Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.csproj">
+      <Project>{01108527-bd86-4172-8206-f5aab861e293}</Project>
+      <Name>Piraeus.Web.WebSockets</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Piraeus.ServiceModel.Protocols.Coap.Phone.PCLTimer\Piraeus.ServiceModel.Protocols.Coap.Phone.PCLTimer.csproj">
       <Project>{990c1d79-a460-40b9-aa26-f8790fe3bd6b}</Project>

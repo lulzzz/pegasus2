@@ -3,24 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Pegasus.Phone.XF.WebSocket;
+using Piraeus.Web.WebSockets;
+using Piraeus.Web.WebSockets.Net45;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using System.Threading;
-using Pegasus.Phone.XF.Droid.WebSocket;
 
-[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_Android))]
-namespace Pegasus.Phone.XF.Droid.WebSocket
+[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_Net45))]
+namespace Piraeus.Web.WebSockets.Net45
 {
 
-    //[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_Android))]
-    public class WebSocketClient_Android : IWebSocketClient
+    //[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_Net45))]
+    public class WebSocketClient_Net45 : IWebSocketClient
     {
         private const int receiveChunkSize = 1024;
         private ClientWebSocket client;
@@ -31,7 +25,7 @@ namespace Pegasus.Phone.XF.Droid.WebSocket
         public event WebSocketMessageHandler OnMessage;
 
         private Queue<byte[]> messageQueue;
-        public WebSocketClient_Android()
+        public WebSocketClient_Net45()
         {
             this.client = new ClientWebSocket();
             this.messageQueue = new Queue<byte[]>();

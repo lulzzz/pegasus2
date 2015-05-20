@@ -1,5 +1,5 @@
-﻿using Pegasus.Phone.XF.WebSocket;
-using Pegasus.Phone.XF.WinPhone81.WebSocket;
+﻿using Piraeus.Web.WebSockets;
+using Piraeus.Web.WebSockets.WinRT;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +10,11 @@ using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 using Windows.Web;
 
-[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_WinPhone))]
-namespace Pegasus.Phone.XF.WinPhone81.WebSocket
+[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_WinRT))]
+namespace Piraeus.Web.WebSockets.WinRT
 {
-    //[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_WinPhone))]
-    public class WebSocketClient_WinPhone : IWebSocketClient
+    //[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_WinRT))]
+    public class WebSocketClient_WinRT : IWebSocketClient
     {
         private const int receiveChunkSize = 1024;
         private StreamWebSocket client;
@@ -29,7 +29,7 @@ namespace Pegasus.Phone.XF.WinPhone81.WebSocket
 
         private Queue<byte[]> messageQueue;
 
-        public WebSocketClient_WinPhone()
+        public WebSocketClient_WinRT()
         {
             this.client = new StreamWebSocket();
             this.messageQueue = new Queue<byte[]>();
