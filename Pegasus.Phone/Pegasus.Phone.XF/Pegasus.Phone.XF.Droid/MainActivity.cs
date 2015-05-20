@@ -17,7 +17,7 @@ namespace Pegasus.Phone.XF.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new Pegasus.Phone.XF.App());
+            LoadApplication(new App());
         }
     }
 }
