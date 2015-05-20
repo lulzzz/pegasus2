@@ -1,5 +1,4 @@
-﻿using Pegasus2.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pegasus.Phone.XF.ViewModels
 {
-    class MainPageViewModel : BasePageViewModel
+    public class AppDataViewModel : BaseViewModel
     {
         private string statusMessage;
         public string StatusMessage
@@ -21,18 +20,6 @@ namespace Pegasus.Phone.XF.ViewModels
         {
             get { return messageCount; }
             set { SetProperty(ref messageCount, value); }
-        }
-
-        private CraftTelemetry craftTelemetry;
-        public CraftTelemetry CraftTelemetry
-        {
-            get { return craftTelemetry; }
-            set { SetProperty(ref craftTelemetry, value); }
-        }
-
-        public MainPageViewModel()
-        {
-            StatusMessage = "App launched, press Go!";
         }
     }
 }

@@ -11,6 +11,11 @@ namespace Pegasus.Phone.XF.ViewModels
 		{
 		}
 
+        public AppDataViewModel AppData
+        {
+            get { return App.Instance.AppData; }
+        }
+
 		protected void SetProperty<T>(
 			ref T backingStore, T value,
 			[CallerMemberName] string propertyName = "",
