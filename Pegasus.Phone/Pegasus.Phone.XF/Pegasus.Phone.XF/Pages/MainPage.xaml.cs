@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Piraeus.Web.WebSockets;
 using Pegasus2.Data;
 using Piraeus.ServiceModel.Protocols.Coap;
+using Pegasus.Phone.XF.ViewModels;
 //using Piraeus.Web.WebSockets;
 
 namespace Pegasus.Phone.XF.Pages
@@ -19,10 +20,7 @@ namespace Pegasus.Phone.XF.Pages
         private static string host = "ws://habtest.azurewebsites.net/api/connect";
         private static string subprotocol = "coap.v1";
 
-        public string MainText
-        {
-            get; set;
-        }
+        private MainPageViewModel ViewModel;
 
         private void ConnectWebSocket(object sender, EventArgs e)
         {
@@ -40,14 +38,16 @@ namespace Pegasus.Phone.XF.Pages
             Task.WhenAll(task);
         }
 
-        private static int messageCount;
-
         private void client_OnMessage(object sender, byte[] message)
         {
             CoapMessage coapMessage = CoapMessage.DecodeMessage(message);
             string jsonString = Encoding.UTF8.GetString(coapMessage.Payload, 0, coapMessage.Payload.Length);
-            CraftTelemetry telemetry = JsonConvert.DeserializeObject<CraftTelemetry>(jsonString);
-            Device.BeginInvokeOnMainThread(() => myLabel.Text = String.Format("{0} ({1} messages)", telemetry.AtmosphericPressure, ++messageCount));
+            var telemetry = JsonConvert.DeserializeObject<CraftTelemetry>(jsonString);
+            Device.BeginInvokeOnMainThread(() =>
+                {
+                    this.ViewModel.MessageCount++;
+                    this.ViewModel.CraftTelemetry = telemetry;
+                });
         }
 
         private void client_OnClose(object sender, string message)
@@ -57,7 +57,7 @@ namespace Pegasus.Phone.XF.Pages
 
         private void client_OnOpen(object sender, string message)
         {
-            Device.BeginInvokeOnMainThread(() => myLabel.Text = "Web Socket is open");
+            Device.BeginInvokeOnMainThread(() => this.ViewModel.StatusMessage = "Web Socket is open");
         
         }
 
@@ -69,8 +69,7 @@ namespace Pegasus.Phone.XF.Pages
         public MainPage()
         {
             InitializeComponent();
-            this.MainText = "Hello, world";
-            this.BindingContext = this;
+            this.BindingContext = this.ViewModel = new MainPageViewModel();
         }
     }
 }

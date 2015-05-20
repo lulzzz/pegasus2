@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
+// Reference https://github.com/jamesmontemagno/Hanselman.Forms
+
 namespace Pegasus.Phone.XF
 {
 	public class App : Application
