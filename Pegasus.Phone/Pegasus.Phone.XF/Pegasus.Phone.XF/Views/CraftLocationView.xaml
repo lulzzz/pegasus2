@@ -4,6 +4,7 @@
     <StackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
       <Label Text="{Binding Data.GpsLatitude}" HorizontalOptions="CenterAndExpand" />
       <Label Text="{Binding Data.GpsLongitude}" HorizontalOptions="CenterAndExpand" />
+      <ContentView x:Name="Map" />
     </StackLayout>
 	</ContentView.Content>
 </ContentView>

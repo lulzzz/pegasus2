@@ -25,6 +25,7 @@ namespace Pegasus.Phone.XF.Windows
         public MainPage()
         {
             this.InitializeComponent();
+            // Xamarin.Forms
             LoadApplication(new Pegasus.Phone.XF.App());
         }
     }

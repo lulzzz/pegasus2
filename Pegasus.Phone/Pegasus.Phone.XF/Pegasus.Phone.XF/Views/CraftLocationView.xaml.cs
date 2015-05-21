@@ -6,10 +6,23 @@ namespace Pegasus.Phone.XF
 {
 	public partial class CraftLocationView : ContentView
 	{
-		public CraftLocationView ()
+        IMapsSupport map;
+
+		public CraftLocationView()
 		{
-			InitializeComponent ();
+			InitializeComponent();
 		}
-	}
+
+        protected override void OnBindingContextChanged()
+        {
+            if (map == null && this.BindingContext != null)
+            {
+                map = DependencyService.Get<IMapsSupport>();
+                map.BindToView(this);
+            }
+
+            base.OnBindingContextChanged();
+        }
+    }
 }
 
