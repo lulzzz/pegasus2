@@ -18,6 +18,18 @@ namespace Pegasus.Phone.XF
             App.Instance.ConnectWebSocket();
         }
 
+        private void Show_Map(object sender, EventArgs e)
+        {
+            this.TelemetryView.IsVisible = false;
+            this.MapsView.IsVisible = true;
+        }
+
+        private void Show_Telemetry(object sender, EventArgs e)
+        {
+            this.TelemetryView.IsVisible = true;
+            this.MapsView.IsVisible = false;
+        }
+
         public MainPage()
         {
             InitializeComponent();

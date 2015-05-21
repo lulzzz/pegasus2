@@ -46,6 +46,9 @@
     <Compile Include="ViewModels\BasicViewModel.cs" />
     <Compile Include="ViewModels\Views\CraftTelemetryViewModel.cs" />
     <Compile Include="ViewModels\Pages\MainPageViewModel.cs" />
+    <Compile Include="Views\CraftLocationView.xaml.cs">
+      <DependentUpon>CraftLocationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CraftTelemetryView.xaml.cs">
       <DependentUpon>CraftTelemetryView.xaml</DependentUpon>
     </Compile>
@@ -106,6 +109,11 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\CraftLocationView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup />
 </Project>
