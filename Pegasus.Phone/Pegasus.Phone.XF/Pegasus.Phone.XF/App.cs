@@ -67,6 +67,11 @@ namespace Pegasus.Phone.XF
             CoapMessage coapMessage = CoapMessage.DecodeMessage(message);
             string jsonString = Encoding.UTF8.GetString(coapMessage.Payload, 0, coapMessage.Payload.Length);
             var telemetry = JsonConvert.DeserializeObject<CraftTelemetry>(jsonString);
+
+            // TEMP apply geo drift
+            telemetry.GpsLongitude += this.AppData.MessageCount / 100.0;
+            telemetry.GpsLatitude += this.AppData.MessageCount / 50.0;
+
             Device.BeginInvokeOnMainThread(() =>
                 {
                     this.AppData.MessageCount++;

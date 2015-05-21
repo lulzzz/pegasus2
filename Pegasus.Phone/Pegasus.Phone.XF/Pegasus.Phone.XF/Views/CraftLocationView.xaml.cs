@@ -11,18 +11,9 @@ namespace Pegasus.Phone.XF
 		public CraftLocationView()
 		{
 			InitializeComponent();
+            map = DependencyService.Get<IMapsSupport>();
+            map.BindToView(this);
 		}
-
-        protected override void OnBindingContextChanged()
-        {
-            if (map == null && this.BindingContext != null)
-            {
-                map = DependencyService.Get<IMapsSupport>();
-                map.BindToView(this);
-            }
-
-            base.OnBindingContextChanged();
-        }
     }
 }
 
