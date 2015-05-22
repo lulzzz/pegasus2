@@ -27,7 +27,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketTestClient", "..\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pegasus.Phone.XF.Windows", "Pegasus.Phone.XF\Pegasus.Phone.XF.Windows\Pegasus.Phone.XF.Windows.csproj", "{47AB0825-43D6-4640-A8D0-7FC77DDB9225}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Pegasus.Phone.XF.Shared", "Pegasus.Phone.XF\Pegasus.Phone.XF.Shared\Pegasus.Phone.XF.Shared.shproj", "{F634EB8D-02E9-4D1C-8137-0EF1530187BF}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Pegasus.Phone.XF\Pegasus.Phone.XF.Shared\Pegasus.Phone.XF.Shared.projitems*{1bcd305a-1cfc-4a8a-bbf9-922418b6b10b}*SharedItemsImports = 4
+		Pegasus.Phone.XF\Pegasus.Phone.XF.Shared\Pegasus.Phone.XF.Shared.projitems*{1e9127a6-a3cf-4f94-92fe-13fb4252da0e}*SharedItemsImports = 4
+		Pegasus.Phone.XF\Pegasus.Phone.XF.Shared\Pegasus.Phone.XF.Shared.projitems*{f634eb8d-02e9-4d1c-8137-0ef1530187bf}*SharedItemsImports = 13
+		Pegasus.Phone.XF\Pegasus.Phone.XF.Shared\Pegasus.Phone.XF.Shared.projitems*{47ab0825-43d6-4640-a8d0-7fc77ddb9225}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
 		Ad-Hoc|ARM = Ad-Hoc|ARM

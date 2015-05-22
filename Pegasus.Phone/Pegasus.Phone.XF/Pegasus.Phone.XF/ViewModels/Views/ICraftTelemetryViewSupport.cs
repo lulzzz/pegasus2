@@ -7,7 +7,7 @@ using Xamarin.Forms;
 
 namespace Pegasus.Phone.XF
 {
-    public interface IMapsSupport
+    public interface ICraftTelemetryViewSupport
     {
         void BindToView(ContentView view);
     }

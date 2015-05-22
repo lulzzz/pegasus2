@@ -1,17 +1,13 @@
-﻿using Pegasus.Phone.XF.ViewModels.Views;
-using Pegasus.Phone.XF.Windows;
+﻿using Pegasus.Phone.XF;
+using Pegasus.Phone.XF.ViewModels.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
-[assembly: Xamarin.Forms.Dependency(typeof(MapsSupport))]
-namespace Pegasus.Phone.XF.Windows
+[assembly: Xamarin.Forms.Dependency(typeof(CraftTelemetryViewSupport))]
+namespace Pegasus.Phone.XF
 {
-    public class MapsSupport : IMapsSupport
+    public class CraftTelemetryViewSupport : ICraftTelemetryViewSupport
     {
         CraftTelemetryViewModel craftTelemetry;
         ContentView sourceView;

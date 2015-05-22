@@ -36,7 +36,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="IMapsSupport.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -47,6 +46,7 @@
     <Compile Include="ViewModels\BasicViewModel.cs" />
     <Compile Include="ViewModels\Views\CraftTelemetryViewModel.cs" />
     <Compile Include="ViewModels\Pages\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\Views\ICraftTelemetryViewSupport.cs" />
     <Compile Include="Views\CraftLocationView.xaml.cs">
       <DependentUpon>CraftLocationView.xaml</DependentUpon>
     </Compile>
