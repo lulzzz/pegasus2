@@ -9,6 +9,8 @@ using Bing.Maps;
 using System.ComponentModel;
 using Pegasus.Phone.XF.Windows.Renderers;
 
+// https://visualstudiogallery.msdn.microsoft.com/224eb93a-ebc4-46ba-9be7-90ee777ad9e1
+
 [assembly: ExportRenderer(typeof(PegasusMap), typeof(PegasusMapRenderer))]
 namespace Pegasus.Phone.XF.Windows.Renderers
 {
