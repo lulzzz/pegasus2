@@ -5,7 +5,7 @@
              x:Class="Pegasus.Phone.XF.MainPage">
   <StackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
     <pegasus:CraftTelemetryView x:Name="TelemetryView" BindingContext="{Binding CraftTelemetry}" IsVisible="True" />
-    <pegasus:CraftLocationView x:Name="MapsView" BindingContext="{Binding CraftTelemetry}" IsVisible="False" />
+    <pegasus:LocationsView x:Name="MapsView" IsVisible="False" />
     <Label Text="{Binding AppData.StatusMessage}" HorizontalOptions="CenterAndExpand" />
     <Label Text="{Binding AppData.MessageCount, StringFormat='received {0} messages'}" HorizontalOptions="CenterAndExpand" />
     <StackLayout Orientation="Horizontal">

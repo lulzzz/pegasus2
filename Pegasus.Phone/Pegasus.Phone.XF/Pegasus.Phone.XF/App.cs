@@ -1,7 +1,5 @@
 ﻿using Pegasus.Phone.XF.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -39,11 +37,18 @@ namespace Pegasus.Phone.XF
             private set;
         }
 
+        public GroundTelemetryViewModel CurrentGroundTelemetry
+        {
+            get;
+            private set;
+        }
+
         public App()
         {
             Instance = this;
             AppData = new AppDataViewModel { StatusMessage = "Application launched, press go!" };
             CurrentCraftTelemetry = new CraftTelemetryViewModel();
+            CurrentGroundTelemetry = new GroundTelemetryViewModel();
             MainPage = new MainPage();
         }
 
@@ -73,10 +78,25 @@ namespace Pegasus.Phone.XF
             telemetry.GpsLongitude += this.AppData.MessageCount / 100.0;
             telemetry.GpsLatitude += this.AppData.MessageCount / 50.0;
 
+            // TEMP create ground telemetry
+            GroundTelemetry groundTelemetry = null;
+            if (CurrentGroundTelemetry.Data == null)
+            {
+                groundTelemetry = new GroundTelemetry
+                {
+                    GpsLatitude = telemetry.GpsLatitude,
+                    GpsLongitude = telemetry.GpsLongitude
+                };
+            }
+
             Device.BeginInvokeOnMainThread(() =>
                 {
                     this.AppData.MessageCount++;
                     this.CurrentCraftTelemetry.Data = telemetry;
+                    if (groundTelemetry != null)
+                    {
+                        this.CurrentGroundTelemetry.Data = groundTelemetry;
+                    }
                 });
         }
 

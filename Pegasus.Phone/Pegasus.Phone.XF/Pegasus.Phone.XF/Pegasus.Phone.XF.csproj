@@ -46,11 +46,13 @@
     <Compile Include="ViewModels\BasePageViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BasicViewModel.cs" />
+    <Compile Include="ViewModels\Views\GroundTelemetryViewModel.cs" />
+    <Compile Include="ViewModels\Views\LocationsViewModel.cs" />
     <Compile Include="ViewModels\Views\CraftTelemetryViewModel.cs" />
     <Compile Include="ViewModels\Pages\MainPageViewModel.cs" />
-    <Compile Include="ViewModels\Views\ICraftTelemetryViewSupport.cs" />
-    <Compile Include="Views\CraftLocationView.xaml.cs">
-      <DependentUpon>CraftLocationView.xaml</DependentUpon>
+    <Compile Include="Views\ILocationsViewSupport.cs" />
+    <Compile Include="Views\LocationsView.xaml.cs">
+      <DependentUpon>LocationsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CraftTelemetryView.xaml.cs">
       <DependentUpon>CraftTelemetryView.xaml</DependentUpon>
@@ -112,7 +114,7 @@
   </Target>
   -->
   <ItemGroup>
-    <EmbeddedResource Include="Views\CraftLocationView.xaml">
+    <EmbeddedResource Include="Views\LocationsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

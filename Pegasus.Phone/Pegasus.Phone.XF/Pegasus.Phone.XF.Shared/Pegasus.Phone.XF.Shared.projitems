@@ -9,6 +9,6 @@
     <Import_RootNamespace>Pegasus.Phone.XF.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\CraftTelemetryViewSupport.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\LocationsViewSupport.cs" />
   </ItemGroup>
 </Project>

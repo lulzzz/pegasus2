@@ -4,12 +4,12 @@ using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
-[assembly: Xamarin.Forms.Dependency(typeof(CraftTelemetryViewSupport))]
+[assembly: Xamarin.Forms.Dependency(typeof(LocationsViewSupport))]
 namespace Pegasus.Phone.XF
 {
-    public class CraftTelemetryViewSupport : ICraftTelemetryViewSupport
+    public class LocationsViewSupport : ILocationsViewSupport
     {
-        CraftTelemetryViewModel craftTelemetry;
+        LocationsViewModel viewModel;
         ContentView sourceView;
         //Map map;
         Xamarin.Forms.Maps.Map map = new Xamarin.Forms.Maps.Map();
@@ -24,23 +24,24 @@ namespace Pegasus.Phone.XF
             //map = new PegasusMap();
             sourceView.Content = map;
 
-            sourceView.BindingContextChanged += View_BindingContextChanged;           
+            sourceView.BindingContextChanged += View_BindingContextChanged;
+            View_BindingContextChanged(null, null);
         }
 
         private void View_BindingContextChanged(object sender, EventArgs e)
         {
             if (sourceView.BindingContext != null)
             {
-                craftTelemetry = (CraftTelemetryViewModel)sourceView.BindingContext; // Hard-cast to cause an error
-                craftTelemetry.PropertyChanged += TelemetryChanged;
+                viewModel = (LocationsViewModel)sourceView.BindingContext; // Hard-cast to cause an error
+                viewModel.CraftTelemetry.PropertyChanged += CraftTelemetryChanged;
             }
         }
 
-        private void TelemetryChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void CraftTelemetryChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             Xamarin.Forms.Maps.Position craftPosition = new Xamarin.Forms.Maps.Position(
-                    craftTelemetry.Data.GpsLatitude,
-                    craftTelemetry.Data.GpsLongitude);
+                    viewModel.CraftTelemetry.Data.GpsLatitude,
+                    viewModel.CraftTelemetry.Data.GpsLongitude);
             Pin pin = new Pin {
                 Type = PinType.Place,
                 Position = craftPosition,
