@@ -1,50 +1,55 @@
-﻿using Pegasus.Phone.XF.CustomControl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms.Platform.WinRT;
+﻿using Xamarin.Forms.Platform.WinRT;
 using Bing.Maps;
-using System.ComponentModel;
+using BingMap = Bing.Maps.Map;
 using Pegasus.Phone.XF.Windows.Renderers;
+using Xamarin.Forms.Maps;
+using XFMap = Xamarin.Forms.Maps.Map;
 
 // https://visualstudiogallery.msdn.microsoft.com/224eb93a-ebc4-46ba-9be7-90ee777ad9e1
 
-[assembly: ExportRenderer(typeof(PegasusMap), typeof(PegasusMapRenderer))]
+[assembly: ExportRenderer(typeof(XFMap), typeof(PegasusMapRenderer))]
 namespace Pegasus.Phone.XF.Windows.Renderers
 {
-    public class PegasusMapRenderer : ViewRenderer<PegasusMap, Map>
+    public class PegasusMapRenderer : ViewRenderer<XFMap, BingMap>
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<PegasusMap> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<XFMap> e)
         {
             base.OnElementChanged(e);
             if (e.OldElement != null || this.Element == null)
+            {
                 return;
-            var map = new Map();
+            }
+
+            var map = new BingMap();
             map.Credentials = "Ar63TjGidMOY96jRx8kLubJjOyqKWOI_S3cToA3P0XO9_mQdQEyIowxChrtD9Eii";
             SetNativeControl(map);
+
+            Xamarin.Forms.MessagingCenter.Subscribe<XFMap, MapSpan>(
+                this, "MapMoveToRegion", OnMoveToRegionMessage, Element);
         }
 
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnMoveToRegionMessage(XFMap map, MapSpan span)
         {
-            base.OnElementPropertyChanged(sender, e);
-            if (this.Element == null || this.Control == null)
-                return;
-            if (e.PropertyName == PegasusMap.CenterPositionProperty.PropertyName)
+            if (map == null || span == null)
             {
-                Pushpin pushpin = new Pushpin();
-                pushpin.Text = "Current Location";
-                Location currentLocation = new Location(Element.CenterPosition.Latitude,
-                    Element.CenterPosition.Longitude);
-                MapLayer.SetPosition(pushpin, currentLocation);
-                if (Control.Children.Count > 0)
-                    Control.Children.RemoveAt(0);
-                Control.Children.Add(pushpin);
-                Control.SetView(currentLocation, 8);
+                return;
             }
-            else
-            { }
+
+            Pushpin pushpin = new Pushpin();
+            pushpin.Text = "Current Location";
+
+            Location currentLocation = new Location(
+                span.Center.Latitude,
+                span.Center.Longitude);
+
+            MapLayer.SetPosition(pushpin, currentLocation);
+            if (Control.Children.Count > 0)
+            {
+                Control.Children.RemoveAt(0);
+            }
+
+            Control.Children.Add(pushpin);
+            Control.SetView(currentLocation, 8); // TODO: set zoom level right
         }
     }
 }

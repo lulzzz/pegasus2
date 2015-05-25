@@ -38,6 +38,7 @@ namespace Pegasus.Phone.XF
             get;
             private set;
         }
+
         public App()
         {
             Instance = this;
