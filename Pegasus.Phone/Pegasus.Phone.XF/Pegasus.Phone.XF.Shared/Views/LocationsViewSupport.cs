@@ -19,9 +19,6 @@ namespace Pegasus.Phone.XF
             map = new Xamarin.Forms.Maps.Map();
 
             sourceView = view;
-            // using a bigger frame such as 800x800 for windows store app
-            sourceView.WidthRequest = 300;
-            sourceView.HeightRequest = 300;
             sourceView.Content = map;
 
             sourceView.BindingContextChanged += View_BindingContextChanged;
@@ -76,7 +73,7 @@ namespace Pegasus.Phone.XF
             }
 
             MapSpan span = MapSpan.FromCenterAndRadius(craftPosition,
-                Distance.FromMiles(5));
+                Distance.FromMiles(15));
 
             map.MoveToRegion(span);
         }
