@@ -22,8 +22,6 @@ namespace Piraeus.Web.WebSockets
 
         //public Task CloseAsync();
 
-        Task ReceiveAsync();
-
         Task SendAsync(byte[] message);
     }
 }
