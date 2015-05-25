@@ -10,12 +10,16 @@ using Windows.Devices.Geolocation;
 using Pegasus.Phone.XF.WinPhone81.Renderers;
 using Windows.Foundation;
 using Xamarin.Forms.Maps;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 [assembly: ExportRenderer(typeof(Map), typeof(PegasusMapRenderer))]
 namespace Pegasus.Phone.XF.WinPhone81.Renderers
 {
     public class PegasusMapRenderer : ViewRenderer<Map, MapControl>
     {
+        ObservableCollection<Pin> pins;
+
         protected override void OnElementChanged(ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
@@ -27,8 +31,37 @@ namespace Pegasus.Phone.XF.WinPhone81.Renderers
             var map = new MapControl();
             SetNativeControl(map);
 
+            pins = (ObservableCollection<Pin>)Element.Pins;
+            pins.CollectionChanged += Pins_CollectionChanged;
+
             Xamarin.Forms.MessagingCenter.Subscribe<Map, MapSpan>(
                 this, "MapMoveToRegion", OnMoveToRegionMessage, Element);
+            OnMoveToRegionMessage(Element, Element.VisibleRegion);
+        }
+
+        private void Pins_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            // This is definitely not the most efficient -- it may cause us some problems?
+            while (Control.MapElements.Count > 0)
+            {
+                Control.MapElements.RemoveAt(Control.MapElements.Count - 1);
+            }
+
+            foreach (Pin pin in pins)
+            {
+                MapIcon mapIcon = new MapIcon()
+                {
+                    Title = pin.Label,
+                    NormalizedAnchorPoint = new Point(0.5, 0.5),
+                    Location = new Geopoint(new BasicGeoposition()
+                    {
+                        Latitude = pin.Position.Latitude,
+                        Longitude = pin.Position.Longitude
+                    })
+                };
+                
+                Control.MapElements.Add(mapIcon);
+            }
         }
 
         private void OnMoveToRegionMessage(Map map, MapSpan span)
@@ -38,23 +71,14 @@ namespace Pegasus.Phone.XF.WinPhone81.Renderers
                 return;
             }
 
-            MapIcon mapIcon = new MapIcon();
-            mapIcon.Title = "Current Location";
-            mapIcon.Location = new Geopoint(
+            var location = new Geopoint(
               new BasicGeoposition()
               {
                   Latitude = span.Center.Latitude,
                   Longitude = span.Center.Longitude
               });
 
-            mapIcon.NormalizedAnchorPoint = new Point(0.5, 0.5);
-            if (Control.MapElements.Count > 0)
-            {
-                Control.MapElements.RemoveAt(0);
-            }
-
-            Control.MapElements.Add(mapIcon);
-            Control.TrySetViewAsync(mapIcon.Location, 12D, 0, 0, MapAnimationKind.Bow);
+            Control.TrySetViewAsync(location, 10D, 0, 0, MapAnimationKind.Bow);
        }
    }
 }
