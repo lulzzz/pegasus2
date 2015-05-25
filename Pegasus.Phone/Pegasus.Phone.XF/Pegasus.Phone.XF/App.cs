@@ -84,8 +84,8 @@ namespace Pegasus.Phone.XF
             {
                 groundTelemetry = new GroundTelemetry
                 {
-                    GpsLatitude = telemetry.GpsLatitude,
-                    GpsLongitude = telemetry.GpsLongitude
+                    GpsLatitude = telemetry.GpsLatitude + 0.1,
+                    GpsLongitude = telemetry.GpsLongitude + 0.1
                 };
             }
 
