@@ -1,6 +1,7 @@
-﻿using Pegasus.Phone.XF.ViewModels.Views;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using Xamarin.Forms.Maps;
+using Pegasus.Phone.XF.Utilities;
+using Pegasus.Phone.XF.ViewModels.Views;
 
 namespace Pegasus.Phone.XF
 {
@@ -13,11 +14,8 @@ namespace Pegasus.Phone.XF
 			InitializeComponent();
             BindingContext = viewModel = new LocationsViewModel();
 
-            if (this.Map != null)
-            {
-                viewModel.CraftTelemetry.PropertyChanged += TelemetryChanged;
-                viewModel.GroundTelemetry.PropertyChanged += TelemetryChanged;
-            }
+            viewModel.CraftTelemetry.PropertyChanged += TelemetryChanged;
+            viewModel.GroundTelemetry.PropertyChanged += TelemetryChanged;
 		}
 
         private void TelemetryChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -32,6 +30,21 @@ namespace Pegasus.Phone.XF
                 Map.Pins.RemoveAt(Map.Pins.Count - 1);
             }
 
+            Position? groundPosition = null;
+            if (viewModel.GroundTelemetry.Data != null)
+            {
+                groundPosition = new Position(
+                        viewModel.GroundTelemetry.Data.GpsLatitude,
+                        viewModel.GroundTelemetry.Data.GpsLongitude);
+
+                Map.Pins.Add(new Pin()
+                    {
+                        Type = PinType.Place,
+                        Position = groundPosition.Value,
+                        Label = "Ground Location"
+                    });
+            }
+
             Position craftPosition = new Position(
                     viewModel.CraftTelemetry.Data.GpsLatitude,
                     viewModel.CraftTelemetry.Data.GpsLongitude);
@@ -43,26 +56,23 @@ namespace Pegasus.Phone.XF
                     Label = "Current Location"
                 });
 
-            if (viewModel.GroundTelemetry.Data != null)
-            {
-                Position groundPosition = new Position(
-                        viewModel.GroundTelemetry.Data.GpsLatitude,
-                        viewModel.GroundTelemetry.Data.GpsLongitude);
+            Distance? distance = null;
 
-                Map.Pins.Add(new Pin()
-                    {
-                        Type = PinType.Place,
-                        Position = groundPosition,
-                        Label = "Ground Location"
-                    });
+            if (groundPosition.HasValue)
+            {
+                distance = groundPosition.Value.DistanceFrom(craftPosition);
             }
 
-            MapSpan span = MapSpan.FromCenterAndRadius(craftPosition,
-                Distance.FromMiles(15));
+            // Minimum distance view of 15 miles
+            if (!distance.HasValue || distance.Value.Miles < 15)
+            {
+                distance = Distance.FromMiles(15);
+            }
+
+            MapSpan span = MapSpan.FromCenterAndRadius(craftPosition, distance.Value);
 
             Map.MoveToRegion(span);
         }
- 
     }
 }
 
