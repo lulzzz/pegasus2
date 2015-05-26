@@ -1,4 +1,5 @@
-﻿using Pegasus.Phone.XF.ViewModels.Pages;
+﻿using Pegasus.Phone.XF.Utilities;
+using Pegasus.Phone.XF.ViewModels.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,11 @@ namespace Pegasus.Phone.XF
                 bool match = (kvp.Key == sender);
                 kvp.Key.IsEnabled = !match;
                 kvp.Value.IsVisible = match;
+
+                if (match)
+                {
+                    Settings.HomePageView = kvp.Value.GetType().Name;
+                }
             }
         }
 
@@ -36,7 +42,10 @@ namespace Pegasus.Phone.XF
             this.buttons[this.TelemetryOverviewButton] = this.TelemetryOverviewView;
             this.buttons[this.LocationsButton] = this.LocationsView;
             this.buttons[this.TelemetryDetailsButton] = this.TelemetryDetailsView;
-            this.SwitchToView(this.buttons.First().Key);
+
+            string defaultView = Settings.HomePageView;
+            Button defaultButton = this.buttons.FirstOrDefault(kvp => kvp.Value.GetType().Name == defaultView).Key ?? this.buttons.First().Key;
+            this.SwitchToView(defaultButton);
         }
     }
 }
