@@ -12,28 +12,31 @@ namespace Pegasus.Phone.XF
     public partial class MainPage : ContentPage
     {
         private MainPageViewModel ViewModel;
+        private Dictionary<Button, View> buttons = new Dictionary<Button, View>();
 
         private void ConnectWebSocket(object sender, EventArgs e)
         {
             App.Instance.ConnectWebSocket();
         }
 
-        private void Show_Map(object sender, EventArgs e)
+        private void SwitchToView(object sender, EventArgs e = null)
         {
-            this.TelemetryView.IsVisible = false;
-            this.MapsView.IsVisible = true;
-        }
-
-        private void Show_Telemetry(object sender, EventArgs e)
-        {
-            this.TelemetryView.IsVisible = true;
-            this.MapsView.IsVisible = false;
+            foreach (var kvp in buttons)
+            {
+                bool match = (kvp.Key == sender);
+                kvp.Key.IsEnabled = !match;
+                kvp.Value.IsVisible = match;
+            }
         }
 
         public MainPage()
         {
             InitializeComponent();
             this.BindingContext = this.ViewModel = new MainPageViewModel();
+            this.buttons[this.TelemetryOverviewButton] = this.TelemetryOverviewView;
+            this.buttons[this.LocationsButton] = this.LocationsView;
+            this.buttons[this.TelemetryDetailsButton] = this.TelemetryDetailsView;
+            this.SwitchToView(this.buttons.First().Key);
         }
     }
 }

@@ -4,9 +4,9 @@ using Xamarin.Forms;
 
 namespace Pegasus.Phone.XF
 {
-	public partial class CraftTelemetryView : ContentView
+	public partial class TelemetryDetailsView : ContentView
 	{
-		public CraftTelemetryView ()
+		public TelemetryDetailsView ()
 		{
 			InitializeComponent ();
 		}
