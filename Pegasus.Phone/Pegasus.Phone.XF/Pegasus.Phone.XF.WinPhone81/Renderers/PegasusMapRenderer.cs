@@ -78,7 +78,19 @@ namespace Pegasus.Phone.XF.WinPhone81.Renderers
                   Longitude = span.Center.Longitude
               });
 
-            Control.TrySetViewAsync(location, 10D, 0, 0, MapAnimationKind.Bow);
+            // These calculations only work in the northwest quadrant of the world
+            var northWestCorner = new BasicGeoposition()
+            {
+                Latitude = span.Center.Latitude + span.LatitudeDegrees / 2,
+                Longitude = span.Center.Longitude - span.LongitudeDegrees / 2
+            };
+            var southEastCorner = new BasicGeoposition()
+            {
+                Latitude = span.Center.Latitude - span.LatitudeDegrees / 2,
+                Longitude = span.Center.Longitude + span.LongitudeDegrees / 2
+            };
+            var bounds = new GeoboundingBox(northWestCorner, southEastCorner);
+            Control.TrySetViewBoundsAsync(bounds, null, MapAnimationKind.Bow);
        }
    }
 }

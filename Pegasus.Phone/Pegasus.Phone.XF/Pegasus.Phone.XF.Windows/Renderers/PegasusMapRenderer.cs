@@ -14,6 +14,8 @@ namespace Pegasus.Phone.XF.Windows.Renderers
 {
     public class PegasusMapRenderer : ViewRenderer<XFMap, BingMap>
     {
+        BingMap map;
+
         ObservableCollection<Pin> pins;
 
         protected override void OnElementChanged(ElementChangedEventArgs<XFMap> e)
@@ -24,7 +26,7 @@ namespace Pegasus.Phone.XF.Windows.Renderers
                 return;
             }
 
-            var map = new BingMap();
+            map = new BingMap();
             map.Credentials = "Ar63TjGidMOY96jRx8kLubJjOyqKWOI_S3cToA3P0XO9_mQdQEyIowxChrtD9Eii";
             SetNativeControl(map);
 
@@ -55,7 +57,7 @@ namespace Pegasus.Phone.XF.Windows.Renderers
 
                 MapLayer.SetPosition(pushPin, pinLocation);
 
-                 Control.Children.Add(pushPin);
+                Control.Children.Add(pushPin);
             }
         }
 
@@ -66,11 +68,15 @@ namespace Pegasus.Phone.XF.Windows.Renderers
                 return;
             }
 
-            Location currentLocation = new Location(
-                span.Center.Latitude,
-                span.Center.Longitude);
+            LocationRect currentLocation = new LocationRect(
+                new Location(
+                    span.Center.Latitude,
+                    span.Center.Longitude),
+                span.LatitudeDegrees * 0.75, // The 0.75 defeats the padding built into the map
+                span.LongitudeDegrees * 0.75
+                );
 
-           Control.SetView(currentLocation, 8); // TODO: set zoom level right
+            Control.SetView(currentLocation);
         }
     }
 }
