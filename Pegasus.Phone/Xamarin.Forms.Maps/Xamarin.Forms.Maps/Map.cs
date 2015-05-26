@@ -83,7 +83,7 @@ namespace Xamarin.Forms.Maps
     /// To be added.
     /// </remarks>
     public static readonly BindableProperty HasZoomEnabledProperty = BindableProperty.Create("HasZoomEnabled", typeof (bool), typeof (Map), (object) true, (BindingMode) 2, (BindableProperty.ValidateValueDelegate) null, (BindableProperty.BindingPropertyChangedDelegate) null, (BindableProperty.BindingPropertyChangingDelegate) null, (BindableProperty.CoerceValueDelegate) null, (BindableProperty.CreateDefaultValueDelegate) null);
-    private readonly ObservableCollection<Pin> pins;
+    private readonly ObservableCollection<Pin> pins = new ObservableCollection<Pin>();
     private MapSpan visibleRegion;
 
     internal MapSpan LastMoveToRegion { get; private set; }
@@ -130,9 +130,9 @@ namespace Xamarin.Forms.Maps
           return;
         if (value == (MapSpan) null)
           throw new ArgumentNullException("value");
-        ((BindableObject) this).OnPropertyChanging("VisibleRegion");
+        this.OnPropertyChanging("VisibleRegion");
         this.visibleRegion = value;
-        ((BindableObject) this).OnPropertyChanged("VisibleRegion");
+        this.OnPropertyChanged("VisibleRegion");
       }
     }
 
@@ -178,7 +178,7 @@ namespace Xamarin.Forms.Maps
       }
       set
       {
-        ((BindableObject) this).SetValue(Map.IsShowingUserProperty, (object) (bool) (value ? 1 : 0));
+        ((BindableObject) this).SetValue(Map.IsShowingUserProperty, (object) value);
       }
     }
 
@@ -201,7 +201,7 @@ namespace Xamarin.Forms.Maps
       }
       set
       {
-        ((BindableObject) this).SetValue(Map.HasScrollEnabledProperty, (object) (bool) (value ? 1 : 0));
+        ((BindableObject) this).SetValue(Map.HasScrollEnabledProperty, (object) value);
       }
     }
 
@@ -224,17 +224,16 @@ namespace Xamarin.Forms.Maps
       }
       set
       {
-        ((BindableObject) this).SetValue(Map.HasZoomEnabledProperty, (object) (bool) (value ? 1 : 0));
+        ((BindableObject)this).SetValue(Map.HasZoomEnabledProperty, (object)value);
       }
     }
 
     public Map(MapSpan region)
     {
-      base.\u002Ector();
       this.LastMoveToRegion = region;
       LayoutOptions layoutOptions;
-      this.set_HorizontalOptions(layoutOptions = (LayoutOptions) LayoutOptions.FillAndExpand);
-      this.set_VerticalOptions(layoutOptions);
+      this.HorizontalOptions = (layoutOptions = (LayoutOptions) LayoutOptions.FillAndExpand);
+      this.VerticalOptions = (layoutOptions);
       this.pins.CollectionChanged += new NotifyCollectionChangedEventHandler(this.PinsOnCollectionChanged);
     }
 
@@ -262,7 +261,7 @@ namespace Xamarin.Forms.Maps
       if (mapSpan == (MapSpan) null)
         throw new ArgumentNullException("mapSpan");
       this.LastMoveToRegion = mapSpan;
-      MessagingCenter.Send<Map, MapSpan>((M0) this, "MapMoveToRegion", (M1) mapSpan);
+      MessagingCenter.Send<Map, MapSpan>(this, "MapMoveToRegion", mapSpan);
     }
 
     /// <summary>

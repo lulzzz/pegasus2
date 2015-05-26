@@ -6,7 +6,6 @@
 
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
-using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -20,6 +19,8 @@ using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Platform.Android;
+using Android.Graphics;
+using AGPoint = Android.Graphics.Point;
 
 namespace Xamarin.Forms.Maps.Android
 {
@@ -43,7 +44,7 @@ namespace Xamarin.Forms.Maps.Android
     {
       get
       {
-        return ((MapView) ((ViewRenderer<View, View>) this).get_Control()).get_Map();
+        return ((MapView) this.Control).Map;
       }
     }
 
@@ -51,37 +52,36 @@ namespace Xamarin.Forms.Maps.Android
     {
       get
       {
-        return (Map) ((VisualElementRenderer<View>) this).get_Element();
+        return (Map) this.Element;
       }
     }
 
     public MapRenderer()
     {
-      base.\u002Ector();
-      ((VisualElementRenderer<View>) this).set_AutoPackage(false);
+      this.AutoPackage = (false);
     }
 
-    public virtual SizeRequest GetDesiredSize(int widthConstraint, int heightConstraint)
+    public override SizeRequest GetDesiredSize(int widthConstraint, int heightConstraint)
     {
-      return new SizeRequest(new Size((double) ContextExtensions.ToPixels(((View) this).Context, 40.0), (double) ContextExtensions.ToPixels(((View) this).Context, 40.0)));
+      return new SizeRequest(new Size((double) ContextExtensions.ToPixels(this.Context, 40.0), (double) ContextExtensions.ToPixels(this.Context, 40.0)));
     }
 
-    protected virtual void OnElementChanged(ElementChangedEventArgs<View> e)
+    protected override void OnElementChanged(ElementChangedEventArgs<View> e)
     {
-      ((ViewRenderer<View, View>) this).OnElementChanged(e);
-      MapView mapView1 = (MapView) ((ViewRenderer<View, View>) this).get_Control();
-      MapView mapView2 = new MapView(((View) this).Context);
+      base.OnElementChanged(e);
+      MapView mapView1 = (MapView)this.Control;
+      MapView mapView2 = new MapView(this.Context);
       mapView2.OnCreate(MapRenderer.bundle);
       mapView2.OnResume();
-      ((ViewRenderer<View, View>) this).SetNativeControl((View) mapView2);
-      if (e.get_OldElement() != null)
+      this.SetNativeControl(mapView2);
+      if (e.OldElement != null)
       {
-        ((ObservableCollection<Pin>) ((Map) e.get_OldElement()).Pins).CollectionChanged -= new NotifyCollectionChangedEventHandler(this.OnCollectionChanged);
+        ((ObservableCollection<Pin>) ((Map) e.OldElement).Pins).CollectionChanged -= new NotifyCollectionChangedEventHandler(this.OnCollectionChanged);
         MessagingCenter.Unsubscribe<Map, MapSpan>((object) this, "MapMoveToRegion");
-        if (mapView1.get_Map() != null)
+        if (mapView1.Map != null)
         {
-          mapView1.get_Map().SetOnCameraChangeListener((GoogleMap.IOnCameraChangeListener) null);
-          this.NativeMap.remove_InfoWindowClick(new EventHandler<GoogleMap.InfoWindowClickEventArgs>(this.MapOnMarkerClick));
+          mapView1.Map.SetOnCameraChangeListener((GoogleMap.IOnCameraChangeListener) null);
+          this.NativeMap.InfoWindowClick -= (new EventHandler<GoogleMap.InfoWindowClickEventArgs>(this.MapOnMarkerClick));
         }
         ((Java.Lang.Object) mapView1).Dispose();
       }
@@ -89,18 +89,18 @@ namespace Xamarin.Forms.Maps.Android
       if (nativeMap != null)
       {
         nativeMap.SetOnCameraChangeListener((GoogleMap.IOnCameraChangeListener) this);
-        this.NativeMap.add_InfoWindowClick(new EventHandler<GoogleMap.InfoWindowClickEventArgs>(this.MapOnMarkerClick));
-        nativeMap.get_UiSettings().set_ZoomControlsEnabled(this.Map.HasZoomEnabled);
-        nativeMap.get_UiSettings().set_ZoomGesturesEnabled(this.Map.HasZoomEnabled);
-        nativeMap.get_UiSettings().set_ScrollGesturesEnabled(this.Map.HasScrollEnabled);
+        this.NativeMap.InfoWindowClick += (new EventHandler<GoogleMap.InfoWindowClickEventArgs>(this.MapOnMarkerClick));
+        nativeMap.UiSettings.ZoomControlsEnabled = (this.Map.HasZoomEnabled);
+        nativeMap.UiSettings.ZoomGesturesEnabled = (this.Map.HasZoomEnabled);
+        nativeMap.UiSettings.ScrollGesturesEnabled = (this.Map.HasScrollEnabled);
         GoogleMap googleMap = nativeMap;
         bool isShowingUser;
-        nativeMap.get_UiSettings().set_MyLocationButtonEnabled(isShowingUser = this.Map.IsShowingUser);
+        nativeMap.UiSettings.MyLocationButtonEnabled = (isShowingUser = this.Map.IsShowingUser);
         int num = isShowingUser ? 1 : 0;
-        googleMap.set_MyLocationEnabled(num != 0);
+        googleMap.MyLocationEnabled = (num != 0);
         this.SetMapType();
       }
-      MessagingCenter.Subscribe<Map, MapSpan>((object) this, "MapMoveToRegion", (Action<M0, M1>) new Action<Map, MapSpan>(this.OnMoveToRegionMessage), (M0) this.Map);
+      MessagingCenter.Subscribe<Map, MapSpan>(this, "MapMoveToRegion", new Action<Map, MapSpan>(this.OnMoveToRegionMessage), this.Map);
       INotifyCollectionChanged collectionChanged = this.Map.Pins as INotifyCollectionChanged;
       if (collectionChanged == null)
         return;
@@ -132,25 +132,25 @@ namespace Xamarin.Forms.Maps.Android
         else
           nativeMap.MoveCamera(cameraUpdate);
       }
-      catch (IllegalStateException ex)
+      catch (IllegalStateException)
       {
       }
     }
 
-    protected virtual void OnLayout(bool changed, int l, int t, int r, int b)
+    protected override void OnLayout(bool changed, int l, int t, int r, int b)
     {
-      ((ViewRenderer<View, View>) this).OnLayout(changed, l, t, r, b);
+      base.OnLayout(changed, l, t, r, b);
       if (!this.init)
         return;
-      this.MoveToRegion(((Map) ((VisualElementRenderer<View>) this).get_Element()).LastMoveToRegion, false);
+      this.MoveToRegion(((Map) this.Element).LastMoveToRegion, false);
       this.UpdatePins();
       this.init = false;
     }
 
-    protected virtual void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+    protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-      ((ViewRenderer<View, View>) this).OnElementPropertyChanged(sender, e);
-      if (e.PropertyName == Map.MapTypeProperty.get_PropertyName())
+      base.OnElementPropertyChanged(sender, e);
+      if (e.PropertyName == Map.MapTypeProperty.PropertyName)
       {
         this.SetMapType();
       }
@@ -159,24 +159,24 @@ namespace Xamarin.Forms.Maps.Android
         GoogleMap nativeMap = this.NativeMap;
         if (nativeMap == null)
           return;
-        if (e.PropertyName == Map.IsShowingUserProperty.get_PropertyName())
+        if (e.PropertyName == Map.IsShowingUserProperty.PropertyName)
         {
           GoogleMap googleMap = nativeMap;
           bool isShowingUser;
-          nativeMap.get_UiSettings().set_MyLocationButtonEnabled(isShowingUser = this.Map.IsShowingUser);
+          nativeMap.UiSettings.MyLocationButtonEnabled = (isShowingUser = this.Map.IsShowingUser);
           int num = isShowingUser ? 1 : 0;
-          googleMap.set_MyLocationEnabled(num != 0);
+          googleMap.MyLocationEnabled = (num != 0);
         }
-        else if (e.PropertyName == Map.HasScrollEnabledProperty.get_PropertyName())
+        else if (e.PropertyName == Map.HasScrollEnabledProperty.PropertyName)
         {
-          nativeMap.get_UiSettings().set_ScrollGesturesEnabled(this.Map.HasScrollEnabled);
+          nativeMap.UiSettings.ScrollGesturesEnabled = (this.Map.HasScrollEnabled);
         }
         else
         {
-          if (!(e.PropertyName == Map.HasZoomEnabledProperty.get_PropertyName()))
+          if (!(e.PropertyName == Map.HasZoomEnabledProperty.PropertyName))
             return;
-          nativeMap.get_UiSettings().set_ZoomControlsEnabled(this.Map.HasZoomEnabled);
-          nativeMap.get_UiSettings().set_ZoomGesturesEnabled(this.Map.HasZoomEnabled);
+          nativeMap.UiSettings.ZoomControlsEnabled = (this.Map.HasZoomEnabled);
+          nativeMap.UiSettings.ZoomGesturesEnabled = (this.Map.HasZoomEnabled);
         }
       }
     }
@@ -189,13 +189,13 @@ namespace Xamarin.Forms.Maps.Android
       switch (this.Map.MapType)
       {
         case MapType.Street:
-          nativeMap.set_MapType(1);
+          nativeMap.MapType = (1);
           break;
         case MapType.Satellite:
-          nativeMap.set_MapType(2);
+          nativeMap.MapType = (2);
           break;
         case MapType.Hybrid:
-          nativeMap.set_MapType(4);
+          nativeMap.MapType = (4);
           break;
         default:
           throw new ArgumentOutOfRangeException();
@@ -207,16 +207,16 @@ namespace Xamarin.Forms.Maps.Android
       GoogleMap nativeMap = this.NativeMap;
       if (nativeMap == null)
         return;
-      Projection projection = nativeMap.get_Projection();
-      int width = ((ViewRenderer<View, View>) this).get_Control().Width;
-      int height = ((ViewRenderer<View, View>) this).get_Control().Height;
-      LatLng latLng1 = projection.FromScreenLocation(new Point(0, 0));
-      LatLng latLng2 = projection.FromScreenLocation(new Point(width, 0));
-      LatLng latLng3 = projection.FromScreenLocation(new Point(0, height));
-      LatLng latLng4 = projection.FromScreenLocation(new Point(width, height));
-      double latitudeDegrees = System.Math.Max(System.Math.Abs(latLng1.get_Latitude() - latLng4.get_Latitude()), System.Math.Abs(latLng2.get_Latitude() - latLng3.get_Latitude()));
-      double longitudeDegrees = System.Math.Max(System.Math.Abs(latLng1.get_Longitude() - latLng4.get_Longitude()), System.Math.Abs(latLng2.get_Longitude() - latLng3.get_Longitude()));
-      ((Map) ((VisualElementRenderer<View>) this).get_Element()).VisibleRegion = new MapSpan(new Position(pos.get_Target().get_Latitude(), pos.get_Target().get_Longitude()), latitudeDegrees, longitudeDegrees);
+      Projection projection = nativeMap.Projection;
+      int width = Control.Width;
+      int height = Control.Height;
+      LatLng latLng1 = projection.FromScreenLocation(new AGPoint(0, 0));
+      LatLng latLng2 = projection.FromScreenLocation(new AGPoint(width, 0));
+      LatLng latLng3 = projection.FromScreenLocation(new AGPoint(0, height));
+      LatLng latLng4 = projection.FromScreenLocation(new AGPoint(width, height));
+      double latitudeDegrees = System.Math.Max(System.Math.Abs(latLng1.Latitude - latLng4.Latitude), System.Math.Abs(latLng2.Latitude - latLng3.Latitude));
+      double longitudeDegrees = System.Math.Max(System.Math.Abs(latLng1.Longitude - latLng4.Longitude), System.Math.Abs(latLng2.Longitude - latLng3.Longitude));
+      ((Map) Element).VisibleRegion = new MapSpan(new Position(pos.Target.Latitude, pos.Target.Longitude), latitudeDegrees, longitudeDegrees);
     }
 
     private void UpdatePins()
@@ -233,19 +233,19 @@ namespace Xamarin.Forms.Maps.Android
         markerOptions.SetTitle(p.Label);
         markerOptions.SetSnippet(p.Address);
         Marker marker = map.AddMarker(markerOptions);
-        p.Id = (object) marker.get_Id();
+        p.Id = (object) marker.Id;
         return marker;
       })));
     }
 
     private void MapOnMarkerClick(object sender, GoogleMap.InfoWindowClickEventArgs eventArgs)
     {
-      Marker marker = eventArgs.get_Marker();
+      Marker marker = eventArgs.Marker;
       Pin pin1 = (Pin) null;
       for (int index = 0; index < this.Map.Pins.Count; ++index)
       {
         Pin pin2 = this.Map.Pins[index];
-        if (!((string) pin2.Id != marker.get_Id()))
+        if (!((string) pin2.Id != marker.Id))
         {
           pin1 = pin2;
           break;
@@ -256,12 +256,12 @@ namespace Xamarin.Forms.Maps.Android
       pin1.SendTap();
     }
 
-    protected virtual void Dispose(bool disposing)
+    protected override void Dispose(bool disposing)
     {
       if (disposing && !this.disposed)
       {
         this.disposed = true;
-        Map map = ((VisualElementRenderer<View>) this).get_Element() as Map;
+        Map map = this.Element as Map;
         if (map != null)
         {
           MessagingCenter.Unsubscribe<Map, MapSpan>((object) this, "MapMoveToRegion");
@@ -270,11 +270,11 @@ namespace Xamarin.Forms.Maps.Android
         GoogleMap nativeMap = this.NativeMap;
         if (nativeMap == null)
           return;
-        nativeMap.set_MyLocationEnabled(false);
-        nativeMap.remove_InfoWindowClick(new EventHandler<GoogleMap.InfoWindowClickEventArgs>(this.MapOnMarkerClick));
+        nativeMap.MyLocationEnabled = (false);
+        nativeMap.InfoWindowClick -= (new EventHandler<GoogleMap.InfoWindowClickEventArgs>(this.MapOnMarkerClick));
         ((Java.Lang.Object) nativeMap).Dispose();
       }
-      ((ViewRenderer<View, View>) this).Dispose(disposing);
+      this.Dispose(disposing);
     }
   }
 }

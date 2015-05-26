@@ -5,7 +5,8 @@
 // Assembly location: D:\source\PegasusMission\Pegasus.Phone\packages\Xamarin.Forms.Maps.1.4.2.6359\lib\MonoAndroid10\Xamarin.Forms.Maps.Android.dll
 
 using Android.Content;
-using Android.Locations;
+using ALGeocoder = Android.Locations.Geocoder;
+using ALAddress = Android.Locations.Address;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,16 +26,16 @@ namespace Xamarin.Forms.Maps.Android
 
     public static async Task<IEnumerable<Position>> GetPositionsForAddressAsync(string address)
     {
-      Android.Locations.Geocoder geocoder = new Android.Locations.Geocoder(Forms.get_Context());
-      IList<Address> addresses = await geocoder.GetFromLocationNameAsync(address, 5);
-      return Enumerable.Select<Address, Position>((IEnumerable<Address>) addresses, (Func<Address, Position>) (p => new Position(p.Latitude, p.Longitude)));
+      ALGeocoder geocoder = new ALGeocoder(Forms.Context);
+      IList<ALAddress> addresses = await geocoder.GetFromLocationNameAsync(address, 5);
+      return Enumerable.Select<ALAddress, Position>((IEnumerable<ALAddress>) addresses, (Func<ALAddress, Position>) (p => new Position(p.Latitude, p.Longitude)));
     }
 
     public static async Task<IEnumerable<string>> GetAddressesForPositionAsync(Position position)
     {
-      Android.Locations.Geocoder geocoder = new Android.Locations.Geocoder(Forms.get_Context());
-      IList<Address> addresses = await geocoder.GetFromLocationAsync(position.Latitude, position.Longitude, 5);
-      return Enumerable.Select<Address, string>((IEnumerable<Address>) addresses, (Func<Address, string>) (p => string.Join("\n", Enumerable.Select<int, string>(Enumerable.Range(0, p.MaxAddressLineIndex + 1), new Func<int, string>(p.GetAddressLine)))));
+      ALGeocoder geocoder = new ALGeocoder(Forms.Context);
+      IList<ALAddress> addresses = await geocoder.GetFromLocationAsync(position.Latitude, position.Longitude, 5);
+      return Enumerable.Select<ALAddress, string>((IEnumerable<ALAddress>) addresses, (Func<ALAddress, string>) (p => string.Join("\n", Enumerable.Select<int, string>(Enumerable.Range(0, p.MaxAddressLineIndex + 1), new Func<int, string>(p.GetAddressLine)))));
     }
   }
 }

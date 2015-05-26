@@ -1,10 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Pegasus.Phone.XF.LocationsView">
+<ContentView
+  xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+  x:Class="Pegasus.Phone.XF.LocationsView" >
 	<ContentView.Content>
-    <StackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
-      <Label Text="{Binding Data.GpsLatitude}" HorizontalOptions="CenterAndExpand" />
-      <Label Text="{Binding Data.GpsLongitude}" HorizontalOptions="CenterAndExpand" />
-      <ContentView x:Name="Map" BindingContext="{Binding}" />
-    </StackLayout>
+    <Grid VerticalOptions="Fill" HorizontalOptions="Fill">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="1*" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <maps:Map x:Name="Map" HorizontalOptions="Fill" VerticalOptions="Fill" />
+      <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+        <Label Text="{Binding CraftTelemetry.Data.GpsLatitude}" />
+        <Label Text="{Binding CraftTelemetry.Data.GpsLongitude}" />
+      </StackLayout>
+    </Grid>
 	</ContentView.Content>
 </ContentView>

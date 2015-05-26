@@ -95,6 +95,10 @@
       <Project>{F4297D99-D786-4F0D-944B-77EA9E4B13A9}</Project>
       <Name>Piraeus.ServiceModel.Protocols.Coap.Phone</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.Forms.Maps\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj">
+      <Project>{382ffe07-3d3e-4b9b-8aa9-fff6a6478ca3}</Project>
+      <Name>Xamarin.Forms.Maps</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\MainPage.xaml">

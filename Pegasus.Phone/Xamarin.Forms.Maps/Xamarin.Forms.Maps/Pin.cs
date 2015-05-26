@@ -194,7 +194,6 @@ namespace Xamarin.Forms.Maps
 
     public Pin()
     {
-      base.\u002Ector();
     }
 
     /// <param name="left">A <see cref="T:Xamarin.Forms.Maps.Pin"/> to be compared.</param><param name="right">A <see cref="T:Xamarin.Forms.Maps.Pin"/> to be compared.</param>
@@ -250,7 +249,7 @@ namespace Xamarin.Forms.Maps
     /// <remarks>
     /// To be added.
     /// </remarks>
-    public virtual bool Equals(object obj)
+    public override bool Equals(object obj)
     {
       if (object.ReferenceEquals((object) null, obj))
         return false;
@@ -276,7 +275,7 @@ namespace Xamarin.Forms.Maps
     /// </para>
     /// 
     /// </remarks>
-    public virtual int GetHashCode()
+    public override int GetHashCode()
     {
       return (int) ((PinType) (((this.Label != null ? this.Label.GetHashCode() : 0) * 397 ^ this.Position.GetHashCode()) * 397) ^ this.Type) * 397 ^ (this.Address != null ? this.Address.GetHashCode() : 0);
     }

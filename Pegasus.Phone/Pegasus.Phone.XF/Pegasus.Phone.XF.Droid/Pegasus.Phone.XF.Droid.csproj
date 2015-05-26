@@ -101,14 +101,6 @@
       <HintPath>..\..\packages\Xamarin.Forms.1.4.2.6359\lib\MonoAndroid10\Xamarin.Forms.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xamarin.Forms.Maps, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.Maps.1.4.2.6359\lib\MonoAndroid10\Xamarin.Forms.Maps.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Maps.Android, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Xamarin.Forms.Maps.1.4.2.6359\lib\MonoAndroid10\Xamarin.Forms.Maps.Android.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Xamarin.Forms.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.2.6359\lib\MonoAndroid10\Xamarin.Forms.Platform.dll</HintPath>
       <Private>True</Private>
@@ -149,6 +141,14 @@
     <ProjectReference Include="..\..\..\Shared\WebSockets\Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.csproj">
       <Project>{01108527-bd86-4172-8206-f5aab861e293}</Project>
       <Name>Piraeus.Web.WebSockets</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.Forms.Maps\Xamarin.Forms.Maps.Android\Xamarin.Forms.Maps.Android.csproj">
+      <Project>{54969e75-e286-434c-9c4c-ea5aa82afe4c}</Project>
+      <Name>Xamarin.Forms.Maps.Android</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.Forms.Maps\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj">
+      <Project>{382ffe07-3d3e-4b9b-8aa9-fff6a6478ca3}</Project>
+      <Name>Xamarin.Forms.Maps</Name>
     </ProjectReference>
     <ProjectReference Include="..\Pegasus.Phone.XF\Pegasus.Phone.XF.csproj">
       <Name>Pegasus.Phone.XF</Name>

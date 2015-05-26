@@ -136,6 +136,10 @@
       <Project>{f4297d99-d786-4f0d-944b-77ea9e4b13a9}</Project>
       <Name>Piraeus.ServiceModel.Protocols.Coap.Phone</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Xamarin.Forms.Maps\Xamarin.Forms.Maps\Xamarin.Forms.Maps.csproj">
+      <Project>{382ffe07-3d3e-4b9b-8aa9-fff6a6478ca3}</Project>
+      <Name>Xamarin.Forms.Maps</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Pegasus.Phone.XF\Pegasus.Phone.XF.csproj">
       <Project>{1cd058f6-a9f9-4956-98cd-c001e5bee0bc}</Project>
       <Name>Pegasus.Phone.XF</Name>
@@ -149,9 +153,6 @@
     <Reference Include="Xamarin.Forms.Core, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.2.6359\lib\wpa81\Xamarin.Forms.Core.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Xamarin.Forms.Maps">
-      <HintPath>..\..\packages\Xamarin.Forms.Maps.1.4.2.6359\lib\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.Maps.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Forms.Platform.WinRT, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.1.4.2.6359\lib\wpa81\Xamarin.Forms.Platform.WinRT.dll</HintPath>
