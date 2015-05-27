@@ -11,14 +11,18 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <pegasus:CraftTelemetryView x:Name="TelemetryView" BindingContext="{Binding CraftTelemetry}" IsVisible="False" />
-    <pegasus:LocationsView x:Name="MapsView" IsVisible="True" />
+    <pegasus:TelemetryOverviewView x:Name="TelemetryOverviewView" BindingContext="{Binding CraftTelemetry}" IsVisible="False" />
+    <pegasus:LocationsView x:Name="LocationsView" BindingContext="{Binding LocationsViewModel}" IsVisible="False" />
+    <pegasus:TelemetryDetailsView x:Name="TelemetryDetailsView" BindingContext="{Binding TelemetryDetailsViewModel}" IsVisible="False" />
+
     <Label Grid.Row="1" Text="{Binding AppData.StatusMessage}" HorizontalOptions="CenterAndExpand" />
     <Label Grid.Row="2" Text="{Binding AppData.MessageCount, StringFormat='received {0} messages'}" HorizontalOptions="CenterAndExpand" />
+
     <StackLayout Grid.Row="3" Orientation="Horizontal" HorizontalOptions="Center">
       <Button Text="Go" Clicked="ConnectWebSocket" />
-      <Button Text="Telemetry" Clicked="Show_Telemetry" />
-      <Button Text="Map" Clicked="Show_Map" />
+      <Button x:Name="TelemetryOverviewButton" Text="Overview" Clicked="SwitchToView" BindingContext="{x:Reference Name=TelemetryOverviewView}" />
+      <Button x:Name="LocationsButton" Text="Map" Clicked="SwitchToView" BindingContext="{x:Reference Name=LocationsView}" />
+      <Button x:Name="TelemetryDetailsButton" Text="Details" Clicked="SwitchToView" BindingContext="{x:Reference Name=TelemetryDetailsView}" />
     </StackLayout>
   </Grid>
 </ContentPage>

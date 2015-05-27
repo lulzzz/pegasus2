@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Pegasus.Phone.XF.TelemetryDetailsView">
+	<ContentView.Content>
+    <StackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
+      <Label Text="Details page...." HorizontalOptions="CenterAndExpand" />
+      <Label Text="{Binding Data.Humidity}" HorizontalOptions="CenterAndExpand" />
+      <Label Text="{Binding Data.AtmosphericPressure}" HorizontalOptions="CenterAndExpand" />
+      <Grid x:Name="Grid" VerticalOptions="CenterAndExpand">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="100" />
+          <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0" Grid.Row="0" Text="Name" Font="15,Bold" HorizontalOptions="Start" />
+        <Label Grid.Column="1" Grid.Row="0" Text="Value" Font="15,Bold" HorizontalOptions="End" />
+
+        <!-- values are put in by code due to Xamarin bug, sorry -->
+      </Grid>
+   </StackLayout>
+	</ContentView.Content>
+</ContentView>

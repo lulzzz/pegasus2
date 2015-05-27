@@ -115,6 +115,12 @@ namespace Pegasus2.Data
         [JsonProperty("videoServoOn")]
         public bool VideoServoOn { get; set; }
 
+        [JsonProperty("deploymentAltitude")]
+        public double DeploymentAltitude { get; set; }
+
+        [JsonProperty("releaseTime")]
+        public DateTime ReleaseTime { get; set; }
+
         #endregion
 
        
@@ -166,6 +172,8 @@ namespace Pegasus2.Data
             this.LedsActivated = parts[index++] == "0" ? false : true;
             this.BPServoOn = parts[index++] == "0" ? false : true;
             this.VideoServoOn = parts[index++] == "0" ? false : true;
+            this.DeploymentAltitude = Convert.ToDouble(parts[index++]);
+            this.ReleaseTime = Convert.ToDateTime(parts[index++]);
 
             return this;
 
@@ -218,6 +226,8 @@ namespace Pegasus2.Data
             builder.BuildJsonFieldBool(Constants.PayloadTelemetry.FieldNames[index++], this.LedsActivated.ToString());
             builder.BuildJsonFieldBool(Constants.PayloadTelemetry.FieldNames[index++], this.BPServoOn.ToString());
             builder.BuildJsonFieldBool(Constants.PayloadTelemetry.FieldNames[index++], this.VideoServoOn.ToString());
+            builder.BuildJsonFieldBool(Constants.PayloadTelemetry.FieldNames[index++], this.DeploymentAltitude.ToString());
+            builder.BuildJsonFieldBool(Constants.PayloadTelemetry.FieldNames[index++], this.ReleaseTime.ToString());
 
 
 

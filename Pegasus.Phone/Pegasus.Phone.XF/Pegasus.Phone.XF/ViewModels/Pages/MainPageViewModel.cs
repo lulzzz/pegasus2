@@ -15,6 +15,34 @@ namespace Pegasus.Phone.XF.ViewModels.Pages
             get { return App.Instance.CurrentCraftTelemetry; }
         }
 
+        private LocationsViewModel locationsViewModel;
+        public LocationsViewModel LocationsViewModel
+        {
+            get
+            {
+                if (locationsViewModel == null)
+                {
+                    locationsViewModel = new LocationsViewModel();
+                }
+
+                return locationsViewModel;
+            }
+        }
+
+        private TelemetryDetailsViewModel telemetryDetailsViewModel;
+        public TelemetryDetailsViewModel TelemetryDetailsViewModel
+        {
+            get
+            {
+                if (telemetryDetailsViewModel == null)
+                {
+                    telemetryDetailsViewModel = new TelemetryDetailsViewModel();
+                }
+
+                return telemetryDetailsViewModel;
+            }
+        }
+
         public MainPageViewModel()
         {
         }
