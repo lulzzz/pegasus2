@@ -10,17 +10,6 @@ namespace Pegasus.Phone.XF.ViewModels.Views
 {
     public class TelemetryDetailsViewModel : BaseViewModel
     {
-        static KeyValuePair<string, Func<TelemetryDetailsViewModel, string>>[] formatters =
-            new[]
-            {
-                new KeyValuePair<string, Func<TelemetryDetailsViewModel, string>>(
-                    "GPS Altitude", vm => String.Format("{0} ft", vm.CraftTelemetry.Data.GpsAltitude)),
-                new KeyValuePair<string, Func<TelemetryDetailsViewModel, string>>(
-                    "GPS Longitude", vm => String.Format("{0}", vm.CraftTelemetry.Data.GpsLongitude)),
-                new KeyValuePair<string, Func<TelemetryDetailsViewModel, string>>(
-                    "GPS Latitude", vm => String.Format("{0}", vm.CraftTelemetry.Data.GpsLatitude))
-            };
-
         public class TelemetryItem : BaseViewModel
         {
             string name;
@@ -36,15 +25,11 @@ namespace Pegasus.Phone.XF.ViewModels.Views
                 get { return val; }
                 set { SetProperty(ref val, value); }
             }
+
+            internal Func<TelemetryDetailsViewModel, string> Formatter;
         }
 
         public CraftTelemetryViewModel CraftTelemetry
-        {
-            get;
-            private set;
-        }
-
-        public GroundTelemetryViewModel GroundTelemetry
         {
             get;
             private set;
@@ -56,31 +41,33 @@ namespace Pegasus.Phone.XF.ViewModels.Views
             get { return telemetryItems; }
         }
 
+        private void TelemetryChanged(object sender = null, System.ComponentModel.PropertyChangedEventArgs e = null)
+        {
+            foreach (var item in TelemetryItems)
+            {
+                item.Value = (this.CraftTelemetry.Data == null) ? "-" : item.Formatter(this);
+            }
+        }
+
         public TelemetryDetailsViewModel()
         {
             CraftTelemetry = App.Instance.CurrentCraftTelemetry;
-            GroundTelemetry = App.Instance.CurrentGroundTelemetry;
 
             telemetryItems = new ObservableCollection<TelemetryItem>();
-            foreach (var formatter in formatters)
+            telemetryItems.Add(new TelemetryItem
             {
-                telemetryItems.Add(new TelemetryItem { Name = formatter.Key });
-            }
+                Name = "GPS Alitutude",
+                Formatter = vm => String.Format("{0} ft", vm.CraftTelemetry.Data.GpsAltitude)
+            });
+            telemetryItems.Add(new TelemetryItem
+            {
+                Name = "GPS Longitude",
+                Formatter = vm => String.Format("{0}", vm.CraftTelemetry.Data.GpsLongitude)
+            });
 
             // This will cause a memory leak, but since we're only creating one of these...
             CraftTelemetry.PropertyChanged += TelemetryChanged;
-            GroundTelemetry.PropertyChanged += TelemetryChanged;
-        }
-
-        private void TelemetryChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            for (int i = 0; i < formatters.Length; i++)
-            {
-                TelemetryItems[i].Name = formatters[i].Key;
-                TelemetryItems[i].Value = formatters[i].Value(this);
-                //if (i == 2)
-                    TelemetryItems[i] = TelemetryItems[i];
-            }
+            TelemetryChanged();
         }
     }
 }

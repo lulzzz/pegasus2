@@ -5,20 +5,21 @@
       <Label Text="Details page...." HorizontalOptions="CenterAndExpand" />
       <Label Text="{Binding Data.Humidity}" HorizontalOptions="CenterAndExpand" />
       <Label Text="{Binding Data.AtmosphericPressure}" HorizontalOptions="CenterAndExpand" />
-      <ListView ItemsSource="{Binding TelemetryItems}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
-              <StackLayout Orientation="Horizontal">
-                <Label Text="{Binding Name}" Font="15,Bold" HorizontalOptions="StartAndExpand" />
-                <Label Text="..." HorizontalOptions="Center" />
-                <Label Text="{Binding Value}" HorizontalOptions="EndAndExpand" />
-              </StackLayout>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
-      <Label Text="Details page...." HorizontalOptions="CenterAndExpand" />
-    </StackLayout>
+      <Grid x:Name="Grid" VerticalOptions="CenterAndExpand">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="100" />
+          <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0" Grid.Row="0" Text="Name" Font="15,Bold" HorizontalOptions="Start" />
+        <Label Grid.Column="1" Grid.Row="0" Text="Value" Font="15,Bold" HorizontalOptions="End" />
+
+        <!-- values are put in by code due to Xamarin bug, sorry -->
+      </Grid>
+   </StackLayout>
 	</ContentView.Content>
 </ContentView>
