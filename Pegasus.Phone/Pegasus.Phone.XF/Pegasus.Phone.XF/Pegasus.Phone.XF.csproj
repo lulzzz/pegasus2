@@ -51,7 +51,6 @@
     <Compile Include="ViewModels\Views\LocationsViewModel.cs" />
     <Compile Include="ViewModels\Views\CraftTelemetryViewModel.cs" />
     <Compile Include="ViewModels\Pages\MainPageViewModel.cs" />
-    <Compile Include="Views\ILocationsViewSupport.cs" />
     <Compile Include="Views\LocationsView.xaml.cs">
       <DependentUpon>LocationsView.xaml</DependentUpon>
     </Compile>
