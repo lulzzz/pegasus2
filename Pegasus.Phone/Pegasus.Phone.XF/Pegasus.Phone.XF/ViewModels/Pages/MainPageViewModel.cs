@@ -29,6 +29,20 @@ namespace Pegasus.Phone.XF.ViewModels.Pages
             }
         }
 
+        private TelemetryDetailsViewModel telemetryDetailsViewModel;
+        public TelemetryDetailsViewModel TelemetryDetailsViewModel
+        {
+            get
+            {
+                if (telemetryDetailsViewModel == null)
+                {
+                    telemetryDetailsViewModel = new TelemetryDetailsViewModel();
+                }
+
+                return telemetryDetailsViewModel;
+            }
+        }
+
         public MainPageViewModel()
         {
         }

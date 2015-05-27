@@ -10,6 +10,6 @@ namespace Pegasus.Phone.XF
 		{
 			InitializeComponent ();
 		}
-	}
+    }
 }
 
