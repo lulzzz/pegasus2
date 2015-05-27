@@ -12,10 +12,12 @@
     </Grid.RowDefinitions>
 
     <pegasus:TelemetryOverviewView x:Name="TelemetryOverviewView" BindingContext="{Binding CraftTelemetry}" IsVisible="False" />
-    <pegasus:LocationsView x:Name="LocationsView" IsVisible="False" />
+    <pegasus:LocationsView x:Name="LocationsView" BindingContext="{Binding LocationsViewModel}" IsVisible="False" />
     <pegasus:TelemetryDetailsView x:Name="TelemetryDetailsView" BindingContext="{Binding CraftTelemetry}" IsVisible="False" />
+
     <Label Grid.Row="1" Text="{Binding AppData.StatusMessage}" HorizontalOptions="CenterAndExpand" />
     <Label Grid.Row="2" Text="{Binding AppData.MessageCount, StringFormat='received {0} messages'}" HorizontalOptions="CenterAndExpand" />
+
     <StackLayout Grid.Row="3" Orientation="Horizontal" HorizontalOptions="Center">
       <Button Text="Go" Clicked="ConnectWebSocket" />
       <Button x:Name="TelemetryOverviewButton" Text="Overview" Clicked="SwitchToView" BindingContext="{x:Reference Name=TelemetryOverviewView}" />

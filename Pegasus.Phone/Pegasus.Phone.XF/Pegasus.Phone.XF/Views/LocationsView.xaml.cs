@@ -9,14 +9,34 @@ namespace Pegasus.Phone.XF
 	{
         LocationsViewModel viewModel;
 
-		public LocationsView()
-		{
-			InitializeComponent();
-            BindingContext = viewModel = new LocationsViewModel();
+        public LocationsView()
+        {
+            InitializeComponent();
+        }
 
-            viewModel.CraftTelemetry.PropertyChanged += TelemetryChanged;
-            viewModel.GroundTelemetry.PropertyChanged += TelemetryChanged;
-		}
+        protected override void OnBindingContextChanged()
+        {
+            base.OnBindingContextChanged();
+
+            if (viewModel == this.BindingContext)
+            {
+                return;
+            }
+
+            if (viewModel != null)
+            {
+                viewModel.CraftTelemetry.PropertyChanged -= TelemetryChanged;
+                viewModel.GroundTelemetry.PropertyChanged -= TelemetryChanged;
+            }
+
+            viewModel = this.BindingContext as LocationsViewModel;
+
+            if (viewModel != null)
+            {
+                viewModel.CraftTelemetry.PropertyChanged += TelemetryChanged;
+                viewModel.GroundTelemetry.PropertyChanged += TelemetryChanged;
+            }
+        }
 
         private void TelemetryChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
