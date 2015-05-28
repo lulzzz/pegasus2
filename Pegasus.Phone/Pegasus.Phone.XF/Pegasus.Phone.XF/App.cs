@@ -54,6 +54,8 @@ namespace Pegasus.Phone.XF
 
         public void ConnectWebSocket()
         {
+            Device.BeginInvokeOnMainThread(() => this.AppData.StatusMessage = "Connecting...");
+
             //WebSocketClient client = new WebSocketClient();
             var client = DependencyService.Get<IWebSocketClient>();
             client.OnError += client_OnError;

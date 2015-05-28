@@ -17,6 +17,7 @@ namespace Pegasus.Phone.XF
 
         private void ConnectWebSocket(object sender, EventArgs e)
         {
+            this.ConnectButton.IsEnabled = false;
             App.Instance.ConnectWebSocket();
         }
 
