@@ -40,6 +40,8 @@ namespace Pegasus.Phone.XF
 
         private void TelemetryChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            // TODO: this should really be done completely in the view model!!
+
             if (viewModel.CraftTelemetry.Data == null)
             {
                 return;
@@ -61,6 +63,7 @@ namespace Pegasus.Phone.XF
                     {
                         Type = PinType.Place,
                         Position = groundPosition.Value,
+                        Color = Color.Red,
                         Label = "Ground Location"
                     });
             }
@@ -73,6 +76,7 @@ namespace Pegasus.Phone.XF
                 {
                     Type = PinType.Place,
                     Position = craftPosition,
+                    Color = Color.Green,
                     Label = "Current Location"
                 });
 

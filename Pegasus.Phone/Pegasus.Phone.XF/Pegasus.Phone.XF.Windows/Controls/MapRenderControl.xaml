@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Pegasus.Phone.XF.Windows.Controls"
     xmlns:converters="using:Pegasus.Phone.XF.Windows.Converters"
+    xmlns:xamarinrt="using:Xamarin.Forms.Platform.WinRT"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:maps="using:Bing.Maps"
@@ -13,6 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <converters:PositionToLocationConverter x:Key="PositionToLocationConverter" />
+            <xamarinrt:ColorConverter x:Key="ColorConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <maps:Map x:Name="Map" x:FieldModifier="public">
@@ -21,7 +23,7 @@
                 <DataTemplate>
                     <Ellipse
                         Height="20" Width="20"
-                        Fill="Red"
+                        Fill="{Binding Color, Converter={StaticResource ColorConverter}}"
                         Stroke="White" StrokeThickness="2"
                         maps:MapLayer.Position="{Binding Position, Converter={StaticResource PositionToLocationConverter}}"
                         />
