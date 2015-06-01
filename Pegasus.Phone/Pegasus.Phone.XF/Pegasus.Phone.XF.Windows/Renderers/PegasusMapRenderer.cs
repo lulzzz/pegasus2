@@ -31,12 +31,12 @@ namespace Pegasus.Phone.XF.Windows.Renderers
 
             Xamarin.Forms.MessagingCenter.Subscribe<XFMap, MapSpan>(
                 this, "MapMoveToRegion", OnMoveToRegionMessage, Element);
-            OnMoveToRegionMessage(Element, Element.VisibleRegion);
+            OnMoveToRegionMessage(Element, Element.LastMoveToRegion);
         }
 
         private void OnMoveToRegionMessage(XFMap map, MapSpan span)
         {
-            if (map == null || span == null)
+            if (map == null || span == null || (span.LatitudeDegrees == 0.1 && span.LongitudeDegrees == 0.1))
             {
                 return;
             }
