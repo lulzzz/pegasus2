@@ -2,12 +2,14 @@
 using Xamarin.Forms.Maps;
 using Pegasus.Phone.XF.Utilities;
 using Pegasus.Phone.XF.ViewModels.Views;
+using System;
 
 namespace Pegasus.Phone.XF
 {
 	public partial class LocationsView : ContentView
 	{
         LocationsViewModel viewModel;
+        Distance? oldDistance;
 
         public LocationsView()
         {
@@ -87,7 +89,6 @@ namespace Pegasus.Phone.XF
 
             pin = (Map.Pins.Count <= pinIndex) ? new Pin() : Map.Pins[pinIndex];
 
-            Distance? distance = null;
             pin.Type = PinType.Place;
             pin.Position = craftPosition;
             pin.Color = Color.Green;
@@ -105,20 +106,45 @@ namespace Pegasus.Phone.XF
                 Map.Pins.RemoveAt(Map.Pins.Count - 1);
             }
 
+            Distance? oldRadius = null;
+            bool userZoomed = false;
+            if (this.Map.VisibleRegion != null &&
+                (this.Map.VisibleRegion.LatitudeDegrees != 90) // default view on Android
+                )
+            {
+                oldRadius = this.Map.VisibleRegion.Radius;
+                userZoomed = this.oldDistance.HasValue && Math.Abs(this.oldDistance.Value.Meters - oldRadius.Value.Meters) > 1;
+            }
+
+            Distance? distance = null;
             if (groundPosition.HasValue)
             {
                 distance = groundPosition.Value.DistanceFrom(craftPosition);
             }
 
-            // Minimum distance view of 15 miles
-            if (!distance.HasValue || distance.Value.Miles < 15)
+            // If the user has zoomed, keep that zoom unless we need to zoom out to see
+            // both elements.  Otherwise, zoom to 15 miles or farther if necessary.
+            MapSpan newSpan;
+            if (userZoomed)
             {
-                distance = Distance.FromMiles(15);
+                newSpan =
+                  (!distance.HasValue || distance.Value.Miles <= oldRadius.Value.Miles) ?
+                      new MapSpan(craftPosition, Map.VisibleRegion.LatitudeDegrees, Map.VisibleRegion.LongitudeDegrees) :
+                      MapSpan.FromCenterAndRadius(craftPosition, distance.Value);
+            }
+            else
+            {
+                if (!distance.HasValue || distance.Value.Miles < 15)
+                {
+                    distance = Distance.FromMiles(15);
+                }
+
+                newSpan = MapSpan.FromCenterAndRadius(craftPosition, distance.Value);
+
+                this.oldDistance = distance;
             }
 
-            MapSpan span = MapSpan.FromCenterAndRadius(craftPosition, distance.Value);
-
-            Map.MoveToRegion(span);
+            Map.MoveToRegion(newSpan);
         }
     }
 }
