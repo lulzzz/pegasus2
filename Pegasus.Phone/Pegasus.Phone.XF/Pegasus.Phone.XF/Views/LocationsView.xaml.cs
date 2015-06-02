@@ -47,9 +47,17 @@ namespace Pegasus.Phone.XF
                 return;
             }
 
-            while (Map.Pins.Count > 0)
+            Pin pin;
+            int pinIndex = 0;
+
+            // Xamarin's map renderer can't handle you changing the properties of a Pin,
+            // whereas replacing pins on Windows causes a flicker.
+            if (Device.OS == TargetPlatform.Android || Device.OS == TargetPlatform.iOS)
             {
-                Map.Pins.RemoveAt(Map.Pins.Count - 1);
+                while (Map.Pins.Count > pinIndex)
+                {
+                    Map.Pins.RemoveAt(Map.Pins.Count - 1);
+                }
             }
 
             Position? groundPosition = null;
@@ -59,28 +67,43 @@ namespace Pegasus.Phone.XF
                         viewModel.GroundTelemetry.Data.GpsLatitude,
                         viewModel.GroundTelemetry.Data.GpsLongitude);
 
-                Map.Pins.Add(new Pin()
-                    {
-                        Type = PinType.Place,
-                        Position = groundPosition.Value,
-                        Color = Color.Red,
-                        Label = "Ground Location"
-                    });
+                pin = (Map.Pins.Count <= pinIndex) ? new Pin() : Map.Pins[pinIndex];
+
+                pin.Type = PinType.Place;
+                pin.Position = groundPosition.Value;
+                pin.Color = Color.Red;
+                pin.Label = "Ground Location";
+
+                if (Map.Pins.Count <= pinIndex)
+                {
+                    Map.Pins.Add(pin);
+                }
+                pinIndex++;
             }
 
             Position craftPosition = new Position(
                     viewModel.CraftTelemetry.Data.GpsLatitude,
                     viewModel.CraftTelemetry.Data.GpsLongitude);
 
-            Map.Pins.Add(new Pin()
-                {
-                    Type = PinType.Place,
-                    Position = craftPosition,
-                    Color = Color.Green,
-                    Label = "Current Location"
-                });
+            pin = (Map.Pins.Count <= pinIndex) ? new Pin() : Map.Pins[pinIndex];
 
             Distance? distance = null;
+            pin.Type = PinType.Place;
+            pin.Position = craftPosition;
+            pin.Color = Color.Green;
+            pin.Label = "Current Location";
+
+            if (Map.Pins.Count <= pinIndex)
+            {
+                Map.Pins.Add(pin);
+            }
+            pinIndex++;
+
+            // Remove any extra pins
+            while (Map.Pins.Count > pinIndex)
+            {
+                Map.Pins.RemoveAt(Map.Pins.Count - 1);
+            }
 
             if (groundPosition.HasValue)
             {
