@@ -27,11 +27,19 @@ namespace Pegasus.Phone.XF.Windows.Renderers
             var map = new MapRenderControl();
             map.Map.Credentials = "Ar63TjGidMOY96jRx8kLubJjOyqKWOI_S3cToA3P0XO9_mQdQEyIowxChrtD9Eii";
             map.MapItems.ItemsSource = Element.Pins;
+            map.Map.ViewChanged += Map_ViewChanged;
             SetNativeControl(map);
 
             Xamarin.Forms.MessagingCenter.Subscribe<XFMap, MapSpan>(
                 this, "MapMoveToRegion", OnMoveToRegionMessage, Element);
             OnMoveToRegionMessage(Element, Element.LastMoveToRegion);
+        }
+
+        private void Map_ViewChanged(object sender, ViewChangedEventArgs e)
+        {
+            Element.VisibleRegion = new MapSpan(
+                new Position(Control.Map.Bounds.Center.Latitude, Control.Map.Bounds.Center.Longitude),
+                Control.Map.Bounds.Width, Control.Map.Bounds.Height);
         }
 
         private void OnMoveToRegionMessage(XFMap map, MapSpan span)
@@ -45,8 +53,8 @@ namespace Pegasus.Phone.XF.Windows.Renderers
                 new Location(
                     span.Center.Latitude,
                     span.Center.Longitude),
-                span.LatitudeDegrees * 0.75, // The 0.75 defeats the padding built into the map
-                span.LongitudeDegrees * 0.75
+                span.LatitudeDegrees,
+                span.LongitudeDegrees
                 );
 
             Control.Map.SetView(currentLocation);
