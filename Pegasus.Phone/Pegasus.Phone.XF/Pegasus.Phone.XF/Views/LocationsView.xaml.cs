@@ -3,6 +3,7 @@ using Xamarin.Forms.Maps;
 using Pegasus.Phone.XF.Utilities;
 using Pegasus.Phone.XF.ViewModels.Views;
 using System;
+using System.Diagnostics;
 
 namespace Pegasus.Phone.XF
 {
@@ -10,6 +11,8 @@ namespace Pegasus.Phone.XF
 	{
         LocationsViewModel viewModel;
         Distance? oldDistance;
+        Distance? oldViewRadius;
+        bool userZoomed;
 
         public LocationsView()
         {
@@ -106,14 +109,14 @@ namespace Pegasus.Phone.XF
                 Map.Pins.RemoveAt(Map.Pins.Count - 1);
             }
 
-            Distance? oldRadius = null;
-            bool userZoomed = false;
             if (this.Map.VisibleRegion != null &&
-                (this.Map.VisibleRegion.LatitudeDegrees != 90) // default view on Android
-                )
+                this.Map.VisibleRegion.LatitudeDegrees != 90 &&
+                this.Map.VisibleRegion.LongitudeDegrees != 180)
             {
-                oldRadius = this.Map.VisibleRegion.Radius;
-                userZoomed = this.oldDistance.HasValue && Math.Abs(this.oldDistance.Value.Meters - oldRadius.Value.Meters) > 1;
+                oldViewRadius = this.Map.VisibleRegion.Radius;
+                userZoomed = userZoomed ||
+                    (this.oldDistance.HasValue &&
+                     Math.Abs(this.oldDistance.Value.Meters - oldViewRadius.Value.Meters) > 10);
             }
 
             Distance? distance = null;
@@ -128,7 +131,7 @@ namespace Pegasus.Phone.XF
             if (userZoomed)
             {
                 newSpan =
-                  (!distance.HasValue || distance.Value.Miles <= oldRadius.Value.Miles) ?
+                  (!distance.HasValue || distance.Value.Miles <= oldViewRadius.Value.Miles) ?
                       new MapSpan(craftPosition, Map.VisibleRegion.LatitudeDegrees, Map.VisibleRegion.LongitudeDegrees) :
                       MapSpan.FromCenterAndRadius(craftPosition, distance.Value);
             }
