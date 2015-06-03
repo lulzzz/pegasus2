@@ -23,6 +23,7 @@ namespace Pegasus.Phone.XF.WinPhone81.Renderers
 
             SetNativeControl(new MapRenderControl());
             Control.MapItems.ItemsSource = Element.Pins;
+            Control.Map.MapServiceToken = "AtxO1mWPBN-w3GVYC_kQoOf50VRIupvCWy8NV0-WcmhiRai2OExiOcKXQpLEtwJr";
 
             Xamarin.Forms.MessagingCenter.Subscribe<Map, MapSpan>(
                 this, "MapMoveToRegion", OnMoveToRegionMessage, Element);
