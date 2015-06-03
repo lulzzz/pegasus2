@@ -24,11 +24,10 @@ namespace Pegasus.Phone.XF.Windows.Renderers
                 return;
             }
 
-            var map = new MapRenderControl();
-            map.Map.Credentials = "Ar63TjGidMOY96jRx8kLubJjOyqKWOI_S3cToA3P0XO9_mQdQEyIowxChrtD9Eii";
-            map.MapItems.ItemsSource = Element.Pins;
-            map.Map.ViewChanged += Map_ViewChanged;
-            SetNativeControl(map);
+            SetNativeControl(new MapRenderControl());
+            Control.Map.Credentials = "Ar63TjGidMOY96jRx8kLubJjOyqKWOI_S3cToA3P0XO9_mQdQEyIowxChrtD9Eii";
+            Control.MapItems.ItemsSource = Element.Pins;
+            Control.Map.ViewChanged += Map_ViewChanged;
 
             Xamarin.Forms.MessagingCenter.Subscribe<XFMap, MapSpan>(
                 this, "MapMoveToRegion", OnMoveToRegionMessage, Element);
