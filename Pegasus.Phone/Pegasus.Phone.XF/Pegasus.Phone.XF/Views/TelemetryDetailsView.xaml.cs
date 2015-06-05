@@ -7,8 +7,6 @@ namespace Pegasus.Phone.XF
 {
 	public partial class TelemetryDetailsView : ContentView
 	{
-        bool createdGridEntries;
-
 		public TelemetryDetailsView ()
 		{
 			InitializeComponent ();
@@ -24,9 +22,6 @@ namespace Pegasus.Phone.XF
             {
                 return;
             }
-
-            // TODO: if ViewModel changes, remove old contents of Grid....
-            createdGridEntries = true;
 
             // This is terribly ugly.  However, ListView doesn't render properly
             // when databindings change on Windows and WP, so we're kinda screwed.
