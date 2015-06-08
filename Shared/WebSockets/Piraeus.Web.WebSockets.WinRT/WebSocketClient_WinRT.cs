@@ -72,8 +72,11 @@ namespace Piraeus.Web.WebSockets.WinRT
 
         private void Client_MessageReceived(MessageWebSocket sender, MessageWebSocketMessageReceivedEventArgs args)
         {
-            if (args.MessageType != SocketMessageType.Binary)
+            if (args.MessageType == SocketMessageType.Utf8)
             {
+                //var stream = args.GetDataStream();
+                //uint length = messageReader.ReadUInt32();
+                //string message = messageReader.ReadString(length);
                 throw new InvalidOperationException("Expected a Binary message!");
             }
 
