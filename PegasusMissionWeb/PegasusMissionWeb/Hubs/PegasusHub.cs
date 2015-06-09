@@ -49,7 +49,7 @@ namespace PegasusMissionWeb.Hubs
             string jsonString = Encoding.UTF8.GetString(coapMessage.Payload);
             CraftTelemetry telemetry = JsonConvert.DeserializeObject<CraftTelemetry>(jsonString);
             //Console.WriteLine(telemetry.AtmosphericPressure);
-            Send("Pegasus Hub Server - Atm Pressure", telemetry.AtmosphericPressure.ToString() );
+            Send(telemetry.GpsLatitude.ToString(), telemetry.GpsLongitude.ToString() );
         }
 
         static void client_OnClose(object sender, string message)
