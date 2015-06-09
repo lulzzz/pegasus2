@@ -44,12 +44,12 @@ namespace Piraeus.ServiceModel.Protocols.Coap
             }
             else if (typeValue == 3 || typeValue == 35 || typeValue == 39)
             {
-                return value == null ? null : Encoding.UTF8.GetString(value, 0, value.Length - 1);
+                return value == null ? null : Encoding.UTF8.GetString(value, 0, value.Length);
             }
             //2,8,11,15,20,35,39
             else if (typeValue == 8 || typeValue == 11 || typeValue == 15 || typeValue == 20)
             {
-                return Encoding.UTF8.GetString(value, 0, value.Length - 1);
+                return Encoding.UTF8.GetString(value, 0, value.Length);
             }
             else
             {
