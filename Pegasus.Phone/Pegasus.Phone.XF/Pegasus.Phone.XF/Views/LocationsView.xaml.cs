@@ -31,7 +31,7 @@ namespace Pegasus.Phone.XF
             if (viewModel != null)
             {
                 viewModel.CraftTelemetry.PropertyChanged -= TelemetryChanged;
-                viewModel.GroundTelemetry.PropertyChanged -= TelemetryChanged;
+                viewModel.ChaseTelemetry.PropertyChanged -= TelemetryChanged;
             }
 
             viewModel = this.BindingContext as LocationsViewModel;
@@ -39,7 +39,7 @@ namespace Pegasus.Phone.XF
             if (viewModel != null)
             {
                 viewModel.CraftTelemetry.PropertyChanged += TelemetryChanged;
-                viewModel.GroundTelemetry.PropertyChanged += TelemetryChanged;
+                viewModel.ChaseTelemetry.PropertyChanged += TelemetryChanged;
             }
         }
 
@@ -65,17 +65,15 @@ namespace Pegasus.Phone.XF
                 }
             }
 
-            Position? groundPosition = null;
-            if (viewModel.GroundTelemetry.Data != null)
+            Position? chasePosition = null;
+            if (viewModel.ChaseTelemetry.Data != null)
             {
-                groundPosition = new Position(
-                        viewModel.GroundTelemetry.Data.GpsLatitude,
-                        viewModel.GroundTelemetry.Data.GpsLongitude);
+                chasePosition = viewModel.ChaseTelemetry.Data.ToPosition();
 
                 pin = (Map.Pins.Count <= pinIndex) ? new Pin() : Map.Pins[pinIndex];
 
                 pin.Type = PinType.Place;
-                pin.Position = groundPosition.Value;
+                pin.Position = chasePosition.Value;
                 pin.Color = Color.Red;
                 pin.Label = "Ground Location";
 
@@ -86,9 +84,7 @@ namespace Pegasus.Phone.XF
                 pinIndex++;
             }
 
-            Position craftPosition = new Position(
-                    viewModel.CraftTelemetry.Data.GpsLatitude,
-                    viewModel.CraftTelemetry.Data.GpsLongitude);
+            Position craftPosition = viewModel.CraftTelemetry.Data.ToPosition();
 
             pin = (Map.Pins.Count <= pinIndex) ? new Pin() : Map.Pins[pinIndex];
 
@@ -120,9 +116,9 @@ namespace Pegasus.Phone.XF
             }
 
             Distance? distance = null;
-            if (groundPosition.HasValue)
+            if (chasePosition.HasValue)
             {
-                distance = groundPosition.Value.DistanceFrom(craftPosition);
+                distance = chasePosition.Value.DistanceFrom(craftPosition);
             }
 
             // If the user has zoomed, keep that zoom unless we need to zoom out to see

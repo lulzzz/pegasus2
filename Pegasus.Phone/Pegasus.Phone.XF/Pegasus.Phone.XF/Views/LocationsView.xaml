@@ -12,10 +12,7 @@
       </Grid.RowDefinitions>
 
       <maps:Map x:Name="Map" HorizontalOptions="Fill" VerticalOptions="Fill" />
-      <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-        <Label Text="{Binding CraftTelemetry.Data.GpsLatitude}" />
-        <Label Text="{Binding CraftTelemetry.Data.GpsLongitude}" />
-      </StackLayout>
+      <Label Text="{Binding ChaseVehicleToCraftDistanceText}" Grid.Row="1" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
     </Grid>
 	</ContentView.Content>
 </ContentView>

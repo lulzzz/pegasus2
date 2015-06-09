@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pegasus.Phone.XF.Utilities;
 
 namespace Pegasus.Phone.XF.ViewModels.Views
 {
@@ -15,16 +16,48 @@ namespace Pegasus.Phone.XF.ViewModels.Views
             private set;
         }
 
-        public GroundTelemetryViewModel GroundTelemetry
+        public GroundTelemetryViewModel ChaseTelemetry
         {
             get;
             private set;
         }
 
+        public String ChaseVehicleToCraftDistanceText
+        {
+            get
+            {
+                if (CraftTelemetry.Data == null || ChaseTelemetry.Data == null)
+                {
+                    return null;
+                }
+
+                return String.Format(
+                    "Chase Vehicle to Craft: {0:0.00}km",
+                    Math.Abs(CraftTelemetry.Data.ToPosition().DistanceFrom(
+                             ChaseTelemetry.Data.ToPosition()).Kilometers));
+            }
+
+            // used only to generate notifications
+            set
+            {
+                string unused = "bogus value";
+                SetProperty(ref unused, value);
+            }
+        }
+
         public LocationsViewModel()
         {
             CraftTelemetry = App.Instance.CurrentCraftTelemetry;
-            GroundTelemetry = App.Instance.CurrentGroundTelemetry;
+            ChaseTelemetry = App.Instance.CurrentChaseTelemetry;
+
+            ChaseTelemetry.PropertyChanged += TelemetryChanged;
+            CraftTelemetry.PropertyChanged += TelemetryChanged;
+        }
+
+        private void TelemetryChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            // Generate notifications
+            ChaseVehicleToCraftDistanceText = null;
         }
     }
 }
