@@ -11,6 +11,7 @@ using Piraeus.Web.WebSockets;
 using Pegasus2.Data;
 using Piraeus.ServiceModel.Protocols.Coap;
 using Pegasus.Phone.XF.ViewModels.Views;
+using Pegasus.Phone.XF.Pages;
 
 namespace Pegasus.Phone.XF
 {
@@ -49,7 +50,8 @@ namespace Pegasus.Phone.XF
             AppData = new AppDataViewModel { StatusMessage = "Application launched, press go!" };
             CurrentCraftTelemetry = new CraftTelemetryViewModel();
             CurrentGroundTelemetry = new GroundTelemetryViewModel();
-            MainPage = new MainPage();
+            //MainPage = new MainPage();
+            MainPage = new RootPage();
         }
 
         public void ConnectWebSocket()

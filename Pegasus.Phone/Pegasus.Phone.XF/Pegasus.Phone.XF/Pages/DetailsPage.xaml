@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Pegasus.Phone.XF.Pages.DetailsPage" Title="Details">
+  <ScrollView  Orientation = "Vertical" VerticalOptions="StartAndExpand">
+    <Grid VerticalOptions="StartAndExpand" ColumnSpacing="5">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Label Text="Measurement"
+             FontSize="Medium"
+             Grid.Row="0" Grid.Column="0"
+             TextColor="White"
+             BackgroundColor="Navy"/>
+      
+      <Label Text="Value"
+             FontSize="Medium"
+             Grid.Row="0" Grid.Column="1"
+             TextColor="White"
+             BackgroundColor="Navy"/>
+      
+      <Label Text="Altitude" FontSize="Medium" Grid.Row="1" Grid.Column="0"/>
+      <Label Text="5000.94 m" FontSize="Medium" Grid.Row="1" Grid.Column="1"/>
+      <Label Text="Air Pressure" FontSize="Medium" Grid.Row="2" Grid.Column="0"/>
+      <Label Text="192 mbars" FontSize="Medium" Grid.Row="2" Grid.Column="1"/>
+      <Label Text="Outside Temp" FontSize="Medium" Grid.Row="3" Grid.Column="0"/>
+      <Label Text="-12 C" FontSize="Medium" Grid.Row="3" Grid.Column="1"/>
+      <Label Text="Inside Temp" FontSize="Medium" Grid.Row="4" Grid.Column="0"/>
+      <Label Text="5 C" FontSize="Medium" Grid.Row="4" Grid.Column="1"/>
+      <Label Text="Battery 1" FontSize="Medium" Grid.Row="5" Grid.Column="0"/>
+      <Label Text="40 V" FontSize="Medium" Grid.Row="5" Grid.Column="1"/>
+      <Label Text="Battery 2" FontSize="Medium" Grid.Row="6" Grid.Column="0"/>
+      <Label Text="30 V" FontSize="Medium" Grid.Row="6" Grid.Column="1"/>
+      <Label Text="Parachute" FontSize="Medium" Grid.Row="7" Grid.Column="0"/>
+      <Label Text="Not Deployed" FontSize="Medium" Grid.Row="7" Grid.Column="1"/>
+      <Label Text="Balloon" FontSize="Medium" Grid.Row="8" Grid.Column="0"/>
+      <Label Text="Released" FontSize="Medium" Grid.Row="8" Grid.Column="1"/>
+      <Label Text="Magnetometer" FontSize="Medium" Grid.Row="9" Grid.Column="0"/>
+      <Label Text="5 Gs" FontSize="Medium" Grid.Row="9" Grid.Column="1"/>
+      <Label Text="Accelerometer" FontSize="Medium" Grid.Row="10" Grid.Column="0"/>
+      <Label Text="0.1 G" FontSize="Medium" Grid.Row="10" Grid.Column="1"/>
+    </Grid>
+  </ScrollView>
+</ContentPage>

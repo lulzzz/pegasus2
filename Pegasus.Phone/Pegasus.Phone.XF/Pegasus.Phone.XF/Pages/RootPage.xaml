@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:me="clr-namespace:Pegasus.Phone.XF.Pages;assembly=Pegasus.Phone.XF"
+    x:Class="Pegasus.Phone.XF.Pages.RootPage" Title="Welcom to Pegasus!">
+  <TabbedPage.Children>
+
+    <me:HomePage />
+    <me:MapPage />
+    <me:DetailsPage />
+    <me:TextCraftPage />
+    <me:LinksPage />
+
+  </TabbedPage.Children>
+</TabbedPage>
