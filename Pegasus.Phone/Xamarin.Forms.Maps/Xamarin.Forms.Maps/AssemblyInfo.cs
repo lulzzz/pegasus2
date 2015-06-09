@@ -17,6 +17,8 @@ using Xamarin.Forms;
 [assembly: InternalsVisibleTo("Xamarin.Forms.Core.WP8.UnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Xaml.UnitTests")]
 [assembly: InternalsVisibleTo("Xamarin.Forms.Xaml")]
+[assembly: InternalsVisibleTo("Pegasus.Phone.XF.Windows")]
+[assembly: InternalsVisibleTo("Pegasus.Phone.XF.WinPhone81")]
 [assembly: Preserve]
 [assembly: AssemblyCompany("Xamarin Inc.")]
 [assembly: AssemblyProduct("Xamarin.Forms")]

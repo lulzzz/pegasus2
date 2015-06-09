@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls.Maps;
+﻿using Windows.UI.Xaml.Controls.Maps;
 using Xamarin.Forms.Platform.WinRT;
 using Windows.Devices.Geolocation;
 using Pegasus.Phone.XF.WinPhone81.Renderers;
@@ -12,14 +6,15 @@ using Windows.Foundation;
 using Xamarin.Forms.Maps;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using Pegasus.Phone.XF.WinPhone81.Controls;
+using System;
+using System.Diagnostics;
 
 [assembly: ExportRenderer(typeof(Map), typeof(PegasusMapRenderer))]
 namespace Pegasus.Phone.XF.WinPhone81.Renderers
 {
-    public class PegasusMapRenderer : ViewRenderer<Map, MapControl>
+    public class PegasusMapRenderer : ViewRenderer<Map, MapRenderControl>
     {
-        ObservableCollection<Pin> pins;
-
         protected override void OnElementChanged(ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
@@ -28,69 +23,91 @@ namespace Pegasus.Phone.XF.WinPhone81.Renderers
                 return;
             }
 
-            var map = new MapControl();
-            SetNativeControl(map);
-
-            pins = (ObservableCollection<Pin>)Element.Pins;
-            pins.CollectionChanged += Pins_CollectionChanged;
+            SetNativeControl(new MapRenderControl());
+            Control.Map.MapServiceToken = "AtxO1mWPBN-w3GVYC_kQoOf50VRIupvCWy8NV0-WcmhiRai2OExiOcKXQpLEtwJr";
+            Control.MapItems.ItemsSource = Element.Pins;
+            Control.Map.CenterChanged += (s, e2) => SetVisibleRegion();
+            Control.Map.ZoomLevelChanged += (s, e2) => SetVisibleRegion();
+            Control.Map.LoadingStatusChanged += (s, e2) => SetVisibleRegion();
 
             Xamarin.Forms.MessagingCenter.Subscribe<Map, MapSpan>(
                 this, "MapMoveToRegion", OnMoveToRegionMessage, Element);
-            OnMoveToRegionMessage(Element, Element.VisibleRegion);
+            OnMoveToRegionMessage(Element, Element.LastMoveToRegion);
         }
 
-        private void Pins_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void SetVisibleRegion()
         {
-            // This is definitely not the most efficient -- it may cause us some problems?
-            while (Control.MapElements.Count > 0)
+            try
             {
-                Control.MapElements.RemoveAt(Control.MapElements.Count - 1);
-            }
-
-            foreach (Pin pin in pins)
-            {
-                MapIcon mapIcon = new MapIcon()
+                Geopoint northWestCorner;
+                try
                 {
-                    Title = pin.Label,
-                    NormalizedAnchorPoint = new Point(0.5, 0.5),
-                    Location = new Geopoint(new BasicGeoposition()
+                    Control.Map.GetLocationFromOffset(new Point(0, 0), out northWestCorner);
+                }
+                catch (ArgumentException)
+                {
+                    var topOfMap = new Geopoint(new BasicGeoposition()
                     {
-                        Latitude = pin.Position.Latitude,
-                        Longitude = pin.Position.Longitude
-                    })
-                };
-                
-                Control.MapElements.Add(mapIcon);
+                        Latitude = 85,
+                        Longitude = 0
+                    });
+
+                    Windows.Foundation.Point topPoint;
+                    Control.Map.GetOffsetFromLocation(topOfMap, out topPoint);
+                    Control.Map.GetLocationFromOffset(new Windows.Foundation.Point(0, topPoint.Y), out northWestCorner);
+                }
+
+                Geopoint southEastCorner = null;
+                try
+                {
+                    Control.Map.GetLocationFromOffset(new Windows.Foundation.Point(Control.Map.ActualWidth, Control.Map.ActualHeight), out southEastCorner);
+                }
+                catch (ArgumentException)
+                {
+                    var bottomOfMap = new Geopoint(new BasicGeoposition()
+                    {
+                        Latitude = -85,
+                        Longitude = 0
+                    });
+
+                    Windows.Foundation.Point bottomPoint;
+                    Control.Map.GetOffsetFromLocation(bottomOfMap, out bottomPoint);
+                    Control.Map.GetLocationFromOffset(new Windows.Foundation.Point(0, bottomPoint.Y), out southEastCorner);
+                }
+
+                Element.VisibleRegion = new MapSpan(
+                    new Position(Control.Map.Center.Position.Latitude, Control.Map.Center.Position.Longitude),
+                    Math.Abs(Control.Map.Center.Position.Latitude - northWestCorner.Position.Latitude) * 2,
+                    Math.Abs(Control.Map.Center.Position.Longitude - northWestCorner.Position.Longitude) * 2);
+            }
+            catch (ArgumentException)
+            {
             }
         }
 
         private void OnMoveToRegionMessage(Map map, MapSpan span)
         {
-            if (map == null || span == null)
+            if (map == null || span == null || (span.LatitudeDegrees == 0.1 && span.LongitudeDegrees == 0.1))
             {
                 return;
             }
 
-            var location = new Geopoint(
-              new BasicGeoposition()
-              {
-                  Latitude = span.Center.Latitude,
-                  Longitude = span.Center.Longitude
-              });
-
             // These calculations only work in the northwest quadrant of the world
+            double scaleFactor = 0.8097419383212764;
             var northWestCorner = new BasicGeoposition()
             {
-                Latitude = span.Center.Latitude + span.LatitudeDegrees / 2,
-                Longitude = span.Center.Longitude - span.LongitudeDegrees / 2
+                Latitude = span.Center.Latitude + (span.LatitudeDegrees / 2)*scaleFactor,
+                Longitude = span.Center.Longitude - (span.LongitudeDegrees / 2)*scaleFactor
             };
             var southEastCorner = new BasicGeoposition()
             {
-                Latitude = span.Center.Latitude - span.LatitudeDegrees / 2,
-                Longitude = span.Center.Longitude + span.LongitudeDegrees / 2
+                Latitude = span.Center.Latitude - (span.LatitudeDegrees / 2)*scaleFactor,
+                Longitude = span.Center.Longitude + (span.LongitudeDegrees / 2)*scaleFactor
             };
             var bounds = new GeoboundingBox(northWestCorner, southEastCorner);
-            Control.TrySetViewBoundsAsync(bounds, null, MapAnimationKind.Bow);
+            // Because this control only can tell us what *is* visible, not the target of the animation,
+            // we can't reliably know what the view is if we have any animations going.  Yuck.
+            Control.Map.TrySetViewBoundsAsync(bounds, null, MapAnimationKind.None);
        }
    }
 }

@@ -232,6 +232,11 @@ namespace Xamarin.Forms.Maps.Android
         markerOptions.SetPosition(new LatLng(p.Position.Latitude, p.Position.Longitude));
         markerOptions.SetTitle(p.Label);
         markerOptions.SetSnippet(p.Address);
+        // HACKHACK
+        if (p.Color == Color.Red) markerOptions.InvokeIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueRed));
+        else if (p.Color == Color.Green) markerOptions.InvokeIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueGreen));
+        else if (p.Color == Color.Green) markerOptions.InvokeIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueBlue));
+        // HACKHACK
         Marker marker = map.AddMarker(markerOptions);
         p.Id = (object) marker.Id;
         return marker;

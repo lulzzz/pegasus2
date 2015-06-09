@@ -73,6 +73,14 @@ namespace Xamarin.Forms.Maps
     /// To be added.
     /// </remarks>
     public static readonly BindableProperty AddressProperty = BindableProperty.Create("Address", typeof (string), typeof (Pin), (object) null, (BindingMode) 2, (BindableProperty.ValidateValueDelegate) null, (BindableProperty.BindingPropertyChangedDelegate) null, (BindableProperty.BindingPropertyChangingDelegate) null, (BindableProperty.CoerceValueDelegate) null, (BindableProperty.CreateDefaultValueDelegate) null);
+     /// <summary>
+    /// Identifies the <see cref="P:Xamarin.Forms.Maps.Pin.Color"/> bindable property.
+    /// </summary>
+    /// 
+    /// <remarks>
+    /// To be added.
+    /// </remarks>
+    public static readonly BindableProperty ColorProperty = BindableProperty.Create("Color", typeof (Color), typeof (Pin), (object) Color.Blue, (BindingMode) 2, (BindableProperty.ValidateValueDelegate) null, (BindableProperty.BindingPropertyChangedDelegate) null, (BindableProperty.BindingPropertyChangingDelegate) null, (BindableProperty.CoerceValueDelegate) null, (BindableProperty.CreateDefaultValueDelegate) null);
     private object id;
     private string label;
 
@@ -180,6 +188,30 @@ namespace Xamarin.Forms.Maps
       set
       {
         this.SetValue(Pin.AddressProperty, (object) value);
+      }
+    }
+
+
+    /// <summary>
+    /// The color.
+    /// </summary>
+    /// 
+    /// <value>
+    /// To be added.
+    /// </value>
+    /// 
+    /// <remarks>
+    /// To be added.
+    /// </remarks>
+    public Color Color
+    {
+      get
+      {
+        return (Color) this.GetValue(Pin.ColorProperty);
+      }
+      set
+      {
+        this.SetValue(Pin.ColorProperty, (object) value);
       }
     }
 

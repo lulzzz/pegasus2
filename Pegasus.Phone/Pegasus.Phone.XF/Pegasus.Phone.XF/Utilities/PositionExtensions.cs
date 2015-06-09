@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pegasus2.Data;
+using System;
 using Xamarin.Forms.Maps;
 
 namespace Pegasus.Phone.XF.Utilities
@@ -71,5 +72,14 @@ namespace Pegasus.Phone.XF.Utilities
             return Math.PI * deg / 180.0;
         }
 
+        public static Position ToPosition(this CraftTelemetry telemetry)
+        {
+            return new Position(telemetry.GpsLatitude, telemetry.GpsLongitude);
+        }
+
+        public static Position ToPosition(this GroundTelemetry telemetry)
+        {
+            return new Position(telemetry.GpsLatitude, telemetry.GpsLongitude);
+        }
     }
 }

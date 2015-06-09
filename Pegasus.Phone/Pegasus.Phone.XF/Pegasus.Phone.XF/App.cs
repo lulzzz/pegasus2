@@ -11,7 +11,6 @@ using Piraeus.Web.WebSockets;
 using Pegasus2.Data;
 using Piraeus.ServiceModel.Protocols.Coap;
 using Pegasus.Phone.XF.ViewModels.Views;
-using Pegasus.Phone.XF.Pages;
 
 namespace Pegasus.Phone.XF
 {
@@ -38,7 +37,7 @@ namespace Pegasus.Phone.XF
             private set;
         }
 
-        public GroundTelemetryViewModel CurrentGroundTelemetry
+        public GroundTelemetryViewModel CurrentChaseTelemetry
         {
             get;
             private set;
@@ -49,13 +48,14 @@ namespace Pegasus.Phone.XF
             Instance = this;
             AppData = new AppDataViewModel { StatusMessage = "Application launched, press go!" };
             CurrentCraftTelemetry = new CraftTelemetryViewModel();
-            CurrentGroundTelemetry = new GroundTelemetryViewModel();
-            //MainPage = new MainPage();
+            CurrentChaseTelemetry = new GroundTelemetryViewModel();
             MainPage = new RootPage();
         }
 
         public void ConnectWebSocket()
         {
+            Device.BeginInvokeOnMainThread(() => this.AppData.StatusMessage = "Connecting...");
+
             //WebSocketClient client = new WebSocketClient();
             var client = DependencyService.Get<IWebSocketClient>();
             client.OnError += client_OnError;
@@ -81,10 +81,10 @@ namespace Pegasus.Phone.XF
             telemetry.GpsLatitude += this.AppData.MessageCount / 50.0;
 
             // TEMP create ground telemetry
-            GroundTelemetry groundTelemetry = null;
-            if (CurrentGroundTelemetry.Data == null)
+            GroundTelemetry chaseTelemetry = null;
+            if (CurrentChaseTelemetry.Data == null)
             {
-                groundTelemetry = new GroundTelemetry
+                chaseTelemetry = new GroundTelemetry
                 {
                     GpsLatitude = telemetry.GpsLatitude + 0.1,
                     GpsLongitude = telemetry.GpsLongitude + 0.1
@@ -95,9 +95,9 @@ namespace Pegasus.Phone.XF
                 {
                     this.AppData.MessageCount++;
                     this.CurrentCraftTelemetry.Data = telemetry;
-                    if (groundTelemetry != null)
+                    if (chaseTelemetry != null)
                     {
-                        this.CurrentGroundTelemetry.Data = groundTelemetry;
+                        this.CurrentChaseTelemetry.Data = chaseTelemetry;
                     }
                 });
         }
