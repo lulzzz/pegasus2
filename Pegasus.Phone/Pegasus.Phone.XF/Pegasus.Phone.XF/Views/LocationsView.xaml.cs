@@ -17,6 +17,7 @@ namespace Pegasus.Phone.XF
         public LocationsView()
         {
             InitializeComponent();
+            this.PropertyChanged += (s, e) => { if (e.PropertyName == "IsVisible" && this.IsVisible) TelemetryChanged(s, e); };
         }
 
         protected override void OnBindingContextChanged()
@@ -45,6 +46,11 @@ namespace Pegasus.Phone.XF
 
         private void TelemetryChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            if (!this.IsVisible)
+            {
+                return;
+            }
+
             // TODO: this should really be done completely in the view model!!
 
             if (viewModel.CraftTelemetry.Data == null)
