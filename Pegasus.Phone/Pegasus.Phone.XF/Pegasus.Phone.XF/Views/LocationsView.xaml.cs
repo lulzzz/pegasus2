@@ -122,7 +122,7 @@ namespace Pegasus.Phone.XF
             }
 
             // If the user has zoomed, keep that zoom unless we need to zoom out to see
-            // both elements.  Otherwise, zoom to 15 miles or farther if necessary.
+            // both elements.  Otherwise, zoom to 2 miles or farther if necessary.
             MapSpan newSpan;
             if (userZoomed)
             {
@@ -133,9 +133,9 @@ namespace Pegasus.Phone.XF
             }
             else
             {
-                if (!distance.HasValue || distance.Value.Miles < 15)
+                if (!distance.HasValue || distance.Value.Miles < 2)
                 {
-                    distance = Distance.FromMiles(15);
+                    distance = Distance.FromMiles(2);
                 }
 
                 newSpan = MapSpan.FromCenterAndRadius(craftPosition, distance.Value);
