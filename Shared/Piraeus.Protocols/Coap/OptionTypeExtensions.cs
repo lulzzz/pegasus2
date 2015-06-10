@@ -1,7 +1,7 @@
 ﻿
 
 
-namespace Piraeus.ServiceModel.Protocols.Coap
+namespace Piraeus.Protocols.Coap
 {
     using System;
     using System.Text;
@@ -43,13 +43,13 @@ namespace Piraeus.ServiceModel.Protocols.Coap
                 }
             }
             else if (typeValue == 3 || typeValue == 35 || typeValue == 39)
-            {
-                return value == null ? null : Encoding.UTF8.GetString(value, 0, value.Length);
+            {                
+                return value == null ? null : Encoding.UTF8.GetString(value);
             }
             //2,8,11,15,20,35,39
             else if (typeValue == 8 || typeValue == 11 || typeValue == 15 || typeValue == 20)
             {
-                return Encoding.UTF8.GetString(value, 0, value.Length);
+                return Encoding.UTF8.GetString(value);
             }
             else
             {

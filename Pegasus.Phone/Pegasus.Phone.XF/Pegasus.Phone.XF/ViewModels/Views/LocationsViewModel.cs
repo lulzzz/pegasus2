@@ -22,6 +22,12 @@ namespace Pegasus.Phone.XF.ViewModels.Views
             private set;
         }
 
+        public GroundTelemetryViewModel LaunchTelemetry
+        {
+            get;
+            private set;
+        }
+
         public String ChaseVehicleToCraftDistanceText
         {
             get
@@ -49,6 +55,7 @@ namespace Pegasus.Phone.XF.ViewModels.Views
         {
             CraftTelemetry = App.Instance.CurrentCraftTelemetry;
             ChaseTelemetry = App.Instance.CurrentChaseTelemetry;
+            LaunchTelemetry = App.Instance.CurrentLaunchTelemetry;
 
             ChaseTelemetry.PropertyChanged += TelemetryChanged;
             CraftTelemetry.PropertyChanged += TelemetryChanged;

@@ -17,6 +17,7 @@ namespace Pegasus.Phone.XF
         public LocationsView()
         {
             InitializeComponent();
+            this.PropertyChanged += (s, e) => { if (e.PropertyName == "IsVisible" && this.IsVisible) TelemetryChanged(s, e); };
         }
 
         protected override void OnBindingContextChanged()
@@ -32,6 +33,7 @@ namespace Pegasus.Phone.XF
             {
                 viewModel.CraftTelemetry.PropertyChanged -= TelemetryChanged;
                 viewModel.ChaseTelemetry.PropertyChanged -= TelemetryChanged;
+                viewModel.LaunchTelemetry.PropertyChanged -= TelemetryChanged;
             }
 
             viewModel = this.BindingContext as LocationsViewModel;
@@ -40,11 +42,17 @@ namespace Pegasus.Phone.XF
             {
                 viewModel.CraftTelemetry.PropertyChanged += TelemetryChanged;
                 viewModel.ChaseTelemetry.PropertyChanged += TelemetryChanged;
+                viewModel.LaunchTelemetry.PropertyChanged += TelemetryChanged;
             }
         }
 
         private void TelemetryChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            if (!this.IsVisible)
+            {
+                return;
+            }
+
             // TODO: this should really be done completely in the view model!!
 
             if (viewModel.CraftTelemetry.Data == null)
@@ -75,7 +83,26 @@ namespace Pegasus.Phone.XF
                 pin.Type = PinType.Place;
                 pin.Position = chasePosition.Value;
                 pin.Color = Color.Red;
-                pin.Label = "Ground Location";
+                pin.Label = "Chase Location";
+
+                if (Map.Pins.Count <= pinIndex)
+                {
+                    Map.Pins.Add(pin);
+                }
+                pinIndex++;
+            }
+
+            Position? launchPosition = null;
+            if (viewModel.LaunchTelemetry.Data != null)
+            {
+                launchPosition = viewModel.LaunchTelemetry.Data.ToPosition();
+
+                pin = (Map.Pins.Count <= pinIndex) ? new Pin() : Map.Pins[pinIndex];
+
+                pin.Type = PinType.Place;
+                pin.Position = launchPosition.Value;
+                pin.Color = Color.Purple;
+                pin.Label = "Launch Location";
 
                 if (Map.Pins.Count <= pinIndex)
                 {
@@ -122,7 +149,7 @@ namespace Pegasus.Phone.XF
             }
 
             // If the user has zoomed, keep that zoom unless we need to zoom out to see
-            // both elements.  Otherwise, zoom to 15 miles or farther if necessary.
+            // both elements.  Otherwise, zoom to 2 miles or farther if necessary.
             MapSpan newSpan;
             if (userZoomed)
             {
@@ -133,9 +160,9 @@ namespace Pegasus.Phone.XF
             }
             else
             {
-                if (!distance.HasValue || distance.Value.Miles < 15)
+                if (!distance.HasValue || distance.Value.Miles < 2)
                 {
-                    distance = Distance.FromMiles(15);
+                    distance = Distance.FromMiles(2);
                 }
 
                 newSpan = MapSpan.FromCenterAndRadius(craftPosition, distance.Value);
