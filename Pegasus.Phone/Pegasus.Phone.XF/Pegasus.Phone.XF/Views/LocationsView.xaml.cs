@@ -33,6 +33,7 @@ namespace Pegasus.Phone.XF
             {
                 viewModel.CraftTelemetry.PropertyChanged -= TelemetryChanged;
                 viewModel.ChaseTelemetry.PropertyChanged -= TelemetryChanged;
+                viewModel.LaunchTelemetry.PropertyChanged -= TelemetryChanged;
             }
 
             viewModel = this.BindingContext as LocationsViewModel;
@@ -41,6 +42,7 @@ namespace Pegasus.Phone.XF
             {
                 viewModel.CraftTelemetry.PropertyChanged += TelemetryChanged;
                 viewModel.ChaseTelemetry.PropertyChanged += TelemetryChanged;
+                viewModel.LaunchTelemetry.PropertyChanged += TelemetryChanged;
             }
         }
 
@@ -81,7 +83,26 @@ namespace Pegasus.Phone.XF
                 pin.Type = PinType.Place;
                 pin.Position = chasePosition.Value;
                 pin.Color = Color.Red;
-                pin.Label = "Ground Location";
+                pin.Label = "Chase Location";
+
+                if (Map.Pins.Count <= pinIndex)
+                {
+                    Map.Pins.Add(pin);
+                }
+                pinIndex++;
+            }
+
+            Position? launchPosition = null;
+            if (viewModel.LaunchTelemetry.Data != null)
+            {
+                launchPosition = viewModel.LaunchTelemetry.Data.ToPosition();
+
+                pin = (Map.Pins.Count <= pinIndex) ? new Pin() : Map.Pins[pinIndex];
+
+                pin.Type = PinType.Place;
+                pin.Position = launchPosition.Value;
+                pin.Color = Color.Purple;
+                pin.Label = "Launch Location";
 
                 if (Map.Pins.Count <= pinIndex)
                 {

@@ -31,8 +31,8 @@ namespace Pegasus.Phone.XF
 
 #if FAKE_DATA
         private static string craftTelemetryLine = "$:2015-01-28T21:49:18Z,989.6,198.8,13.0,77.6,13.0,2.2,7.5,7.4,0,0,1,0,-3200,-384,17408,-3200,-384,17408,-3200,-384,17408,1.0,46.8301,-119.1643,198.8,6.4,169.5,1,6,0,-0.7,0,0,1,0,0,1000,02:30,*CA";
-        private static double launchLatitude = 46.8301;
-        private static double launchLongitude = -119.1643;
+        private static double launchLatitude = 46.8422;
+        private static double launchLongitude = -119.1632;
         private static double launchAltitude = 198.8;
 #endif
 
