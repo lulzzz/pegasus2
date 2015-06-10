@@ -123,7 +123,34 @@ namespace Pegasus2.Data
 
         #endregion
 
-       
+        // this property is used for binding purpose as Xamarin binding only support single argument
+        public string AltitudeSpeed 
+        {
+            get { return String.Format("{0} m @ {1} m/s", this.GpsAltitude, this.GpsSpeed); }
+        }
+
+        public string MainDeployStatus
+        {
+            get 
+            {
+                if (this.MainDeployed)
+                    return "DEPLOYED";
+                else
+                    return "NOT DEPLOYED";
+            }
+        }
+
+        public string BalloonReleaseStatus
+        {
+            get
+            {
+                if (this.BalloonReleased)
+                    return "RELEASED";
+                else
+                    return "NOT RELEASED";
+            }
+        }
+
         public override MessageType GetMessageType()
         {
             return MessageType.CraftTelemetry;

@@ -15,7 +15,7 @@
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
 
-    <Label Text="Craft - 5000m @ 15m/s"
+    <Label Text="{Binding CraftTelemetry.Data.AltitudeSpeed, StringFormat='Craft - {0}'}"
            FontSize="Medium"
            BackgroundColor="Navy"
            XAlign="Center"
@@ -24,7 +24,7 @@
     <maps:Map x:Name="Map" Grid.Row="1" HeightRequest="300" HorizontalOptions="Fill"/>
 
 
-    <Label Text="Parachute - DEPLOYED"
+    <Label Text="{Binding CraftTelemetry.Data.MainDeployStatus, StringFormat='Parachute - {0}'}"
            FontSize="Medium"
            BackgroundColor="Navy"
            XAlign="Center"

@@ -29,5 +29,13 @@ namespace Pegasus2.Data
 
         [JsonProperty("z")]
         public virtual double Z { get; set; }
+
+        public String FriendlyFormat
+        {
+            get
+            {
+                return String.Format("({0}, {1}, {2})", X, Y, Z);
+            }
+        }
     }
 }

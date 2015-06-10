@@ -36,25 +36,25 @@
              BackgroundColor="Navy"/>
       
       <Label Text="Altitude" FontSize="Medium" Grid.Row="1" Grid.Column="0"/>
-      <Label Text="5000.94 m" FontSize="Medium" Grid.Row="1" Grid.Column="1"/>
+      <Label Text="{Binding CraftTelemetry.Data.GpsAltitude, StringFormat='{0} m'}" FontSize="Medium" Grid.Row="1" Grid.Column="1"/>
       <Label Text="Air Pressure" FontSize="Medium" Grid.Row="2" Grid.Column="0"/>
-      <Label Text="192 mbars" FontSize="Medium" Grid.Row="2" Grid.Column="1"/>
+      <Label Text="{Binding CraftTelemetry.Data.AtmosphericPressure, StringFormat='{0} mbars'}" FontSize="Medium" Grid.Row="2" Grid.Column="1"/>
       <Label Text="Outside Temp" FontSize="Medium" Grid.Row="3" Grid.Column="0"/>
-      <Label Text="-12 C" FontSize="Medium" Grid.Row="3" Grid.Column="1"/>
+      <Label Text="{Binding CraftTelemetry.Data.TempOutside, StringFormat='{0} C'}" FontSize="Medium" Grid.Row="3" Grid.Column="1"/>
       <Label Text="Inside Temp" FontSize="Medium" Grid.Row="4" Grid.Column="0"/>
-      <Label Text="5 C" FontSize="Medium" Grid.Row="4" Grid.Column="1"/>
+      <Label Text="{Binding CraftTelemetry.Data.TempInside, StringFormat='{0} C'}" FontSize="Medium" Grid.Row="4" Grid.Column="1"/>
       <Label Text="Battery 1" FontSize="Medium" Grid.Row="5" Grid.Column="0"/>
-      <Label Text="40 V" FontSize="Medium" Grid.Row="5" Grid.Column="1"/>
+      <Label Text="{Binding CraftTelemetry.Data.Battery1Level, StringFormat='{0} V'}" FontSize="Medium" Grid.Row="5" Grid.Column="1"/>
       <Label Text="Battery 2" FontSize="Medium" Grid.Row="6" Grid.Column="0"/>
-      <Label Text="30 V" FontSize="Medium" Grid.Row="6" Grid.Column="1"/>
+      <Label Text="{Binding CraftTelemetry.Data.Battery2Level, StringFormat='{0} V'}" FontSize="Medium" Grid.Row="6" Grid.Column="1"/>
       <Label Text="Parachute" FontSize="Medium" Grid.Row="7" Grid.Column="0"/>
-      <Label Text="Not Deployed" FontSize="Medium" Grid.Row="7" Grid.Column="1"/>
+      <Label Text="{Binding CraftTelemetry.Data.MainDeployStatus}" FontSize="Medium" Grid.Row="7" Grid.Column="1"/>
       <Label Text="Balloon" FontSize="Medium" Grid.Row="8" Grid.Column="0"/>
-      <Label Text="Released" FontSize="Medium" Grid.Row="8" Grid.Column="1"/>
+      <Label Text="{Binding CraftTelemetry.Data.BalloonReleaseStatus}" FontSize="Medium" Grid.Row="8" Grid.Column="1"/>
       <Label Text="Magnetometer" FontSize="Medium" Grid.Row="9" Grid.Column="0"/>
-      <Label Text="5 Gs" FontSize="Medium" Grid.Row="9" Grid.Column="1"/>
+      <Label Text="{Binding CraftTelemetry.Data.Magnetometer.FriendlyFormat, StringFormat='{0} Gs'}" FontSize="Medium" Grid.Row="9" Grid.Column="1"/>
       <Label Text="Accelerometer" FontSize="Medium" Grid.Row="10" Grid.Column="0"/>
-      <Label Text="0.1 G" FontSize="Medium" Grid.Row="10" Grid.Column="1"/>
+      <Label Text="{Binding CraftTelemetry.Data.Accelerometer.FriendlyFormat, StringFormat='{0} G'}" FontSize="Medium" Grid.Row="10" Grid.Column="1"/>
     </Grid>
   </ScrollView>
 </ContentPage>

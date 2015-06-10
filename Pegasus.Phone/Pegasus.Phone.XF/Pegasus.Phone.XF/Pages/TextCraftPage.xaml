@@ -11,7 +11,7 @@
            HorizontalOptions="Center" />
 
     <Label
-      Text="Craft is now at 5000m @ 15m/s"
+      Text="{Binding CraftTelemetry.Data.AltitudeSpeed, StringFormat='Craft - {0}'}"
            FontSize="Small"
            BackgroundColor="Teal"
            XAlign="Center" />
