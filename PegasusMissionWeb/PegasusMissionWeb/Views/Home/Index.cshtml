@@ -397,32 +397,38 @@
 <script src="~/signalr/hubs"></script>
 
 <script type="text/javascript">
-   
+    var mapInitialized = false;
+    var mapOptions = {
+        center: new google.maps.LatLng(0,0),
+        zoom: 10,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    var map = new google.maps.Map(document.getElementById("map_canvas"),
+      mapOptions);
     $(document).ready(function () {
+       
         var chat = $.connection.pegasusHub;
-        chat.client.addNewMessageToPage = function (ltd, lng) {
-            // Add the message to the page.
-            //initialize(ltd, lng);
-            //initialize(Math.floor((Math.random() * 100) + 1), Math.floor((Math.random() * 100) + 1));
+        chat.client.addNewMessageToPage = function (jsonString) {
+
+
+            //initialize(ltd, lng);         
+            var obj = jQuery.parseJSON(jsonString);
+            initialize(55.770 + Math.random(), 37.424 + Math.random());
+
             //$('#discussion').append('<li><strong>' + htmlEncode(name)
             //    + '</strong>: ' + htmlEncode(message) + '</li>');
         };
-        $.connection.hub.start().done(function () {
 
-            chat.server.send($('#displayname').val(), $('#message').val());
+        $.connection.hub.start().done(function () {
+            chat.server.send(1);
         });
 
-   });
-    function initialize(ltd,lng) {
+    });
 
-     var mapOptions = {
-       center: new google.maps.LatLng(ltd, lng),
-       zoom: 10,
-       mapTypeId: google.maps.MapTypeId.ROADMAP
-     };
-     var map = new google.maps.Map(document.getElementById("map_canvas"),
-       mapOptions);
-
+    function initialize(ltd,lng) {        
+        mapInitialized = true;
+        var latLng = new google.maps.LatLng(ltd, lng);
+        map.panTo(latLng);
      //// create a marker
      //var latlng = new google.maps.LatLng();
      //var marker = new google.maps.Marker({

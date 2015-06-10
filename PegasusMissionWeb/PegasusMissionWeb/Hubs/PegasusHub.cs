@@ -22,7 +22,7 @@ namespace PegasusMissionWeb.Hubs
         WebSocketClient client = new WebSocketClient();
         public bool webSocketInstantiated = false;
 
-        public void Send(string name, string message)
+        public void Send(string jsonString)
         {
             if (webSocketInstantiated == false)
             {
@@ -36,10 +36,10 @@ namespace PegasusMissionWeb.Hubs
                 {
                     await client.ConnectAsync(host, subprotocol, null);
                 });
-                message = "Sample Message - Hub Starting";
+                //message = "Sample Message - Hub Starting";
             }
             // Call the addNewMessageToPage method to update clients.
-            Clients.All.addNewMessageToPage(name, message);
+            Clients.All.addNewMessageToPage(jsonString);
 
         }
 
@@ -47,9 +47,10 @@ namespace PegasusMissionWeb.Hubs
         {
             CoapMessage coapMessage = CoapMessage.DecodeMessage(message);
             string jsonString = Encoding.UTF8.GetString(coapMessage.Payload);
-            CraftTelemetry telemetry = JsonConvert.DeserializeObject<CraftTelemetry>(jsonString);
-            //Console.WriteLine(telemetry.AtmosphericPressure);
-            Send(telemetry.GpsLatitude.ToString(), telemetry.GpsLongitude.ToString() );
+            //CraftTelemetry telemetry = JsonConvert.DeserializeObject<CraftTelemetry>(jsonString);
+            Send(jsonString);
+
+            //Send(telemetry.GpsLatitude.ToString(), telemetry.GpsLongitude.ToString(), telemetry.Accelerometer.ToString() );
         }
 
         static void client_OnClose(object sender, string message)
