@@ -13,6 +13,7 @@ using Piraeus.Web.WebSockets;
 using Pegasus2.Data;
 using Piraeus.ServiceModel.Protocols.Coap;
 using Pegasus.Phone.XF.ViewModels.Views;
+using Pegasus.Phone.XF.Pages;
 
 namespace Pegasus.Phone.XF
 {
@@ -74,7 +75,7 @@ namespace Pegasus.Phone.XF
             CurrentCraftTelemetry = new CraftTelemetryViewModel();
             CurrentChaseTelemetry = new GroundTelemetryViewModel();
             CurrentLaunchTelemetry = new GroundTelemetryViewModel();
-            MainPage = new MainPage();
+            MainPage = new RootPage();
         }
 
 #if FAKE_DATA
