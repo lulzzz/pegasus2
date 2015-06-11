@@ -191,3 +191,4 @@ ModelManifest.xml
 
 # XamarinStudio files
 *.userprefs
+/PegasusMissionWeb/packages

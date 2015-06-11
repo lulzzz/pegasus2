@@ -18,6 +18,10 @@ p {
 	font: 13px/1.7em 'Open Sans'; 	
 }
     
+hr {
+    margin: 14px 0;
+}
+
 input,
 button,
 select,
@@ -339,8 +343,8 @@ textarea {
 	clear: both;
 	
 	width: auto;
-	
-	margin-bottom: 2em;
+
+    margin-bottom: 10px;
 		
 	overflow: hidden;
 }
@@ -349,8 +353,8 @@ textarea {
 	
 	position: relative;
 	
-	height: 40px;
-	line-height: 40px;
+	height: 30px;
+	line-height: 30px;
 	
 	background: #f9f6f1;
 	background:-moz-linear-gradient(top, #f9f6f1 0%, #f2efea 100%); /* FF3.6+ */
@@ -379,7 +383,6 @@ textarea {
 		margin-right: 3em;
 		
 		font-size: 14px;
-		font-weight: 800;
 		color: #525252;
 		line-height: 18px;
 		
@@ -398,7 +401,7 @@ textarea {
 		}
 
 .widget-content {
-	padding: 20px 15px 15px;
+	padding-bottom: 10px;
 	background: #FFF;
 	border: 1px solid #D5D5D5;
 }

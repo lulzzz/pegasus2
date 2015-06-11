@@ -195,6 +195,7 @@
     <Content Include="img\message_avatar2.png" />
     <Content Include="img\sky2.jpg" />
     <Content Include="Scripts\base.js" />
+    <Content Include="Scripts\External\angular.min.js" />
     <Content Include="Scripts\External\bootstrap.js" />
     <Content Include="Scripts\External\bootstrap.min.js" />
     <None Include="Scripts\External\jquery.validate-vsdoc.js" />
@@ -211,6 +212,7 @@
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
+    <Content Include="Scripts\telemetry.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

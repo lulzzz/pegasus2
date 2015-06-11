@@ -12,82 +12,27 @@
     <link href="~/Content/External/bootstrap.min.css" rel="stylesheet">
     <link href="~/Content/External/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
-    <link href="~/Content/External/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="~/Content/Site.css" rel="stylesheet">
     <link href="~/Content/dashboard.css" rel="stylesheet">
-    <style>
-        .bigNumbers {
-            font-size: 45px;
-            font-weight: bold;
-            color: #545454;
-            line-height: 1em;
-        }
-    </style>
+
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 </head>
-<body style="background-image:url('/img/sky.jpg'); background-repeat: no-repeat; background-size: cover;background-position: -35px 0;">
+<body ng-app="pegasus" style="background-image:url('/img/sky.jpg'); background-repeat: no-repeat; background-size: cover;background-position: -35px 0;">
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </a><a class="brand" href="index.html">The Pegasus Mission</a>
-                <!-- <div class="nav-collapse">
-                  <ul class="nav pull-right">
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                      class="icon-cog"></i> Account <b class="caret"></b></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="javascript:;">Settings</a></li>
-                        <li><a href="javascript:;">Help</a></li>
-                      </ul>
-                    </li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                      class="icon-user"></i> EGrappler.com <b class="caret"></b></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="javascript:;">Profile</a></li>
-                        <li><a href="javascript:;">Logout</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                  <form class="navbar-search pull-right">
-                    <input type="text" class="search-query" placeholder="Search">
-                  </form>
-                </div> -->
-                <!--/.nav-collapse -->
             </div>
-            <!-- /container -->
         </div>
-        <!-- /navbar-inner -->
     </div>
-    <!-- /navbar -->
-    <!--
-    <div class="subnavbar">
-      <div class="subnavbar-inner">
-        <div class="container">
-          <ul class="mainnav">
-            <li class="active"><a href="index.html"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-            <li><a href="reports.html"><i class="icon-list-alt"></i><span>Reports</span> </a> </li>
-            <li><a href="guidely.html"><i class="icon-facetime-video"></i><span>App Tour</span> </a></li>
-            <li><a href="charts.html"><i class="icon-bar-chart"></i><span>Charts</span> </a> </li>
-            <li><a href="shortcodes.html"><i class="icon-code"></i><span>Shortcodes</span> </a> </li>
-            <li class="dropdown"><a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-long-arrow-down"></i><span>Drops</span> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="icons.html">Icons</a></li>
-                <li><a href="faq.html">FAQ</a></li>
-                <li><a href="pricing.html">Pricing Plans</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="signup.html">Signup</a></li>
-                <li><a href="error.html">404</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-    -->
-    
-    <div class="main">
+
+    <div class="main" ng-controller="telemetry">
         <div class="main-inner">
             <div class="container">
                 <div class="row">
@@ -101,17 +46,15 @@
                             <div class="widget-content">
                                 <div id='videoControl'>
                                     <iframe width="560" height="315" src="https://www.youtube.com/embed/rNhmYaWiPEk" frameborder="0" allowfullscreen></iframe>
-                                    <!--                <video width="320" height="240" srv=>
-                                                      <source src="assets/dizzy.mp4" type="video/mp4" />
-                                                      <source src="assets/dizzy.webm" type="video/webm" />
-                                                      <source src="assets/dizzy.ogv" type="video/ogg" />
-                                                      Your browser does not support the video tag.
-                                                    </video>-->
+                                    <!-- <video width="320" height="240" srv=>
+                                        <source src="assets/dizzy.mp4" type="video/mp4"/>
+                                        <source src="assets/dizzy.webm" type="video/webm"/>
+                                        <source src="assets/dizzy.ogv" type="video/ogg"/>
+                                        Your browser does not support the video tag.
+                                    </video>-->
                                 </div>
                             </div>
-                            <!-- /widget-content -->
                         </div>
-                        <!-- /widget -->
 
                         <div class="widget widget-nopad">
                             <div class="widget-header">
@@ -119,182 +62,204 @@
                                 <h3> Live telemetry </h3>
                             </div>
 
-                            <!-- /widget-header -->
                             <div class="widget-content">
                                 <div class="widget big-stats-container">
                                     <div class="widget-content">
                                         <div id="big_stats" class="cf">
-                                            <div class="stat"> <span>Radio strength</span> <span class="value">234</span> </div>
-                                            <!-- .stat -->
-
-                                            <div class="stat"> <span>GPS direction</span> <span class="value">423</span> </div>
-                                            <!-- .stat -->
-
-                                            <div class="stat"> <span>GPS speed</span> <span class="value">851</span> </div>
-                                            <!-- .stat -->
-
-                                            <div class="stat"> <span>Verical speed</span> <span class="value">25%</span> </div>
-                                            <!-- .stat -->
+                                            <div class="stat">
+                                                <div>Atm pressure</div> <span class="bigNumbers" ng-bind="atmosphericPressure"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Temp inside</div> <span class="bigNumbers" ng-bind="tempInside"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Pressure altitude</div> <span class="bigNumbers" ng-bind="pressureAltitude"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Humidity</div> <span class="bigNumbers" ng-bind="humidity"></span>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div id="big_stats" class="cf">
+                                            <div class="stat">
+                                                <div>Pressure temp</div> <span class="bigNumbers" ng-bind="pressureTemp"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Temp outside</div> <span class="bigNumbers" ng-bind="tempOutside"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Battery 1 level</div> <span class="bigNumbers" ng-bind="battery1Level"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Battery 2 level</div> <span class="bigNumbers" ng-bind="battery2Level"></span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- /widget-content -->
-
                                 </div>
                             </div>
                         </div>
-                        <!-- /widget -->
+
+                        <div class="widget widget-nopad">
+                            <div class="widget-header">
+                                <i class="icon-list-alt"></i>
+                                <h3> GPS Info </h3>
+                            </div>
+
+                            <div class="widget-content">
+                                <div class="widget big-stats-container">
+                                    <div class="widget-content">
+                                        <div id="big_stats" class="cf">
+                                            <div class="stat">
+                                                <div>Altitude</div> <span class="bigNumbers" ng-bind="gpsAltitude"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Latitude</div> <span class="bigNumbers" ng-bind="gpsLatitude"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Longitude</div> <span class="bigNumbers" ng-bind="gpsLongitude"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Satellites</div> <span class="bigNumbers" ng-bind="gpsSatellites"></span>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div id="big_stats" class="cf">
+                                            <div class="stat">
+                                                <div>Speed</div> <span class="bigNumbers" ng-bind="gpsSpeed"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Vertical speed</div> <span class="bigNumbers" ng-bind="verticalSpeed"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Direction</div> <span class="bigNumbers" ng-bind="gpsDirection"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Radio strength</div> <span class="bigNumbers" ng-bind="radioStrength"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="widget widget-nopad">
+                            <div class="widget-header">
+                                <i class="icon-list-alt"></i>
+                                <h3> Miscellaneous </h3>
+                            </div>
+
+                            <div class="widget-content">
+                                <div class="widget big-stats-container">
+                                    <div class="widget-content">
+                                        <div id="big_stats" class="cf">
+                                            <div class="stat">
+                                                <div>UV rays</div> <span class="bigNumbers" ng-bind="uvRays"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Radiation CPS</div> <span class="bigNumbers" ng-bind="radiationCps"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Radiation errors</div> <span class="bigNumbers" ng-bind="receptionErrors"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Source</div> <span class="bigNumbers" ng-bind="source"></span>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div id="big_stats" class="cf">
+                                            <div class="stat">
+                                                <div>Picture count</div> <span class="bigNumbers" ng-bind="pictureCount"></span>
+                                            </div>
+                                            <div class="stat">
+                                                <div>Timestamp</div> <span class="bigNumbers" ng-bind="timestamp"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="widget widget-table action-table">
                             <div class="widget-header">
                                 <i class="icon-th-list"></i>
                                 <h3>Live twitter feed</h3>
                             </div>
-                            <!-- /widget-header -->
-                            <div class="widget-content" style="align-content:center; align-content:stretch" >
+                            <div class="widget-content" style="align-content: center; align-content: stretch">
                                 <a class="twitter-timeline" href="https://twitter.com/PegasusMission" data-widget-id="605579741039427584">Tweets by @@PegasusMission</a>
-                                <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+                                <script>
+                                    !function (d, s, id) {
+                                        var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                                        if (!d.getElementById(id)) {
+                                            js = d.createElement(s);
+                                            js.id = id;
+                                            js.src = p + "://platform.twitter.com/widgets.js";
+                                            fjs.parentNode.insertBefore(js, fjs);
+                                        }
+                                    }(document, "script", "twitter-wjs");
+                                </script>
 
                             </div>
                             <!-- /widget-content -->
                         </div>
-                        <!-- /widget -->
-                        <!-- /widget -->
-                        <div class="widget">
-                            <div class="widget-header">
-                                <i class="icon-file"></i>
-                                <h3> Content</h3>
-                            </div>
-                            <!-- /widget-header -->
-                            <div class="widget-content">
-                                <ul class="messages_layout">
-                                    <li class="from_user left">
-                                        <a href="#" class="avatar"><img src="img/message_avatar1.png" /></a>
-                                        <div class="message_wrap">
-                                            <span class="arrow"></span>
-                                            <div class="info">
-                                                <a class="name">John Smith</a> <span class="time">1 hour ago</span>
-                                                <div class="options_arrow">
-                                                    <div class="dropdown pull-right">
-                                                        <a class="dropdown-toggle " id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#"> <i class=" icon-caret-down"></i> </a>
-                                                        <ul class="dropdown-menu " role="menu" aria-labelledby="dLabel">
-                                                            <li><a href="#"><i class=" icon-share-alt icon-large"></i> Reply</a></li>
-                                                            <li><a href="#"><i class=" icon-trash icon-large"></i> Delete</a></li>
-                                                            <li><a href="#"><i class=" icon-share icon-large"></i> Share</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="text"> As an interesting side note, as a head without a body, I envy the dead. There's one way and only one way to determine if an animal is intelligent. Dissect its brain! Man, I'm sore all over. I feel like I just went ten rounds with mighty Thor. </div>
-                                        </div>
-                                    </li>
-                                    <li class="by_myself right">
-                                        <a href="#" class="avatar"><img src="img/message_avatar2.png" /></a>
-                                        <div class="message_wrap">
-                                            <span class="arrow"></span>
-                                            <div class="info">
-                                                <a class="name">Bender (myself) </a> <span class="time">4 hours ago</span>
-                                                <div class="options_arrow">
-                                                    <div class="dropdown pull-right">
-                                                        <a class="dropdown-toggle " id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#"> <i class=" icon-caret-down"></i> </a>
-                                                        <ul class="dropdown-menu " role="menu" aria-labelledby="dLabel">
-                                                            <li><a href="#"><i class=" icon-share-alt icon-large"></i> Reply</a></li>
-                                                            <li><a href="#"><i class=" icon-trash icon-large"></i> Delete</a></li>
-                                                            <li><a href="#"><i class=" icon-share icon-large"></i> Share</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="text"> All I want is to be a monkey of moderate intelligence who wears a suit… that's why I'm transferring to business school! I had more, but you go ahead. Man, I'm sore all over. I feel like I just went ten rounds with mighty Thor. File not found. </div>
-                                        </div>
-                                    </li>
-                                    <li class="from_user left">
-                                        <a href="#" class="avatar"><img src="img/message_avatar1.png" /></a>
-                                        <div class="message_wrap">
-                                            <span class="arrow"></span>
-                                            <div class="info">
-                                                <a class="name">Celeste Holm </a> <span class="time">1 Day ago</span>
-                                                <div class="options_arrow">
-                                                    <div class="dropdown pull-right">
-                                                        <a class="dropdown-toggle " id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#"> <i class=" icon-caret-down"></i> </a>
-                                                        <ul class="dropdown-menu " role="menu" aria-labelledby="dLabel">
-                                                            <li><a href="#"><i class=" icon-share-alt icon-large"></i> Reply</a></li>
-                                                            <li><a href="#"><i class=" icon-trash icon-large"></i> Delete</a></li>
-                                                            <li><a href="#"><i class=" icon-share icon-large"></i> Share</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="text"> And I'd do it again! And perhaps a third time! But that would be it. Are you crazy? I can't swallow that. And I'm his friend Jesus. No, I'm Santa Claus! And from now on you're all named Bender Jr. </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="from_user left">
-                                        <a href="#" class="avatar"><img src="img/message_avatar2.png" /></a>
-                                        <div class="message_wrap">
-                                            <span class="arrow"></span>
-                                            <div class="info">
-                                                <a class="name">Mark Jobs </a> <span class="time">2 Days ago</span>
-                                                <div class="options_arrow">
-                                                    <div class="dropdown pull-right">
-                                                        <a class="dropdown-toggle " id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="#"> <i class=" icon-caret-down"></i> </a>
-                                                        <ul class="dropdown-menu " role="menu" aria-labelledby="dLabel">
-                                                            <li><a href="#"><i class=" icon-share-alt icon-large"></i> Reply</a></li>
-                                                            <li><a href="#"><i class=" icon-trash icon-large"></i> Delete</a></li>
-                                                            <li><a href="#"><i class=" icon-share icon-large"></i> Share</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="text"> That's the ONLY thing about being a slave. Now, now. Perfectly symmetrical violence never solved anything. Uh, is the puppy mechanical in any way? As an interesting side note, as a head without a body, I envy the dead. </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- /widget-content -->
-                        </div>
-                        <!-- /widget -->
                     </div>
-                    <!-- /span6 -->
+
                     <div class="span6">
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-list-alt"></i>
                                 <h3> Live location feed </h3>
                             </div>
-                            <!-- /widget-header -->
+
                             <div class="widget-content">
                                 <div class="maps">
                                     @*<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50690.26194980397!2d-122.12143953181338!3d37.43376494127794!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fa35b186a39fb%3A0x5984eee2a66a9cc2!2sMiddlefield+Rd%2C+Palo+Alto%2C+CA%2C+Stany+Zjednoczone!5e0!3m2!1spl!2spl!4v1407250117753" width="560" height="315" frameborder="0" style="border:0"></iframe>*@
-                                    <div id="map_canvas" style="width: 640px; height: 480px;">
-                                    </div>                                
+                                    <div id="map_canvas" style="width: 100%; height: 480px;">
+                                    </div>
                                 </div>
                             </div>
-                            <!-- /widget-content -->
                         </div>
-                        <!-- /widget -->
+
                         <div class="widget">
                             <div class="widget-header">
                                 <i class="icon-bookmark"></i>
                                 <h3>Important Metrics</h3>
                             </div>
+
                             <!-- /widget-header -->
-                            <div class="widget-content">
-                                <table style="width:100%;">
-                                    <tr style="height: 100px;">
-                                        <td><div><div>Atmospheric pressure</div><div class="bigNumbers">1200</div></div></td>
-                                        <td><div><div>Pressure altitude</div><div class="bigNumbers">1200</div></div></td>
-                                        <td><div><div>Inside temperature</div><div class="bigNumbers">1200</div></div></td>
-                                        <td><div><div>Battery 1</div><div class="bigNumbers">1200</div></div></td>
-                                    </tr>
-                                    <tr style="border-top:1px solid #CCC; height: 100px;">
-                                        <td><div><div>Balloon released</div><div class="bigNumbers">true</div></div></td>
-                                        <td><div><div>Parachute deployed</div><div style="color: red !important;" class="bigNumbers">false</div></div></td>
-                                        <td><div><div>Camera up-positioned</div><div class="bigNumbers">true</div></div></td>
-                                        <td><div><div>GPS fix</div><div class="bigNumbers">true</div></div></td>
-                                    </tr>
-                                </table>
+                            @*<div class="widget-content">*@
+                            <div class="widget big-stats-container">
+                                <div class="widget-content">
+                                    <div id="big_stats" class="cf">
+                                        <div class="stat">
+                                            <div>Video Position Up</div> <span class="bigNumbers fa" ng-class="{'fa-check' : videoPositionUp.toLowerCase() == 'true', 'fa-times' : videoPositionUp.toLowerCase() == 'false' }"></span>
+                                        </div>
+                                        <div class="stat">
+                                            <div>Leds Activated</div> <span class="bigNumbers fa" ng-class="{'fa-check' : ledsActivated.toLowerCase() == 'true', 'fa-times' : ledsActivated.toLowerCase() == 'false' }"></span>
+                                        </div>
+                                        <div class="stat">
+                                            <div>Main Deployed</div> <span class="bigNumbers fa" ng-class="{'fa-check' : mainDeployed.toLowerCase() == 'true', 'fa-times' : mainDeployed.toLowerCase() == 'false' }"></span>
+                                        </div>
+                                        <div class="stat">
+                                            <div>GPS fix</div> <span class="bigNumbers fa" ng-class="{'fa-check' : gpsFix.toLowerCase() == 'true', 'fa-times' : gpsFix.toLowerCase() == 'false' }"></span>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div id="big_stats" class="cf">
+                                        <div class="stat">
+                                            <div>Video Servo On</div> <span class="bigNumbers fa" ng-class="{'fa-check' : videoServoOn.toLowerCase() == 'true', 'fa-times' : videoServoOn.toLowerCase() == 'false' }"></span>
+                                        </div>
+                                        <div class="stat">
+                                            <div>BP Servo On</div> <span class="bigNumbers fa" ng-class="{'fa-check' : bpServoOn.toLowerCase() == 'true', 'fa-times' : bpServoOn.toLowerCase() == 'false' }"></span>
+                                        </div>
+                                        <div class="stat">
+                                            <div>Balloon Released</div> <span class="bigNumbers fa" ng-class="{'fa-check' : balloonReleased.toLowerCase() == 'true', 'fa-times' : balloonReleased.toLowerCase() == 'false' }"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*</div>*@
                             </div>
-                            <!-- /widget-content -->
                         </div>
+
                         <!-- /widget -->
                         <div class="widget">
                             <div class="widget-header">
@@ -303,60 +268,16 @@
                             </div>
                             <!-- /widget-header -->
                             <div class="widget-content">
-                                <iframe src="https://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpegasusmission&amp;width=250&amp;height=500&amp;colorscheme=light&amp;show_faces=false&amp;stream=true&amp;show_border=true&amp;header=false&amp;force_wall=false" scrolling="no" frameborder="0" style="border: none; overflow: hidden;   width: 500px; padding: 0px 15px; height: 500px; background: #fff"></iframe>
+                                <iframe src="https://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpegasusmission&amp;width=250&amp;height=500&amp;colorscheme=light&amp;show_faces=false&amp;stream=true&amp;show_border=true&amp;header=false&amp;force_wall=false" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: 100%; height: 500px; background: #fff"></iframe>
                                 <!-- /area-chart -->
                             </div>
                             <!-- /widget-content -->
                         </div>
-
-                        <div class="widget-header">
-                            <i class="icon-list-alt"></i>
-                            <h3> Recent News</h3>
-                        </div>
-                        <!-- /widget-header -->
-                        <div class="widget-content">
-                            <ul class="news-items">
-                                <li>
-
-                                    <div class="news-item-date"> <span class="news-item-day">29</span> <span class="news-item-month">Aug</span> </div>
-                                    <div class="news-item-detail">
-                                        <a href="http://www.egrappler.com/thursday-roundup-40/" class="news-item-title" target="_blank">Thursday Roundup # 40</a>
-                                        <p class="news-item-preview"> This is our web design and development news series where we share our favorite design/development related articles, resources, tutorials and awesome freebies. </p>
-                                    </div>
-
-                                </li>
-                                <li>
-
-                                    <div class="news-item-date"> <span class="news-item-day">15</span> <span class="news-item-month">Jun</span> </div>
-                                    <div class="news-item-detail">
-                                        <a href="http://www.egrappler.com/retina-ready-responsive-app-landing-page-website-template-app-landing/" class="news-item-title" target="_blank">Retina Ready Responsive App Landing Page Website Template – App Landing</a>
-                                        <p class="news-item-preview"> App Landing is a retina ready responsive app landing page website template perfect for software and application developers and small business owners looking to promote their iPhone, iPad, Android Apps and software products.</p>
-                                    </div>
-
-                                </li>
-                                <li>
-
-                                    <div class="news-item-date"> <span class="news-item-day">29</span> <span class="news-item-month">Oct</span> </div>
-                                    <div class="news-item-detail">
-                                        <a href="http://www.egrappler.com/open-source-jquery-php-ajax-contact-form-templates-with-captcha-formify/" class="news-item-title" target="_blank">Open Source jQuery PHP Ajax Contact Form Templates With Captcha: Formify</a>
-                                        <p class="news-item-preview"> Formify is a contribution to lessen the pain of creating contact forms. The collection contains six different forms that are commonly used. These open source contact forms can be customized as well to suit the need for your website/application.</p>
-                                    </div>
-
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /widget-content -->
                     </div>
-                    <!-- /widget -->
                 </div>
-                <!-- /span6 -->
             </div>
-            <!-- /row -->
         </div>
-        <!-- /container -->
     </div>
-    <!-- /main-inner -->
-    <!-- /main -->
     <div class="extra">
         <div class="extra-inner">
             <div class="container">
@@ -389,58 +310,11 @@
     </div>
     <script src="~/Scripts/External/jquery-1.7.2.min.js"></script>
     <script src="~/Scripts/External/bootstrap.js"></script>
+    <script src="~/Scripts/External/angular.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
     <script src="~/Scripts/base.js"></script>
-    </body>
+    <script src="~/Scripts/telemetry.js"></script>
+</body>
 </html>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
-<script src="~/signalr/hubs"></script>
-
-<script type="text/javascript">
-    var mapInitialized = false;
-    var mapOptions = {
-        center: new google.maps.LatLng(0,0),
-        zoom: 10,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById("map_canvas"),
-      mapOptions);
-    $(document).ready(function () {
-       
-        var chat = $.connection.pegasusHub;
-        chat.client.addNewMessageToPage = function (jsonString) {
-
-
-            //initialize(ltd, lng);         
-            var obj = jQuery.parseJSON(jsonString);
-            initialize(55.770 + Math.random(), 37.424 + Math.random());
-
-            //$('#discussion').append('<li><strong>' + htmlEncode(name)
-            //    + '</strong>: ' + htmlEncode(message) + '</li>');
-        };
-
-        $.connection.hub.start().done(function () {
-            chat.server.send(1);
-        });
-
-    });
-
-    function initialize(ltd,lng) {        
-        mapInitialized = true;
-        var latLng = new google.maps.LatLng(ltd, lng);
-        map.panTo(latLng);
-     //// create a marker
-     //var latlng = new google.maps.LatLng();
-     //var marker = new google.maps.Marker({
-     //  position: latlng,
-     //  map: map,
-     //  title: 'My Place'
-     //});
-
-   }
-
-   function htmlEncode(value) {
-       var encodedValue = $('<div />').text(value).html();
-       return encodedValue;
-   }
-</script>
