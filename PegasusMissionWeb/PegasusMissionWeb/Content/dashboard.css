@@ -204,6 +204,7 @@ Bootstrap Admin Template by EGrappler.com
 
 .twitter-timeline {
     width: 100% !important;
+    height: 400px !important;
 }
 
 .big-stats-container .widget-content {
