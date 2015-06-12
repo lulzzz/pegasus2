@@ -4,6 +4,8 @@ using Pegasus.Phone.XF.Utilities;
 using Pegasus.Phone.XF.ViewModels.Views;
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Pegasus.Phone.XF
 {
@@ -17,7 +19,17 @@ namespace Pegasus.Phone.XF
         public LocationsView()
         {
             InitializeComponent();
-            this.PropertyChanged += (s, e) => { if (e.PropertyName == "IsVisible" && this.IsVisible) TelemetryChanged(s, e); };
+        }
+
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+
+            if (propertyName == "IsVisible" && this.IsVisible)
+            {
+                // This nastiness is because of a race condition in initializing the map
+                Task.Delay(100).ContinueWith(task => Device.BeginInvokeOnMainThread(() => TelemetryChanged()));
+            }
         }
 
         protected override void OnBindingContextChanged()
@@ -46,7 +58,7 @@ namespace Pegasus.Phone.XF
             }
         }
 
-        private void TelemetryChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void TelemetryChanged(object sender = null, System.ComponentModel.PropertyChangedEventArgs e = null)
         {
             if (!this.IsVisible)
             {
@@ -170,6 +182,7 @@ namespace Pegasus.Phone.XF
                 this.oldDistance = distance;
             }
 
+            Debug.WriteLine("!! Map requesting radius of " + newSpan.Radius.Miles + " miles, userZoomed: " + this.userZoomed);
             Map.MoveToRegion(newSpan);
         }
     }
