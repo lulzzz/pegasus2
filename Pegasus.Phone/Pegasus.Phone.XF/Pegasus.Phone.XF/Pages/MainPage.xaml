@@ -11,7 +11,7 @@
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <pegasus:TelemetryOverviewView x:Name="TelemetryOverviewView" BindingContext="{Binding CraftTelemetry}" IsVisible="False" />
+    <pegasus:TelemetryOverviewView x:Name="TelemetryOverviewView" BindingContext="{Binding LocationsViewModel}" IsVisible="False" />
     <pegasus:LocationsView x:Name="LocationsView" BindingContext="{Binding LocationsViewModel}" IsVisible="False" />
     <pegasus:TelemetryDetailsView x:Name="TelemetryDetailsView" BindingContext="{Binding TelemetryDetailsViewModel}" IsVisible="False" />
 
