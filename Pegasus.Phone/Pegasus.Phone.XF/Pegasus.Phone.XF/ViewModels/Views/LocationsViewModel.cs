@@ -43,12 +43,7 @@ namespace Pegasus.Phone.XF.ViewModels.Views
                              ChaseTelemetry.Data.ToPosition()).Kilometers));
             }
 
-            // used only to generate notifications
-            set
-            {
-                string unused = "bogus value";
-                SetProperty(ref unused, value);
-            }
+            set { OnPropertyChanged(); }
         }
 
         public LocationsViewModel()

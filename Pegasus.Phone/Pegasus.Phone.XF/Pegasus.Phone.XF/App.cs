@@ -76,6 +76,7 @@ namespace Pegasus.Phone.XF
             CurrentChaseTelemetry = new GroundTelemetryViewModel();
             CurrentLaunchTelemetry = new GroundTelemetryViewModel();
             MainPage = new RootPage();
+            //MainPage = new MainPage();
         }
 
 #if FAKE_DATA
@@ -137,16 +138,26 @@ namespace Pegasus.Phone.XF
         public void ConnectWebSocket()
         {
 #if FAKE_DATA
-            Device.BeginInvokeOnMainThread(() =>
+            Device.BeginInvokeOnMainThread(async () =>
             {
+                this.AppData.BusyCount++;
+
+                await Task.Delay(50); // tiny delay to simulate a real connection
+                //await Task.Delay(5000);
                 this.AppData.MessageCount++;
                 var craftTelemetry = (CraftTelemetry)PegasusMessage.Decode(craftTelemetryLine);
                 this.CurrentCraftTelemetry.Data = craftTelemetry;
                 this.CurrentChaseTelemetry.Data = CreateGroundTelemetry(craftTelemetry, true);
                 this.CurrentLaunchTelemetry.Data = CreateGroundTelemetry(craftTelemetry, false);
+
+                this.AppData.BusyCount--;
             });
 #else
-            Device.BeginInvokeOnMainThread(() => this.AppData.StatusMessage = "Connecting...");
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                this.AppData.StatusMessage = "Connecting...";
+                this.AppData.BusyCount++;
+            });
 
             Task task = Task.Factory.StartNew(() =>
             {
@@ -215,14 +226,21 @@ namespace Pegasus.Phone.XF
 
         private void client_OnOpen(object sender, string message)
         {
-            Device.BeginInvokeOnMainThread(() => this.AppData.StatusMessage = "Web Socket is open");
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                this.AppData.StatusMessage = "Web Socket is open";
+                this.AppData.BusyCount--;
+            });
         }
 
         private void client_OnError(object sender, Exception ex)
         {
-            throw new NotImplementedException();
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                this.AppData.StatusMessage = "Web Socket error: " + ex.Message;
+                this.AppData.BusyCount--;
+            });
         }
-
 
         protected override void OnStart()
         {

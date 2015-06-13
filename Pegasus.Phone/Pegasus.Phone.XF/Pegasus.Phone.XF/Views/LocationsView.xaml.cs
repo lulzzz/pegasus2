@@ -21,14 +21,15 @@ namespace Pegasus.Phone.XF
             InitializeComponent();
         }
 
-        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected override async void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
 
             if (propertyName == "IsVisible" && this.IsVisible)
             {
                 // This nastiness is because of a race condition in initializing the map
-                Task.Delay(100).ContinueWith(task => Device.BeginInvokeOnMainThread(() => TelemetryChanged()));
+                await Task.Delay(100);
+                TelemetryChanged();
             }
         }
 

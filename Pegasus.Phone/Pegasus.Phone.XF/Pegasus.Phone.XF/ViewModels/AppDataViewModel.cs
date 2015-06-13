@@ -21,5 +21,22 @@ namespace Pegasus.Phone.XF.ViewModels
             get { return messageCount; }
             set { SetProperty(ref messageCount, value); }
         }
+
+        private int busyCount;
+        public int BusyCount
+        {
+            get { return busyCount; }
+            set
+            {
+                SetProperty(ref busyCount, value);
+                IsBusy = true; // value doesn't matter
+            }
+        }
+
+        public bool IsBusy
+        {
+            get { return busyCount != 0; }
+            private set { OnPropertyChanged(); }
+        }
     }
 }

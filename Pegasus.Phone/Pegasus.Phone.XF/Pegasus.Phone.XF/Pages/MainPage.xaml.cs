@@ -12,7 +12,7 @@ namespace Pegasus.Phone.XF
 {
     public partial class MainPage : ContentPage
     {
-        private MainPageViewModel ViewModel;
+        private MainPageViewModel viewModel;
         private Dictionary<Button, View> buttons = new Dictionary<Button, View>();
 
         private void ConnectWebSocket(object sender, EventArgs e)
@@ -39,7 +39,9 @@ namespace Pegasus.Phone.XF
         public MainPage()
         {
             InitializeComponent();
-            this.BindingContext = this.ViewModel = new MainPageViewModel();
+
+            this.BindingContext = this.viewModel = new MainPageViewModel();
+            this.viewModel.AppData.PropertyChanged += AppData_PropertyChanged;
             this.buttons[this.TelemetryOverviewButton] = this.TelemetryOverviewView;
             this.buttons[this.LocationsButton] = this.LocationsView;
             this.buttons[this.TelemetryDetailsButton] = this.TelemetryDetailsView;
@@ -47,6 +49,28 @@ namespace Pegasus.Phone.XF
             string defaultView = Settings.HomePageView;
             Button defaultButton = this.buttons.FirstOrDefault(kvp => kvp.Value.GetType().Name == defaultView).Key ?? this.buttons.First().Key;
             this.SwitchToView(defaultButton);
+        }
+
+        private async void AppData_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsBusy")
+            {
+                if (this.viewModel.AppData.IsBusy)
+                {
+                    this.ActivityIndicator.IsRunning = true;
+                    this.ActivityIndicator.IsVisible = true;
+                    this.ActivityIndicatorBackground.Opacity = 0;
+                    this.ActivityIndicatorBackground.IsVisible = true;
+                    await this.ActivityIndicatorBackground.FadeTo(0.5);
+                }
+                else
+                {
+                    this.ActivityIndicator.IsVisible = false;
+                    this.ActivityIndicator.IsRunning = false;
+                    await this.ActivityIndicatorBackground.FadeTo(0);
+                    this.ActivityIndicatorBackground.IsVisible = false;
+                }
+            }
         }
     }
 }

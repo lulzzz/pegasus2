@@ -36,7 +36,7 @@ namespace Pegasus.Phone.XF.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 		#endregion
 
-		public void OnPropertyChanged(string propertyName)
+		public void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			if (PropertyChanged == null)
 				return;
