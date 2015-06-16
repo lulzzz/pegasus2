@@ -1,18 +1,23 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Pegasus2.Data
 {
+    using Newtonsoft.Json;
+    using System;
+
 #if !(SILVERLIGHT || WINDOWS_PHONE || NETFX_CORE || PORTABLE)
     [Serializable]
 #endif
     [JsonObject]
     public class GroundTelemetry : PegasusMessage
-    {       
+    {
+        public GroundTelemetry()
+        {
+
+        }
+
+        #region Properties
+
         [JsonProperty("source")]
         public string Source { get; set; }
 
@@ -23,10 +28,10 @@ namespace Pegasus2.Data
         public double Temperature { get; set; }
 
         [JsonProperty("gpsLatitude")]
-        public double GpsLatitude {get;set;}
+        public double GpsLatitude { get; set; }
 
         [JsonProperty("gpsLongitude")]
-        public double GpsLongitude {get;set;}
+        public double GpsLongitude { get; set; }
 
         [JsonProperty("gpsAltitude")]
         public double GpsAltitude { get; set; }
@@ -37,14 +42,14 @@ namespace Pegasus2.Data
         [JsonProperty("gpsDirection")]
         public double GpsDirection { get; set; }
 
-        [JsonProperty("gpsFix")]        
-        public bool GpsFix {get;set;}
+        [JsonProperty("gpsFix")]
+        public bool GpsFix { get; set; }
 
         [JsonProperty("gpsSatellites")]
         public double GpsSatellites { get; set; }
 
         [JsonProperty("azimuth")]
-        public double Azimuth { get; set; } 
+        public double Azimuth { get; set; }
 
         [JsonProperty("elevation")]
         public double Elevation { get; set; }
@@ -66,6 +71,8 @@ namespace Pegasus2.Data
 
         [JsonProperty("peerDistance")]
         public double PeerDistance { get; set; }
+
+        #endregion
 
         public override MessageType GetMessageType()
         {
@@ -108,7 +115,7 @@ namespace Pegasus2.Data
         {
             int index = 0;
             JsonBuilder builder = new JsonBuilder();
-            
+
             builder.BuildJsonField(Constants.GroundTelemetry.FieldNames[index++], this.Source.ToString());
             builder.BuildJsonField(Constants.GroundTelemetry.FieldNames[index++], this.Timestamp.ToString());
             builder.BuildJsonField(Constants.GroundTelemetry.FieldNames[index++], this.Temperature.ToString());
@@ -129,6 +136,11 @@ namespace Pegasus2.Data
             builder.BuildJsonField(Constants.GroundTelemetry.FieldNames[index++], this.PeerDistance.ToString());
 
             return builder.ToString();
+        }
+
+        public override PegasusMessage FromJson(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<GroundTelemetry>(jsonString);
         }
     }
 }

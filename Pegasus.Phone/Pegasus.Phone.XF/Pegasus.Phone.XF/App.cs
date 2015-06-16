@@ -1,4 +1,4 @@
-﻿#define FAKE_DATA
+﻿#undef FAKE_DATA
 
 using Pegasus.Phone.XF.ViewModels;
 using System;
@@ -25,6 +25,7 @@ namespace Pegasus.Phone.XF
         private static string GroundTopicSubscribeUri = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/ground";
         private static string TelemetryTopicPublishUri = "coaps://pegasusmission.io/publish?topic=http://pegasus2.org/telemetry";
         private static string TelemetryTopicSubscribeUri = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/telemetry";
+        private static string userMessageTopicUriString = "coaps://pegasusmission.io/publish?topic=http://pegasus2.org/usermessage";
         private static string JwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL25hbWUiOiJhYmMyIiwiaHR0cDovL3BlZ2FzdXNtaXNzaW9uLmlvL2NsYWltcy9yb2xlIjoidXNlciIsImlzcyI6InVybjpwZWdhc3VzbWlzc2lvbi5pbyIsImF1ZCI6Imh0dHA6Ly9icm9rZXIucGVnYXN1c21pc3Npb24uaW8vYXBpL2Nvbm5lY3QiLCJleHAiOjE0NjUyMDg5MDQsIm5iZiI6MTQzMzY3MjkwNH0.p856DcRRnGAwZJyPCbBSfrBY5Uwp21_4oNQcxNQamFI";
 
         private IWebSocketClient client;
@@ -75,8 +76,8 @@ namespace Pegasus.Phone.XF
             CurrentCraftTelemetry = new CraftTelemetryViewModel();
             CurrentChaseTelemetry = new GroundTelemetryViewModel();
             CurrentLaunchTelemetry = new GroundTelemetryViewModel();
-            MainPage = new RootPage();
-            //MainPage = new MainPage();
+            //MainPage = new RootPage();
+            MainPage = new MainPage();
         }
 
 #if FAKE_DATA
@@ -174,6 +175,53 @@ namespace Pegasus.Phone.XF
 
             Task.WhenAll(task);
 #endif
+        }
+
+        public void TriggerSendUserMessage(string message)
+        {
+#if FAKE_DATA
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                this.AppData.StatusMessage = "Fake message sent!";
+            });
+#else
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                this.AppData.StatusMessage = "Sending...";
+                this.AppData.BusyCount++;
+            });
+
+            Task task = Task.Factory.StartNew(() =>
+            {
+                SendUserMessage(message);
+            });
+
+            Task.WhenAll(task);
+#endif
+        }
+
+        private void SendUserMessage(string message)
+        {
+            UserMessage umessage = new UserMessage();
+            //adding ticks to the user message for testing latency (not used in production)
+            umessage.Message = message + "_" + DateTime.UtcNow.Ticks.ToString();
+            umessage.id = Guid.NewGuid().ToString();
+            string jsonString = umessage.ToJson();
+            byte[] payload = Encoding.UTF8.GetBytes(jsonString);
+            CoapRequest request = new CoapRequest(messageId++,
+                                                    RequestMessageType.NonConfirmable,
+                                                    MethodType.POST,
+                                                    new Uri(userMessageTopicUriString),
+                                                    MediaType.Json,
+                                                    payload);
+
+            byte[] messageBytes = request.Encode();
+            client.SendAsync(messageBytes).Wait();
+            Device.BeginInvokeOnMainThread(() => 
+            { 
+                this.AppData.StatusMessage = "Message Sent!";
+                this.AppData.BusyCount--;
+            });
         }
 
         private void SubscribeTopic(string subscribeUri)

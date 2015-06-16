@@ -44,8 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accelerometer.cs" />
+    <Compile Include="CameraCommand.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="CraftNote.cs" />
     <Compile Include="CraftTelemetry.cs" />
+    <Compile Include="DelieverySystemCommand.cs" />
     <Compile Include="DimensionalMeasurements.cs" />
     <Compile Include="FlightParameters.cs" />
     <Compile Include="GroundTelemetry.cs" />
@@ -53,8 +56,11 @@
     <Compile Include="JsonBuilder.cs" />
     <Compile Include="Magnetometer.cs" />
     <Compile Include="MessageType.cs" />
+    <Compile Include="ParachuteCommand.cs" />
     <Compile Include="PegasusMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserMessage.cs" />
+    <Compile Include="VideoPosition.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

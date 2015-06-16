@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:Pegasus.Phone.XF;assembly=Pegasus.Phone.XF"
+             x:Class="Pegasus.Phone.XF.TextCraftView">
+  <ContentView.Content>
+    <StackLayout Padding="5, 5, 5, 5"
+                 Orientation="Vertical"
+                 Spacing="5" >
+
+      <Label Text="Say Hello to Pegasus II Craft"
+             FontSize="Medium"
+             HorizontalOptions="Center" />
+
+      <Label
+        Text="{Binding CraftTelemetry.Data.AltitudeSpeed, StringFormat='Craft - {0}'}"
+             FontSize="Small"
+             BackgroundColor="Teal"
+             XAlign="Center" />
+
+      <Editor x:Name="MessageEditor" HeightRequest="200">
+        <Editor.Triggers>
+          <EventTrigger
+             Event="TextChanged">
+            <local:EditorValidation />
+          </EventTrigger>
+        </Editor.Triggers>
+      </Editor>
+      <Label Text="Your message here - 40 characters or less" FontSize="Small"/>
+
+      <Button 
+        x:Name ="SendMessageButton"
+        Text="Send"
+              Clicked="SendUserMessage"
+              HorizontalOptions="Center"
+              VerticalOptions="CenterAndExpand" />
+    </StackLayout>
+  </ContentView.Content>
+</ContentView>

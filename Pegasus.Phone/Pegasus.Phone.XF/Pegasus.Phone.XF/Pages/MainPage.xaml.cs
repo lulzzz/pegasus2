@@ -45,6 +45,7 @@ namespace Pegasus.Phone.XF
             this.buttons[this.TelemetryOverviewButton] = this.TelemetryOverviewView;
             this.buttons[this.LocationsButton] = this.LocationsView;
             this.buttons[this.TelemetryDetailsButton] = this.TelemetryDetailsView;
+            this.buttons[this.TextCraftButton] = this.TextCraftView;
 
             string defaultView = Settings.HomePageView;
             Button defaultButton = this.buttons.FirstOrDefault(kvp => kvp.Value.GetType().Name == defaultView).Key ?? this.buttons.First().Key;

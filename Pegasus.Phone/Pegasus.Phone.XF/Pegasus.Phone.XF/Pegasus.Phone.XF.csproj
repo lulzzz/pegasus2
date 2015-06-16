@@ -80,6 +80,9 @@
     <Compile Include="Views\TelemetryOverviewView.xaml.cs">
       <DependentUpon>TelemetryOverviewView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TextCraftView.xaml.cs">
+      <DependentUpon>TextCraftView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
@@ -194,6 +197,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Pages\RootPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\TextCraftView.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

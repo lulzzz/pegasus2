@@ -17,7 +17,6 @@ namespace P2TelemetryGenerator
     class Program
     {
 
-        //2015-01-28T23:21:28Z start time
 
         private static int telemetryType;
         private static int delay;
@@ -27,8 +26,9 @@ namespace P2TelemetryGenerator
         private static double launchLongitude = -119.1643;
         private static double launchAltitude = 198.8;
 
-        private static string host = "wss://broker.pegasusmission.io/api/connect";
+
         //private static string host = "ws://localhost:11748/api/connect";
+        private static string host = "wss://broker.pegasusmission.io/api/connect";
         private static string subprotocol = "coap.v1";
         private static string securityTokenString;
         private static string issuer = "urn:pegasusmission.io";
@@ -49,39 +49,41 @@ namespace P2TelemetryGenerator
             WriteHeader();
             SelectTelemteryType();
 
-            if(telemetryType == 4)
+            if (telemetryType == 4)
             {
                 role = "user";
             }
             else
             {
                 SelectTelemetrySource();
-            }           
-            
+            }
+
             SelectDelay();
-
-            LoadCraftTelemetry();
-            
             SetSecurityToken();
-
             OpenWebSocket();
 
-            while(!opened)
+            while (!opened)
             {
                 Console.WriteLine("waiting on socket to open...");
                 Thread.Sleep(500);
-                
+
             }
 
+            LoadCraftTelemetry();
+
             int index = 0;
-            if(telemetryType == 1)
+            if (telemetryType == 1)
             {
-                while(index < craftTelemetryList.Count)
-                {   
+                while (index < craftTelemetryList.Count)
+                {
+
                     SendCraftTelemetry(craftTelemetryList[index]);
                     index++;
                     Console.WriteLine("Sent message {0}", index);
-                    Thread.Sleep(delay);                    
+                    if (delay > 0)
+                    {
+                        Thread.Sleep(delay);
+                    }
                 }
             }
             else if (telemetryType == 2)
@@ -89,9 +91,8 @@ namespace P2TelemetryGenerator
                 while (index < craftTelemetryList.Count)
                 {
                     CraftTelemetry ct = JsonConvert.DeserializeObject<CraftTelemetry>(craftTelemetryList[index]);
-                    //CraftTelemetry ct = PegasusMessage.Decode(craftTelemetryList[index]) as CraftTelemetry;
                     GroundTelemetry launchTelemetry = CreateGroundTelemetry(ct, false);
-                    GroundTelemetry mobileTelemtry = CreateGroundTelemetry(ct, true);                   
+                    GroundTelemetry mobileTelemtry = CreateGroundTelemetry(ct, true);
                     if (telemetrySource == "mobile")
                     {
                         SendGroundTelemetry(mobileTelemtry);
@@ -103,7 +104,7 @@ namespace P2TelemetryGenerator
 
                     index++;
                     Console.WriteLine("Sent message {0}", index);
-                    Thread.Sleep(delay);                    
+                    Thread.Sleep(delay);
                 }
             }
             else if (telemetryType == 3)
@@ -111,7 +112,6 @@ namespace P2TelemetryGenerator
                 while (index < craftTelemetryList.Count)
                 {
                     CraftTelemetry ct = JsonConvert.DeserializeObject<CraftTelemetry>(craftTelemetryList[index]);
-                    //CraftTelemetry ct = PegasusMessage.Decode(craftTelemetryList[index]) as CraftTelemetry;
                     GroundTelemetry launchTelemetry = CreateGroundTelemetry(ct, false);
                     GroundTelemetry mobileTelemtry = CreateGroundTelemetry(ct, true);
                     SendCraftTelemetry(craftTelemetryList[index]);
@@ -119,19 +119,20 @@ namespace P2TelemetryGenerator
                     SendGroundTelemetry(mobileTelemtry);
                     index++;
                     Console.WriteLine("Sent message {0}", index);
-                    Thread.Sleep(delay);                    
+                    Thread.Sleep(delay);
                 }
             }
             else
             {
-                while(index < 100)
+
+                index++;
+                while (index < craftTelemetryList.Count)
                 {
                     string userMessage = String.Format("Message {0}", index);
                     SendUserMessage(userMessage);
                     index++;
                     Console.WriteLine("Sent message {0}", index);
                     Thread.Sleep(delay);
-                    
                 }
             }
 
@@ -142,13 +143,14 @@ namespace P2TelemetryGenerator
         }
 
         private static void SendCraftTelemetry(string message)
-        {            
+        {
+            message = message.Replace("02:30", DateTime.UtcNow.Ticks.ToString());
             byte[] payload = Encoding.UTF8.GetBytes(message);
-            CoapRequest request = new CoapRequest(messageId++, 
-                                                    RequestMessageType.NonConfirmable, 
-                                                    MethodType.POST, 
-                                                    new Uri(craftTelemetryTopicUriString), 
-                                                    MediaType.Json, 
+            CoapRequest request = new CoapRequest(messageId++,
+                                                    RequestMessageType.NonConfirmable,
+                                                    MethodType.POST,
+                                                    new Uri(craftTelemetryTopicUriString),
+                                                    MediaType.Json,
                                                     payload);
 
             byte[] messageBytes = request.Encode();
@@ -172,7 +174,11 @@ namespace P2TelemetryGenerator
 
         private static void SendUserMessage(string message)
         {
-            string jsonString = CraftTelemetry.Decode(message).ToJson();
+            UserMessage umessage = new UserMessage();
+            //adding ticks to the user message for testing latency (not used in production)
+            umessage.Message = message + "_" + DateTime.UtcNow.Ticks.ToString();
+            umessage.id = Guid.NewGuid().ToString();
+            string jsonString = umessage.ToJson();
             byte[] payload = Encoding.UTF8.GetBytes(jsonString);
             CoapRequest request = new CoapRequest(messageId++,
                                                     RequestMessageType.NonConfirmable,
@@ -184,23 +190,21 @@ namespace P2TelemetryGenerator
             byte[] messageBytes = request.Encode();
             client.SendAsync(messageBytes).Wait();
         }
-
-
         private static GroundTelemetry CreateGroundTelemetry(CraftTelemetry craftTelemetry, bool mobile)
         {
             GroundTelemetry gt = new GroundTelemetry();
             gt.Source = mobile ? "mobile" : "launch";  //telemetrySource;
             gt.Timestamp = craftTelemetry.Timestamp;
             gt.Temperature = new Random().Next(17, 25);
-            
-            
-            if(mobile)
+
+
+            if (mobile)
             {
                 gt.GpsAltitude = new Random().Next(500, 600);
                 gt.GpsLatitude = craftTelemetry.GpsLatitude + .0111;
                 gt.GpsLongitude = craftTelemetry.GpsLongitude + 0.0111;
                 gt.GpsDirection = new Random().Next(80, 110);
-                gt.GpsSpeed = new Random().Next(10, 50);                
+                gt.GpsSpeed = new Random().Next(10, 50);
             }
             else //launch 
             {
@@ -243,15 +247,15 @@ namespace P2TelemetryGenerator
         private static void OpenWebSocket()
         {
             client = new WebSocketClient_Net45();
-            client.OnClose+=client_OnClose;
-            client.OnError+=client_OnError;
+            client.OnClose += client_OnClose;
+            client.OnError += client_OnError;
             client.OnMessage += client_OnMessage;
             client.OnOpen += client_OnOpen;
 
             Task task = Task.Factory.StartNew(async () =>
-                {
-                    await client.ConnectAsync(host, subprotocol, securityTokenString);
-                });
+            {
+                await client.ConnectAsync(host, subprotocol, securityTokenString);
+            });
 
             Task.WhenAll(task);
         }
@@ -275,7 +279,7 @@ namespace P2TelemetryGenerator
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(ex.Message);
-            if(ex.InnerException != null)
+            if (ex.InnerException != null)
             {
                 Console.WriteLine(ex.InnerException.Message);
             }
@@ -317,8 +321,8 @@ namespace P2TelemetryGenerator
             Console.Write("Type selection here ? ");
             string result = Console.ReadLine();
 
-            if(!int.TryParse(result, out telemetryType))
-            {                
+            if (!int.TryParse(result, out telemetryType))
+            {
                 Console.WriteLine();
                 Console.WriteLine("invalid selection try again");
                 SelectTelemteryType();
@@ -369,7 +373,7 @@ namespace P2TelemetryGenerator
             Console.Write("Select Delay between call (ms) ? ");
             string result = Console.ReadLine();
 
-            if(!int.TryParse(result, out delay))
+            if (!int.TryParse(result, out delay))
             {
                 Console.WriteLine();
                 Console.WriteLine("invalid selection try again");
@@ -400,13 +404,14 @@ namespace P2TelemetryGenerator
                     {
                         string line = reader.ReadLine();
                         CraftTelemetry message = (CraftTelemetry)PegasusMessage.Decode(line);
+                        message.Timestamp = DateTime.UtcNow;
                         message.Source = telemetrySource;
 
                         string jsonString = message.ToJson();
                         craftTelemetryList.Add(jsonString);
                     }
                 }
-            }                        
+            }
         }
     }
 }
