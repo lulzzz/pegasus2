@@ -1,4 +1,4 @@
-﻿#undef FAKE_DATA
+﻿//#define FAKE_DATA
 
 using Pegasus.Phone.XF.ViewModels;
 using System;
@@ -19,8 +19,12 @@ namespace Pegasus.Phone.XF
 {
     public class App : Application
     {
-        private static string Host = "wss://broker.pegasusmission.io/api/connect";
         private static string SubProtocol = "coap.v1";
+#if false
+        private static string Host = "wss://broker.pegasusmission.io/api/connect";
+#else
+        private static string Host = "ws://broker.pegasusmission.io/api/connect";
+#endif
         private static string GroundTopicPublishUri = "coaps://pegasusmission.io/publish?topic=http://pegasus2.org/ground";
         private static string GroundTopicSubscribeUri = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/ground";
         private static string TelemetryTopicPublishUri = "coaps://pegasusmission.io/publish?topic=http://pegasus2.org/telemetry";

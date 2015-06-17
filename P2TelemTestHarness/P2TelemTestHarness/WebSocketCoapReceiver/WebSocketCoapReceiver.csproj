@@ -64,7 +64,7 @@
       <Project>{bd64eb38-79c8-4e58-9239-91d64d91544b}</Project>
       <Name>Pegasus2.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Piraeus.Protocols\Piraeus.Protocols.csproj">
+    <ProjectReference Include="..\..\..\Shared\Piraeus.Protocols\Piraeus.Protocols.csproj">
       <Project>{51658c77-2e00-4d4b-93ba-8a950ff281be}</Project>
       <Name>Piraeus.Protocols</Name>
     </ProjectReference>
