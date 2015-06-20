@@ -5,6 +5,11 @@ $(function () {
             $(this).addClass('subnavbar-open-right');
         }
     });
+
+    $('.widget-header').on('click', function() {
+        $(this).parent('.widget').find('.widget-content').toggle("slow");
+        $(this).find('.minimizeWidget').toggleClass('fa-minus-square-o').toggleClass('fa-plus-square-o');
+    });
 });
 
 var mapInitialized = false;
@@ -13,8 +18,7 @@ var mapOptions = {
     zoom: 10,
     mapTypeId: google.maps.MapTypeId.ROADMAP
 };
-var map = new google.maps.Map(document.getElementById("map_canvas"),
-  mapOptions);
+var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
 function initialize(ltd, lng) {
     mapInitialized = true;
