@@ -2,6 +2,7 @@
 using Pegasus2.Data;
 using Piraeus.Protocols.Coap;
 using Piraeus.Web.WebSockets;
+using Piraeus.Web.WebSockets.Net45;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,7 +42,7 @@ namespace WebSocketCoapReceiver
             Console.ReadKey();
 
             SetSecurityToken();
-            WebSocketClient client = new WebSocketClient();
+            IWebSocketClient client = new WebSocketClient_Net45();
             client.OnClose += client_OnClose;
             client.OnError += client_OnError;
             client.OnOpen += client_OnOpen;
@@ -67,7 +68,7 @@ namespace WebSocketCoapReceiver
             Console.ReadKey();
         }
 
-        private static void Subscribe(WebSocketClient client)
+        private static void Subscribe(IWebSocketClient client)
         {
             Uri craftTelemetryResourceUri = new Uri(String.Format("coaps://{0}/subscribe?topic={1}", coapAuthority, craftTelemetryTopic));
             Uri groundTelemetryResourceUri = new Uri(String.Format("coaps://{0}/subscribe?topic={1}", coapAuthority, groundTelemetryTopic));

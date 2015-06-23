@@ -34,15 +34,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Pegasus.Phone\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel" />
-    <Reference Include="System.IdentityModel.Tokens.Jwt">
-      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.4.0.2.205111437\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=4.0.20622.1351, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Pegasus.Phone\packages\System.IdentityModel.Tokens.Jwt.4.0.2.206221351\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -60,16 +61,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pegasus2.Data\Pegasus2.Data.csproj">
-      <Project>{bd64eb38-79c8-4e58-9239-91d64d91544b}</Project>
-      <Name>Pegasus2.Data</Name>
+    <ProjectReference Include="..\..\..\Shared\Pegasus.Data\Pegasus.Data.csproj">
+      <Project>{f3033e0c-1db5-406e-b6a7-e1c794fad7f3}</Project>
+      <Name>Pegasus.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Shared\WebSockets\Piraeus.Web.WebSockets.Net45\Piraeus.Web.WebSockets.Net45.csproj">
+      <Project>{9d95e266-ce63-41fe-976e-2aa3abf6564a}</Project>
+      <Name>Piraeus.Web.WebSockets.Net45</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Piraeus.Protocols\Piraeus.Protocols.csproj">
       <Project>{51658c77-2e00-4d4b-93ba-8a950ff281be}</Project>
       <Name>Piraeus.Protocols</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.csproj">
-      <Project>{c5dac4a2-b8e7-4e70-9230-c7a94a537c0b}</Project>
+    <ProjectReference Include="..\..\..\Shared\WebSockets\Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.csproj">
+      <Project>{01108527-bd86-4172-8206-f5aab861e293}</Project>
       <Name>Piraeus.Web.WebSockets</Name>
     </ProjectReference>
   </ItemGroup>
