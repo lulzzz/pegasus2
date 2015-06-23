@@ -11,7 +11,6 @@ using Piraeus.Web.WebSockets;
 using Pegasus2.Data;
 using Piraeus.ServiceModel.Protocols.Coap;
 using Pegasus.Phone.XF.ViewModels.Views;
-using Pegasus.Phone.XF.Pages;
 
 namespace Pegasus.Phone.XF
 {
