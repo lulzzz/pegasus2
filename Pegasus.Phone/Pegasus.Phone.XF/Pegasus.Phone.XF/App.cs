@@ -1,4 +1,5 @@
-﻿using Pegasus.Phone.XF.ViewModels;
+﻿
+using Pegasus.Phone.XF.ViewModels;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -129,13 +130,10 @@ namespace Pegasus.Phone.XF
             return gt;
         }
 
-        public void ConnectWebSocket()
+        public async Task ConnectWebSocket()
         {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                this.AppData.StatusMessage = "Connecting...";
-                this.AppData.BusyCount++;
-            });
+            this.AppData.StatusMessage = "Connecting...";
+            this.AppData.BusyCount++;
 
             Task task = Task.Factory.StartNew(() =>
             {
@@ -150,7 +148,7 @@ namespace Pegasus.Phone.XF
                 SubscribeTopic(GroundTopicSubscribeUri);
             });
 
-            Task.WhenAll(task);
+            await task;
         }
 
         public async Task FakeLocationAsync()
@@ -167,20 +165,15 @@ namespace Pegasus.Phone.XF
             this.AppData.BusyCount--;
         }
 
-        public void TriggerSendUserMessage(string message)
+        public async Task SendUserMessageAsync(string message)
         {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                this.AppData.StatusMessage = "Sending...";
-                this.AppData.BusyCount++;
-            });
+            this.AppData.StatusMessage = "Sending...";
+            this.AppData.BusyCount++;
 
-            Task task = Task.Factory.StartNew(() =>
+            await Task.Factory.StartNew(() =>
             {
                 SendUserMessage(message);
             });
-
-            Task.WhenAll(task);
         }
 
         private void SendUserMessage(string message)

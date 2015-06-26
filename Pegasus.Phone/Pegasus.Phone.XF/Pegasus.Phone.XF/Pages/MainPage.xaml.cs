@@ -15,10 +15,10 @@ namespace Pegasus.Phone.XF
         private MainPageViewModel viewModel;
         private Dictionary<Button, View> buttons = new Dictionary<Button, View>();
 
-        private void ConnectWebSocket(object sender, EventArgs e)
+        private async void ConnectWebSocket(object sender, EventArgs e)
         {
             this.ConnectButton.IsEnabled = false;
-            App.Instance.ConnectWebSocket();
+            await App.Instance.ConnectWebSocket();
         }
 
         private void SwitchToView(object sender, EventArgs e = null)
@@ -36,9 +36,9 @@ namespace Pegasus.Phone.XF
             }
         }
 
-        private void DoTest(object sender = null, EventArgs e = null)
+        private async void DoTest(object sender = null, EventArgs e = null)
         {
-            App.Instance.FakeLocationAsync();
+            await App.Instance.FakeLocationAsync();
         }
 
         public MainPage()
