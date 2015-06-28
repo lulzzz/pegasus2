@@ -24,10 +24,11 @@
 
     <Button Grid.Row="3" x:Name="ConnectButton" Text="Go" Clicked="ConnectWebSocket" HorizontalOptions="Center" />
     <StackLayout Grid.Row="4" Orientation="Horizontal" HorizontalOptions="Center" Padding="20">
-      <Button x:Name="TelemetryOverviewButton" Text="Overview" Clicked="SwitchToView" BindingContext="{x:Reference Name=TelemetryOverviewView}" />
-      <Button x:Name="LocationsButton" Text="Map" Clicked="SwitchToView" BindingContext="{x:Reference Name=LocationsView}" />
-      <Button x:Name="TelemetryDetailsButton" Text="Details" Clicked="SwitchToView" BindingContext="{x:Reference Name=TelemetryDetailsView}" />
-      <Button x:Name="TextCraftButton" Text="TextCraft" Clicked="SwitchToView" BindingContext="{x:Reference Name=TextCraftView}" />
+      <Button x:Name="TestButton" Text="X" Clicked="DoTest" />
+      <Button x:Name="TelemetryOverviewButton" Text="Overview" Clicked="SwitchToView" />
+      <Button x:Name="LocationsButton" Text="Map" Clicked="SwitchToView"  />
+      <Button x:Name="TelemetryDetailsButton" Text="Details" Clicked="SwitchToView"  />
+      <Button x:Name="TextCraftButton" Text="TextCraft" Clicked="SwitchToView"  />
     </StackLayout>
   </Grid>
 </ContentPage>

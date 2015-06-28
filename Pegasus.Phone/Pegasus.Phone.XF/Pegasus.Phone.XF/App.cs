@@ -1,6 +1,4 @@
-﻿//#define FAKE_DATA
-
-using Pegasus.Phone.XF.ViewModels;
+﻿using Pegasus.Phone.XF.ViewModels;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +18,7 @@ namespace Pegasus.Phone.XF
     public class App : Application
     {
         private static string SubProtocol = "coap.v1";
-#if false
-        private static string Host = "wss://broker.pegasusmission.io/api/connect";
-#else
         private static string Host = "ws://broker.pegasusmission.io/api/connect";
-#endif
         private static string GroundTopicPublishUri = "coaps://pegasusmission.io/publish?topic=http://pegasus2.org/ground";
         private static string GroundTopicSubscribeUri = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/ground";
         private static string TelemetryTopicPublishUri = "coaps://pegasusmission.io/publish?topic=http://pegasus2.org/telemetry";
@@ -35,12 +29,10 @@ namespace Pegasus.Phone.XF
         private IWebSocketClient client;
         private static ushort messageId;
 
-#if FAKE_DATA
-        private static string craftTelemetryLine = "$:2015-01-28T21:49:18Z,989.6,198.8,13.0,77.6,13.0,2.2,7.5,7.4,0,0,1,0,-3200,-384,17408,-3200,-384,17408,-3200,-384,17408,1.0,46.8301,-119.1643,198.8,6.4,169.5,1,6,0,-0.7,0,0,1,0,0,1000,02:30,*CA";
-        private static double launchLatitude = 46.8422;
-        private static double launchLongitude = -119.1632;
-        private static double launchAltitude = 198.8;
-#endif
+        private static string fakeCraftTelemetryLine = "$:2015-01-28T21:49:18Z,989.6,198.8,13.0,77.6,13.0,2.2,7.5,7.4,0,0,1,0,-3200,-384,17408,-3200,-384,17408,-3200,-384,17408,1.0,46.8301,-119.1643,198.8,6.4,169.5,1,6,0,-0.7,0,0,1,0,0,1000,02:30,*CA";
+        private static double fakeLaunchLatitude = 46.8422;
+        private static double fakeLaunchLongitude = -119.1632;
+        private static double fakeLaunchAltitude = 198.8;
 
         public AppDataViewModel AppData
         {
@@ -84,7 +76,6 @@ namespace Pegasus.Phone.XF
             MainPage = new MainPage();
         }
 
-#if FAKE_DATA
         private static GroundTelemetry CreateGroundTelemetry(CraftTelemetry craftTelemetry, bool mobile)
         {
             GroundTelemetry gt = new GroundTelemetry();
@@ -103,9 +94,9 @@ namespace Pegasus.Phone.XF
             }
             else //launch 
             {
-                gt.GpsAltitude = launchAltitude;
-                gt.GpsLatitude = launchLatitude;
-                gt.GpsLongitude = launchLongitude;
+                gt.GpsAltitude = fakeLaunchAltitude;
+                gt.GpsLatitude = fakeLaunchLatitude;
+                gt.GpsLongitude = fakeLaunchLongitude;
                 gt.Azimuth = new Random().Next(45, 120);
                 gt.Elevation = new Random().Next(10, 75);
             }
@@ -118,7 +109,7 @@ namespace Pegasus.Phone.XF
 
             Location groundLocation = new Location() { Latitude = gt.GpsLatitude, Longitude = gt.GpsLongitude };
             Location craftLocation = new Location() { Latitude = craftTelemetry.GpsLatitude, Longitude = craftTelemetry.GpsLongitude };
-            Location fixedLocation = new Location() { Latitude = launchLatitude, Longitude = launchLongitude };
+            Location fixedLocation = new Location() { Latitude = fakeLaunchLatitude, Longitude = fakeLaunchLongitude };
 
             double distKM = TrackingHelper.CalculateDistance(groundLocation, craftLocation);
             double distMI = distKM * 0.621371;
@@ -138,26 +129,9 @@ namespace Pegasus.Phone.XF
 
             return gt;
         }
-#endif
 
         public void ConnectWebSocket()
         {
-#if FAKE_DATA
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                this.AppData.BusyCount++;
-
-                await Task.Delay(50); // tiny delay to simulate a real connection
-                //await Task.Delay(5000);
-                this.AppData.MessageCount++;
-                var craftTelemetry = (CraftTelemetry)PegasusMessage.Decode(craftTelemetryLine);
-                this.CurrentCraftTelemetry.Data = craftTelemetry;
-                this.CurrentChaseTelemetry.Data = CreateGroundTelemetry(craftTelemetry, true);
-                this.CurrentLaunchTelemetry.Data = CreateGroundTelemetry(craftTelemetry, false);
-
-                this.AppData.BusyCount--;
-            });
-#else
             Device.BeginInvokeOnMainThread(() =>
             {
                 this.AppData.StatusMessage = "Connecting...";
@@ -178,17 +152,24 @@ namespace Pegasus.Phone.XF
             });
 
             Task.WhenAll(task);
-#endif
+        }
+
+        public async Task FakeLocationAsync()
+        {
+            this.AppData.BusyCount++;
+
+            await Task.Delay(250); // tiny delay to simulate a real connection
+            this.AppData.MessageCount++;
+            var craftTelemetry = (CraftTelemetry)PegasusMessage.Decode(fakeCraftTelemetryLine);
+            this.CurrentCraftTelemetry.Data = craftTelemetry;
+            this.CurrentChaseTelemetry.Data = CreateGroundTelemetry(craftTelemetry, true);
+            this.CurrentLaunchTelemetry.Data = CreateGroundTelemetry(craftTelemetry, false);
+
+            this.AppData.BusyCount--;
         }
 
         public void TriggerSendUserMessage(string message)
         {
-#if FAKE_DATA
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                this.AppData.StatusMessage = "Fake message sent!";
-            });
-#else
             Device.BeginInvokeOnMainThread(() =>
             {
                 this.AppData.StatusMessage = "Sending...";
@@ -201,7 +182,6 @@ namespace Pegasus.Phone.XF
             });
 
             Task.WhenAll(task);
-#endif
         }
 
         private void SendUserMessage(string message)
@@ -309,15 +289,13 @@ namespace Pegasus.Phone.XF
             // Handle when your app resumes
         }
 
-#if FAKE_DATA
-
-        public class Location
+        internal class Location
         {
             public double Latitude { get; set; }
             public double Longitude { get; set; }
         }
 
-        public static class TrackingHelper
+        internal static class TrackingHelper
         {
             private static double DegreesToRadians(double degrees)
             {
@@ -367,6 +345,5 @@ namespace Pegasus.Phone.XF
                 return totalDistance;
             }
         }
-#endif
     }
 }

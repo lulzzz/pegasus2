@@ -36,6 +36,11 @@ namespace Pegasus.Phone.XF
             }
         }
 
+        private void DoTest(object sender = null, EventArgs e = null)
+        {
+            App.Instance.FakeLocationAsync();
+        }
+
         public MainPage()
         {
             InitializeComponent();
