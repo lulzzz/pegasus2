@@ -183,7 +183,6 @@ namespace Pegasus.Phone.XF
                 this.oldDistance = distance;
             }
 
-            Debug.WriteLine("!! Map requesting radius of " + newSpan.Radius.Miles + " miles, userZoomed: " + this.userZoomed);
             Map.MoveToRegion(newSpan);
         }
     }

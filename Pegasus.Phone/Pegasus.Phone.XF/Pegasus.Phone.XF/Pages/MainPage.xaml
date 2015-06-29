@@ -20,7 +20,6 @@
     <ActivityIndicator x:Name="ActivityIndicator" IsVisible="False" IsRunning="False" VerticalOptions="Center" />
 
     <Label Grid.Row="1" Text="{Binding AppData.StatusMessage}" HorizontalOptions="CenterAndExpand" />
-    <Label Grid.Row="2" Text="{Binding AppData.MessageCount, StringFormat='received {0} messages'}" HorizontalOptions="CenterAndExpand" />
 
     <StackLayout Grid.Row="4" Orientation="Horizontal" HorizontalOptions="Center" Padding="20">
       <Button x:Name="TestButton" Text="{Binding MessageCount}" Clicked="DoTest" WidthRequest="50" BindingContext="{Binding AppData}" />
