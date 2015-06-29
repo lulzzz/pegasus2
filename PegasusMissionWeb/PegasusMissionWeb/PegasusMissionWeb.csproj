@@ -23,6 +23,7 @@
     <ApplicationInsightsResourceId />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -182,10 +183,19 @@
     <Content Include="Content\External\font-awesome-ie7.min.css" />
     <Content Include="Content\External\font-awesome.css" />
     <Content Include="Content\External\font-awesome.min.css" />
+    <Content Include="dist\css\sb-admin-2.css" />
+    <Content Include="dist\css\timeline.css" />
+    <Content Include="dist\js\sb-admin-2.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\antenna.png" />
+    <Content Include="images\antenna32.png" />
+    <Content Include="images\balloon.png" />
+    <Content Include="images\balloon32.png" />
+    <Content Include="images\mobile.png" />
+    <Content Include="images\mobile32.png" />
     <Content Include="img\sky.jpg" />
     <Content Include="img\body-bg.png" />
     <Content Include="img\glyphicons-halflings-white.html" />
@@ -231,6 +241,105 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="bower_components\bootstrap-social\" />
+    <Folder Include="bower_components\bootstrap\dist\css\" />
+    <Folder Include="bower_components\bootstrap\dist\fonts\" />
+    <Folder Include="bower_components\bootstrap\dist\js\" />
+    <Folder Include="bower_components\bootstrap\fonts\" />
+    <Folder Include="bower_components\bootstrap\grunt\" />
+    <Folder Include="bower_components\bootstrap\js\" />
+    <Folder Include="bower_components\bootstrap\less\mixins\" />
+    <Folder Include="bower_components\datatables-plugins\api\" />
+    <Folder Include="bower_components\datatables-plugins\features\alphabetSearch\" />
+    <Folder Include="bower_components\datatables-plugins\features\lengthLinks\" />
+    <Folder Include="bower_components\datatables-plugins\features\searchHighlight\" />
+    <Folder Include="bower_components\datatables-plugins\filtering\row-based\" />
+    <Folder Include="bower_components\datatables-plugins\filtering\type-based\" />
+    <Folder Include="bower_components\datatables-plugins\i18n\" />
+    <Folder Include="bower_components\datatables-plugins\integration\bootstrap\1\" />
+    <Folder Include="bower_components\datatables-plugins\integration\bootstrap\2\" />
+    <Folder Include="bower_components\datatables-plugins\integration\bootstrap\3\" />
+    <Folder Include="bower_components\datatables-plugins\integration\bootstrap\images\" />
+    <Folder Include="bower_components\datatables-plugins\integration\font-awesome\" />
+    <Folder Include="bower_components\datatables-plugins\integration\foundation\images\" />
+    <Folder Include="bower_components\datatables-plugins\integration\jqueryui\" />
+    <Folder Include="bower_components\datatables-plugins\pagination\jPaginator\" />
+    <Folder Include="bower_components\datatables-plugins\sorting\custom-data-source\" />
+    <Folder Include="bower_components\datatables-plugins\type-detection\" />
+    <Folder Include="bower_components\datatables-responsive\css\" />
+    <Folder Include="bower_components\datatables-responsive\docs\api\" />
+    <Folder Include="bower_components\datatables-responsive\docs\option\" />
+    <Folder Include="bower_components\datatables-responsive\examples\child-rows\" />
+    <Folder Include="bower_components\datatables-responsive\examples\display-control\" />
+    <Folder Include="bower_components\datatables-responsive\examples\initialisation\" />
+    <Folder Include="bower_components\datatables-responsive\examples\styling\" />
+    <Folder Include="bower_components\datatables-responsive\js\" />
+    <Folder Include="bower_components\datatables\media\css\" />
+    <Folder Include="bower_components\datatables\media\images\" />
+    <Folder Include="bower_components\datatables\media\js\" />
+    <Folder Include="bower_components\flot.tooltip\js\" />
+    <Folder Include="bower_components\flot\examples\ajax\" />
+    <Folder Include="bower_components\flot\examples\annotating\" />
+    <Folder Include="bower_components\flot\examples\axes-interacting\" />
+    <Folder Include="bower_components\flot\examples\axes-multiple\" />
+    <Folder Include="bower_components\flot\examples\axes-time-zones\tz\" />
+    <Folder Include="bower_components\flot\examples\axes-time\" />
+    <Folder Include="bower_components\flot\examples\basic-options\" />
+    <Folder Include="bower_components\flot\examples\basic-usage\" />
+    <Folder Include="bower_components\flot\examples\canvas\" />
+    <Folder Include="bower_components\flot\examples\categories\" />
+    <Folder Include="bower_components\flot\examples\image\" />
+    <Folder Include="bower_components\flot\examples\interacting\" />
+    <Folder Include="bower_components\flot\examples\navigate\" />
+    <Folder Include="bower_components\flot\examples\percentiles\" />
+    <Folder Include="bower_components\flot\examples\realtime\" />
+    <Folder Include="bower_components\flot\examples\resize\" />
+    <Folder Include="bower_components\flot\examples\selection\" />
+    <Folder Include="bower_components\flot\examples\series-errorbars\" />
+    <Folder Include="bower_components\flot\examples\series-pie\" />
+    <Folder Include="bower_components\flot\examples\series-toggle\" />
+    <Folder Include="bower_components\flot\examples\series-types\" />
+    <Folder Include="bower_components\flot\examples\shared\jquery-ui\" />
+    <Folder Include="bower_components\flot\examples\stacking\" />
+    <Folder Include="bower_components\flot\examples\symbols\" />
+    <Folder Include="bower_components\flot\examples\threshold\" />
+    <Folder Include="bower_components\flot\examples\tracking\" />
+    <Folder Include="bower_components\flot\examples\visitors\" />
+    <Folder Include="bower_components\flot\examples\zooming\" />
+    <Folder Include="bower_components\font-awesome\css\" />
+    <Folder Include="bower_components\font-awesome\fonts\" />
+    <Folder Include="bower_components\font-awesome\less\" />
+    <Folder Include="bower_components\font-awesome\scss\" />
+    <Folder Include="bower_components\holderjs\src\" />
+    <Folder Include="bower_components\holderjs\test\" />
+    <Folder Include="bower_components\jquery\dist\" />
+    <Folder Include="bower_components\jquery\src\ajax\var\" />
+    <Folder Include="bower_components\jquery\src\attributes\" />
+    <Folder Include="bower_components\jquery\src\core\var\" />
+    <Folder Include="bower_components\jquery\src\css\var\" />
+    <Folder Include="bower_components\jquery\src\data\var\" />
+    <Folder Include="bower_components\jquery\src\effects\" />
+    <Folder Include="bower_components\jquery\src\event\" />
+    <Folder Include="bower_components\jquery\src\exports\" />
+    <Folder Include="bower_components\jquery\src\manipulation\var\" />
+    <Folder Include="bower_components\jquery\src\queue\" />
+    <Folder Include="bower_components\jquery\src\sizzle\dist\" />
+    <Folder Include="bower_components\jquery\src\traversing\var\" />
+    <Folder Include="bower_components\jquery\src\var\" />
+    <Folder Include="bower_components\metisMenu\dist\" />
+    <Folder Include="bower_components\metisMenu\src\" />
+    <Folder Include="bower_components\mocha\media\" />
+    <Folder Include="bower_components\morrisjs\examples\lib\" />
+    <Folder Include="bower_components\morrisjs\less\" />
+    <Folder Include="bower_components\morrisjs\lib\" />
+    <Folder Include="bower_components\morrisjs\spec\lib\area\" />
+    <Folder Include="bower_components\morrisjs\spec\lib\bar\" />
+    <Folder Include="bower_components\morrisjs\spec\lib\donut\" />
+    <Folder Include="bower_components\morrisjs\spec\lib\grid\" />
+    <Folder Include="bower_components\morrisjs\spec\lib\line\" />
+    <Folder Include="bower_components\morrisjs\spec\support\" />
+    <Folder Include="bower_components\morrisjs\spec\viz\exemplary\" />
+    <Folder Include="bower_components\raphael\dev\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
