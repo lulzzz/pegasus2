@@ -26,8 +26,11 @@ namespace Pegasus.Phone.XF
         private static string userMessageTopicUriString = "coaps://pegasusmission.io/publish?topic=http://pegasus2.org/usermessage";
         private static string JwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL25hbWUiOiJhYmMyIiwiaHR0cDovL3BlZ2FzdXNtaXNzaW9uLmlvL2NsYWltcy9yb2xlIjoidXNlciIsImlzcyI6InVybjpwZWdhc3VzbWlzc2lvbi5pbyIsImF1ZCI6Imh0dHA6Ly9icm9rZXIucGVnYXN1c21pc3Npb24uaW8vYXBpL2Nvbm5lY3QiLCJleHAiOjE0NjUyMDg5MDQsIm5iZiI6MTQzMzY3MjkwNH0.p856DcRRnGAwZJyPCbBSfrBY5Uwp21_4oNQcxNQamFI";
 
+        private static double secondsBetweenConnects = 60;
+
+        private DateTime lastConnectAttemptTime;
         private IWebSocketClient client;
-        private static ushort messageId;
+        private ushort messageId;
 
         private static string fakeCraftTelemetryLine = "$:2015-01-28T21:49:18Z,989.6,198.8,13.0,77.6,13.0,2.2,7.5,7.4,0,0,1,0,-3200,-384,17408,-3200,-384,17408,-3200,-384,17408,1.0,46.8301,-119.1643,198.8,6.4,169.5,1,6,0,-0.7,0,0,1,0,0,1000,02:30,*CA";
         private static double fakeLaunchLatitude = 46.8422;
@@ -68,7 +71,7 @@ namespace Pegasus.Phone.XF
         public App()
         {
             Instance = this;
-            AppData = new AppDataViewModel { StatusMessage = "Application launched, press go!" };
+            AppData = new AppDataViewModel();
             CurrentCraftTelemetry = new CraftTelemetryViewModel();
             CurrentChaseTelemetry = new GroundTelemetryViewModel();
             CurrentLaunchTelemetry = new GroundTelemetryViewModel();
@@ -130,22 +133,42 @@ namespace Pegasus.Phone.XF
             return gt;
         }
 
-        public async Task ConnectWebSocket()
+        public async Task ConnectWebSocketAsync()
         {
+            if (this.client != null)
+            {
+                return;
+            }
+
+            DateTime connectTime = lastConnectAttemptTime.AddSeconds(secondsBetweenConnects);
+            while (connectTime > DateTime.Now)
+            {
+                this.AppData.StatusMessage = "Delaying " + (int)(connectTime - DateTime.Now).TotalSeconds + " seconds before reconnecting...";
+                await Task.Delay(1000);
+            }
+
             this.AppData.StatusMessage = "Connecting...";
             this.AppData.BusyCount++;
 
             Task task = Task.Factory.StartNew(() =>
             {
                 messageId = 1;
-                client = DependencyService.Get<IWebSocketClient>();
-                client.OnError += client_OnError;
-                client.OnOpen += client_OnOpen;
-                client.OnClose += client_OnClose;
-                client.OnMessage += client_OnMessage;
-                client.ConnectAsync(Host, SubProtocol, JwtToken).Wait();
-                SubscribeTopic(TelemetryTopicSubscribeUri);
-                SubscribeTopic(GroundTopicSubscribeUri);
+                this.lastConnectAttemptTime = DateTime.Now;
+                this.client = DependencyService.Get<IWebSocketClient>();
+                this.client.OnError += client_OnError;
+                this.client.OnOpen += client_OnOpen;
+                this.client.OnClose += client_OnClose;
+                this.client.OnMessage += client_OnMessage;
+                try
+                {
+                    this.client.ConnectAsync(Host, SubProtocol, JwtToken).Wait();
+                    this.SubscribeTopic(TelemetryTopicSubscribeUri);
+                    this.SubscribeTopic(GroundTopicSubscribeUri);
+                }
+                catch (Exception e)
+                {
+                    this.client_OnError(client, e);
+                }
             });
 
             await task;
@@ -245,7 +268,12 @@ namespace Pegasus.Phone.XF
 
         private void client_OnClose(object sender, string message)
         {
-            throw new NotImplementedException();
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                this.AppData.StatusMessage = "Connection closed: " + message;
+                this.client = null;
+                await this.ConnectWebSocketAsync();
+            });
         }
 
         private void client_OnOpen(object sender, string message)
@@ -259,10 +287,12 @@ namespace Pegasus.Phone.XF
 
         private void client_OnError(object sender, Exception ex)
         {
-            Device.BeginInvokeOnMainThread(() =>
+            Device.BeginInvokeOnMainThread(async () =>
             {
                 this.AppData.StatusMessage = "Web Socket error: " + ex.Message;
                 this.AppData.BusyCount--;
+                this.client = null;
+                await this.ConnectWebSocketAsync();
             });
         }
 

@@ -15,12 +15,6 @@ namespace Pegasus.Phone.XF
         private MainPageViewModel viewModel;
         private Dictionary<Button, View> buttons = new Dictionary<Button, View>();
 
-        private async void ConnectWebSocket(object sender, EventArgs e)
-        {
-            this.ConnectButton.IsEnabled = false;
-            await App.Instance.ConnectWebSocket();
-        }
-
         private void SwitchToView(object sender, EventArgs e = null)
         {
             foreach (var kvp in buttons)
@@ -55,6 +49,12 @@ namespace Pegasus.Phone.XF
             string defaultView = Settings.HomePageView;
             Button defaultButton = this.buttons.FirstOrDefault(kvp => kvp.Value.GetType().Name == defaultView).Key ?? this.buttons.First().Key;
             this.SwitchToView(defaultButton);
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await App.Instance.ConnectWebSocketAsync();
         }
 
         private async void AppData_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

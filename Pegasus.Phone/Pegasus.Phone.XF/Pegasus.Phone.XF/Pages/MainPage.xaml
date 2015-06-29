@@ -22,9 +22,8 @@
     <Label Grid.Row="1" Text="{Binding AppData.StatusMessage}" HorizontalOptions="CenterAndExpand" />
     <Label Grid.Row="2" Text="{Binding AppData.MessageCount, StringFormat='received {0} messages'}" HorizontalOptions="CenterAndExpand" />
 
-    <Button Grid.Row="3" x:Name="ConnectButton" Text="Go" Clicked="ConnectWebSocket" HorizontalOptions="Center" />
     <StackLayout Grid.Row="4" Orientation="Horizontal" HorizontalOptions="Center" Padding="20">
-      <Button x:Name="TestButton" Text="X" Clicked="DoTest" />
+      <Button x:Name="TestButton" Text="{Binding MessageCount}" Clicked="DoTest" WidthRequest="50" BindingContext="{Binding AppData}" />
       <Button x:Name="TelemetryOverviewButton" Text="Overview" Clicked="SwitchToView" />
       <Button x:Name="LocationsButton" Text="Map" Clicked="SwitchToView"  />
       <Button x:Name="TelemetryDetailsButton" Text="Details" Clicked="SwitchToView"  />
