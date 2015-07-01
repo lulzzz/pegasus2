@@ -31,7 +31,7 @@ namespace Pegasus.Phone.XF
         private const double FakeLaunchLongitude = -119.1632;
         private const double FakeLaunchAltitude = 198.8;
 
-        private const double SecondsBetweenConnects = 60;
+        private const double SecondsBetweenConnects = 20;
 
         private DateTime lastConnectAttemptTime;
         private IWebSocketClient client;
@@ -139,6 +139,8 @@ namespace Pegasus.Phone.XF
                 return;
             }
 
+            this.AppData.BusyCount++;
+
             DateTime connectTime = lastConnectAttemptTime.AddSeconds(SecondsBetweenConnects);
             while (connectTime > DateTime.Now)
             {
@@ -147,7 +149,6 @@ namespace Pegasus.Phone.XF
             }
 
             this.AppData.StatusMessage = "Connecting...";
-            this.AppData.BusyCount++;
 
             Task task = Task.Factory.StartNew(() =>
             {
@@ -228,7 +229,7 @@ namespace Pegasus.Phone.XF
             CoapRequest request = new CoapRequest(messageId++, RequestMessageType.NonConfirmable, MethodType.POST, resourceUri, MediaType.Json);
             byte[] message = request.Encode();
             client.SendAsync(message).Wait();
-            Device.BeginInvokeOnMainThread(() => this.AppData.StatusMessage = "Subscribed " + subscribeUri);
+            // Device.BeginInvokeOnMainThread(() => this.AppData.StatusMessage = "Subscribed " + subscribeUri);
         }
 
         private void client_OnMessage(object sender, byte[] message)
@@ -269,7 +270,7 @@ namespace Pegasus.Phone.XF
         {
             Device.BeginInvokeOnMainThread(async () =>
             {
-                this.AppData.StatusMessage = "Connection closed: " + message;
+                // this.AppData.StatusMessage = "Connection closed: " + message;
                 this.client = null;
                 await this.ConnectWebSocketAsync();
             });
@@ -279,7 +280,7 @@ namespace Pegasus.Phone.XF
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                this.AppData.StatusMessage = "Web Socket is open";
+                // this.AppData.StatusMessage = "Web Socket is open";
                 this.AppData.BusyCount--;
             });
         }
@@ -288,9 +289,13 @@ namespace Pegasus.Phone.XF
         {
             Device.BeginInvokeOnMainThread(async () =>
             {
-                this.AppData.StatusMessage = "Web Socket error: " + ex.Message;
+                // this.AppData.StatusMessage = "Web Socket error: " + ex.Message;
                 this.AppData.BusyCount--;
                 this.client = null;
+                // Always give us two seconds before trying to reconnect, in case
+                // the phone is bringing up a connection.  This also solves an
+                // animation problem.
+                await Task.Delay(2000); 
                 await this.ConnectWebSocketAsync();
             });
         }

@@ -8,20 +8,29 @@
       <RowDefinition Height="1*" />
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
     <pegasus:TelemetryOverviewView x:Name="TelemetryOverviewView" BindingContext="{Binding LocationsViewModel}" IsVisible="False" />
     <pegasus:LocationsView x:Name="LocationsView" BindingContext="{Binding LocationsViewModel}" IsVisible="False" />
     <pegasus:TelemetryDetailsView x:Name="TelemetryDetailsView" BindingContext="{Binding TelemetryDetailsViewModel}" IsVisible="False" />
     <pegasus:TextCraftView x:Name="TextCraftView" BindingContext="{Binding TelemetryDetailsViewModel}" IsVisible="False" />
-    <BoxView x:Name="ActivityIndicatorBackground" Color="Black" HorizontalOptions="Fill" VerticalOptions="Fill" IsVisible="False" />
-    <ActivityIndicator x:Name="ActivityIndicator" IsVisible="False" IsRunning="False" VerticalOptions="Center" />
+    <Frame x:Name="ActivityIndicatorBackground" IsVisible="False" Padding="0">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="1*" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <BoxView Grid.RowSpan="4" Color="Black" HorizontalOptions="Fill" VerticalOptions="Fill" />
+        <Frame Grid.Row="1">
+          <Label Text="{Binding AppData.StatusMessage}" FontSize="Medium" XAlign="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+        </Frame>
+        <ActivityIndicator Grid.Row="2" x:Name="ActivityIndicator" IsRunning="False" />
+      </Grid>
+    </Frame>
 
-    <Label Grid.Row="1" Text="{Binding AppData.StatusMessage}" HorizontalOptions="CenterAndExpand" />
-
-    <StackLayout Grid.Row="4" Orientation="Horizontal" HorizontalOptions="Center" Padding="20">
+    <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Center" Padding="20">
       <Button x:Name="TestButton" Text="{Binding MessageCount}" Clicked="DoTest" WidthRequest="50" BindingContext="{Binding AppData}" />
       <Button x:Name="TelemetryOverviewButton" Text="Overview" Clicked="SwitchToView" />
       <Button x:Name="LocationsButton" Text="Map" Clicked="SwitchToView"  />

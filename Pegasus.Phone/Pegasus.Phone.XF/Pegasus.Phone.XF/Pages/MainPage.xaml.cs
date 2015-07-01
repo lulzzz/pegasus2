@@ -64,14 +64,12 @@ namespace Pegasus.Phone.XF
                 if (this.viewModel.AppData.IsBusy)
                 {
                     this.ActivityIndicator.IsRunning = true;
-                    this.ActivityIndicator.IsVisible = true;
                     this.ActivityIndicatorBackground.Opacity = 0;
                     this.ActivityIndicatorBackground.IsVisible = true;
-                    await this.ActivityIndicatorBackground.FadeTo(0.5);
+                    await this.ActivityIndicatorBackground.FadeTo(0.75);
                 }
                 else
                 {
-                    this.ActivityIndicator.IsVisible = false;
                     this.ActivityIndicator.IsRunning = false;
                     await this.ActivityIndicatorBackground.FadeTo(0);
                     this.ActivityIndicatorBackground.IsVisible = false;
