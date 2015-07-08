@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:p1="http://schemas.android.com/apk/res/android"
+    p1:layout_width="match_parent"
+    p1:layout_height="match_parent"
+    p1:id="@+id/frameLayout1"
+    p1:foregroundGravity="bottom"
+    p1:background="#ff212121">
+    <LinearLayout
+        p1:orientation="horizontal"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/navbuttons"
+        p1:gravity="center"
+        p1:layout_marginTop="457.0dp">
+        <ImageButton
+            p1:src="@drawable/appba_gauge_25"
+            p1:layout_width="wrap_content"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/gaugeButton"
+            p1:background="#ff212121" />
+        <ImageButton
+            p1:src="@drawable/appbar_map_gps"
+            p1:layout_width="wrap_content"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/mapButton"
+            p1:background="#ff212121" />
+        <ImageButton
+            p1:src="@drawable/appbar_message_send"
+            p1:layout_width="wrap_content"
+            p1:layout_height="71.6dp"
+            p1:id="@+id/messageButton"
+            p1:background="#ff212121" />
+        <ImageButton
+            p1:src="@drawable/appbar_link"
+            p1:layout_width="wrap_content"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/linkButton"
+            p1:background="#ff212121" />
+    </LinearLayout>
+    <LinearLayout
+        p1:orientation="vertical"
+        p1:layout_width="match_parent"
+        p1:layout_height="wrap_content"
+        p1:id="@+id/linearLayout2"
+        p1:layout_marginTop="0.0dp"
+        p1:layout_marginRight="0.0dp">
+        <EditText
+            p1:inputType="textMultiLine"
+            p1:layout_width="match_parent"
+            p1:layout_height="336.4dp"
+            p1:id="@+id/editText1"
+            p1:background="#ffffffff" />
+        <Space
+            p1:layout_width="match_parent"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/space1"
+            p1:layout_marginBottom="25.0dp" />
+        <ImageButton
+            p1:src="@android:drawable/ic_menu_gallery"
+            p1:layout_width="205.9dp"
+            p1:layout_height="wrap_content"
+            p1:id="@+id/sendButton1"
+            p1:layout_marginRight="0.0dp"
+            p1:layout_gravity="center"
+            p1:layout_marginBottom="25dp" />
+        <TextView
+            p1:text="CHUTE STATUS"
+            p1:textAppearance="?android:attr/textAppearanceMedium"
+            p1:layout_width="match_parent"
+            p1:layout_height="33.9dp"
+            p1:id="@+id/chutestatus"
+            p1:background="#ffbcbcbc"
+            p1:gravity="center" />
+    </LinearLayout>
+</FrameLayout>
