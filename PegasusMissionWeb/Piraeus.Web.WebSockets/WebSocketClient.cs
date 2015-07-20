@@ -21,12 +21,13 @@ namespace Piraeus.Web.WebSockets
             this.messageQueue = new Queue<byte[]>();
         }
 
+        private System.Timers.Timer timer;
 
         public bool IsConnected
         {
             get
             {
-                if(this.client == null)
+                if (this.client == null)
                 {
                     return false;
                 }
@@ -52,8 +53,8 @@ namespace Piraeus.Web.WebSockets
         public async Task ConnectAsync(string host, string subprotocol, string securityToken)
         {
             client.Options.SetBuffer(1024, 1024);
-            
-            if(!string.IsNullOrEmpty(subprotocol))
+
+            if (!string.IsNullOrEmpty(subprotocol))
             {
                 this.client.Options.AddSubProtocol(subprotocol);
             }
@@ -64,16 +65,15 @@ namespace Piraeus.Web.WebSockets
             }
             try
             {
-                
+
                 await client.ConnectAsync(new Uri(host), CancellationToken.None);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-
                 Trace.TraceWarning("Web socket client failed to connect.");
                 Trace.TraceError(ex.Message);
-                
-                if(OnError != null)
+
+                if (OnError != null)
                 {
                     OnError(this, new WebSocketException("Web Socket failed to connect."));
                 }
@@ -84,16 +84,33 @@ namespace Piraeus.Web.WebSockets
             if (OnOpen != null)
             {
                 OnOpen(this, "Web socket is opened.");
-            }           
+                timer = new System.Timers.Timer(2000);
+                timer.Elapsed += timer_Elapsed;
+                timer.Start();
 
-            await ReceiveAsync();                       
+            }
+
+            await ReceiveAsync();
+        }
+
+        void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (!IsConnected)
+            {
+                if (OnClose != null)
+                {
+                    OnClose(this, "Web socket is closed.");
+                }
+            }
+
+            timer.Stop();
         }
 
         public async Task CloseAsync()
         {
             await client.CloseAsync(WebSocketCloseStatus.NormalClosure, "Web Socket closed by client.", CancellationToken.None);
 
-            if(OnClose != null)
+            if (OnClose != null)
             {
                 OnClose(this, "Web socket is closed.");
             }
@@ -106,16 +123,26 @@ namespace Piraeus.Web.WebSockets
             WebSocketReceiveResult result = null;
             int remainingLength = 0;
 
-            while(client.State == WebSocketState.Open)
+            while (client.State == WebSocketState.Open)
             {
                 try
                 {
                     if (prefix == null)
                     {
                         prefix = new byte[4];
-                        result = await client.ReceiveAsync(new ArraySegment<byte>(prefix), CancellationToken.None);
+                        int prefixSize = 4;
+                        int offset = 0;
+                        while (offset < prefix.Length)
+                        {
+                            byte[] array = new byte[prefixSize - offset];
+                            result = await client.ReceiveAsync(new ArraySegment<byte>(array), CancellationToken.None);
+                            Buffer.BlockCopy(array, 0, prefix, offset, result.Count);
+                            offset += result.Count;
+                        }
+
                         prefix = BitConverter.IsLittleEndian ? prefix.Reverse().ToArray() : prefix;
                         remainingLength = BitConverter.ToInt32(prefix, 0);
+
                     }
                     else
                     {
@@ -125,38 +152,56 @@ namespace Piraeus.Web.WebSockets
                         {
                             int bufferSize = remainingLength > receiveChunkSize ? receiveChunkSize : remainingLength;
                             byte[] buffer = new byte[bufferSize];
+                        Label_1E9:
                             result = await client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                            
-                            Buffer.BlockCopy(buffer, 0, message, index, buffer.Length);
-                            index += bufferSize;
-                            remainingLength = buffer.Length - index;
-                        } while (remainingLength > 0);
+                            if (result.Count < remainingLength)
+                            {
+                                Buffer.BlockCopy(buffer, 0, message, index, result.Count);
+                                remainingLength = remainingLength - result.Count;
+                                index += result.Count;
+                                goto Label_1E9;
+                            }
+                            else
+                            {
+                                Buffer.BlockCopy(buffer, 0, message, index, result.Count);
+                                remainingLength = remainingLength - result.Count;
+                            }
 
+                        } while (remainingLength > 0);
 
                         prefix = null;
 
-                        if(!result.EndOfMessage)
+                        if (!result.EndOfMessage)
                         {
-                            throw new WebSocketException("Expected EOF for Web Socket message received.");
+                            if (OnError != null)
+                            {
+                                OnError(this, new WebSocketException("Expected EOF for Web Socket message received."));
+                            }
+                            else
+                            {
+                                throw new WebSocketException("Expected EOF for Web Socket message received.");
+                            }
                         }
 
-                        if(OnMessage != null)
+                        if (OnMessage != null)
                         {
                             OnMessage(this, message);
                         }
+
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     exception = ex;
                     Trace.TraceWarning("Web socket receive faulted.");
                     Trace.TraceError(ex.Message);
+                    break;
                 }
             }
 
             if (exception != null)
             {
-                if(OnError != null)
+                if (OnError != null)
                 {
                     OnError(this, new WebSocketException(exception.Message));
                 }
@@ -175,47 +220,38 @@ namespace Piraeus.Web.WebSockets
             Exception exception = null;
             try
             {
-                this.messageQueue.Enqueue(message);
+                byte[] prefix = BitConverter.IsLittleEndian ? BitConverter.GetBytes(message.Length).Reverse().ToArray() : BitConverter.GetBytes(message.Length);
+                byte[] messageBuffer = new byte[message.Length + prefix.Length];
+                Buffer.BlockCopy(prefix, 0, messageBuffer, 0, prefix.Length);
+                Buffer.BlockCopy(message, 0, messageBuffer, prefix.Length, message.Length);
 
-                while (this.messageQueue.Count > 0)
+                int remainingLength = messageBuffer.Length;
+                int index = 0;
+                do
                 {
-                    byte[] prefix = BitConverter.IsLittleEndian ? BitConverter.GetBytes(message.Length).Reverse().ToArray() : BitConverter.GetBytes(message.Length);
-                    byte[] messageBuffer = new byte[message.Length + prefix.Length];
-                    Buffer.BlockCopy(prefix, 0, messageBuffer, 0, prefix.Length);
-                    Buffer.BlockCopy(message, 0, messageBuffer, prefix.Length, message.Length);
-
-                    int remainingLength = messageBuffer.Length;
-                    int index = 0;
-                    do
+                    int bufferSize = remainingLength > receiveChunkSize ? receiveChunkSize : remainingLength;
+                    byte[] buffer = new byte[bufferSize];
+                    Buffer.BlockCopy(messageBuffer, index, buffer, 0, bufferSize);
+                    index += bufferSize;
+                    remainingLength = messageBuffer.Length - index;
+                    try
                     {
-                        int bufferSize = remainingLength > receiveChunkSize ? receiveChunkSize : remainingLength;
-                        byte[] buffer = new byte[bufferSize];
-                        Buffer.BlockCopy(messageBuffer, index, buffer, 0, bufferSize);
-                        index += bufferSize;
-                        remainingLength = messageBuffer.Length - index;
-                        try
-                        {
-                            await client.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Binary, remainingLength == 0, CancellationToken.None);
-                        }
-                        catch (Exception ex)
-                        {
-                            Trace.TraceWarning("Web Socket send fault.");
-                            Trace.TraceError(ex.Message);
-                            throw;
-                            
-                        }
-                        finally
-                        {
-                            this.messageQueue.Dequeue();
-                        }
-                    } while (remainingLength > 0);
-                }
+                        await client.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Binary, remainingLength == 0, CancellationToken.None);
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.TraceWarning("Web Socket send fault.");
+                        Trace.TraceError(ex.Message);
+                        throw ex;
+
+                    }
+                } while (remainingLength > 0);
             }
             catch (Exception ex)
             {
                 exception = ex;
                 Trace.TraceWarning("Web Socket exception during send.");
-                Trace.TraceError(ex.Message);                
+                Trace.TraceError(ex.Message);
             }
 
             if (exception != null)
