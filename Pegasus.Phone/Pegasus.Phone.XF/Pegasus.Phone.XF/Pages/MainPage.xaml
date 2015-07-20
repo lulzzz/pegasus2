@@ -31,6 +31,11 @@
     </Frame>
 
     <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Center" Padding="20">
+      <Image x:Name="TelemetryOverviewImage" Source="Assets/appbar_gauge_25.png" />
+      <Image x:Name="MapImage" Source="Assets/appbar_map_gps.png" />
+      <Image x:Name="TelemetryDetailsImage" Source="Assets/appbar_gauge_25.png" />
+      <Image x:Name="TextCraftImage" Source="Assets/appbar_message_send.png" />
+      <Image x:Name="LinksImage" Source="Assets/appbar_links.png" />
       <Button x:Name="TestButton" Text="{Binding MessageCount}" Clicked="DoTest" WidthRequest="50" BindingContext="{Binding AppData}" />
       <Button x:Name="TelemetryOverviewButton" Text="Overview" Clicked="SwitchToView" />
       <Button x:Name="LocationsButton" Text="Map" Clicked="SwitchToView"  />

@@ -233,6 +233,10 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\appbar_gauge_25.png" />
+    <Content Include="Assets\appbar_link.png" />
+    <Content Include="Assets\appbar_map_gps.png" />
+    <Content Include="Assets\appbar_message_send.png" />
     <Content Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
