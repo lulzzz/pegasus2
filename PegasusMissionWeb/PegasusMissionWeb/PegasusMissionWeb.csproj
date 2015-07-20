@@ -191,10 +191,16 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\antenna.png" />
+    <Content Include="images\antenna2.gif" />
+    <Content Include="images\antenna232.gif" />
     <Content Include="images\antenna32.png" />
     <Content Include="images\balloon.png" />
+    <Content Include="images\balloon2.gif" />
+    <Content Include="images\balloon232.gif" />
     <Content Include="images\balloon32.png" />
     <Content Include="images\mobile.png" />
+    <Content Include="images\mobile2.gif" />
+    <Content Include="images\mobile232.gif" />
     <Content Include="images\mobile32.png" />
     <Content Include="img\sky.jpg" />
     <Content Include="img\body-bg.png" />

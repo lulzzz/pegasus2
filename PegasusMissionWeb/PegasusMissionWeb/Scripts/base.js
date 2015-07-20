@@ -22,9 +22,9 @@ var balloonTriangle = new google.maps.Polygon({
     fillOpacity: 0.05
 });
 
-var imageAntenna = 'images/antenna32.png';
-var imageMobile = 'images/mobile32.png';
-var imageBalloon = 'images/balloon32.png';
+var imageAntenna = 'images/antenna232.gif';
+var imageMobile = 'images/mobile232.gif';
+var imageBalloon = 'images/balloon232.gif';
 
 var markerLaunch = new google.maps.Marker({
     position: new google.maps.LatLng(0, 0),
