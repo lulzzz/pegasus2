@@ -28,9 +28,9 @@ namespace Piraeus.Web.WebSockets.WinRT
             this.client = new MessageWebSocket();
         }
 
-        public async Task ConnectAsync(string host)
+        public Task ConnectAsync(string host)
         {
-            await ConnectAsync(host, null, null);
+            return ConnectAsync(host, null, null);
         }
 
         public async Task ConnectAsync(string host, string subprotocol, string securityToken)
@@ -72,14 +72,6 @@ namespace Piraeus.Web.WebSockets.WinRT
 
         private void Client_MessageReceived(MessageWebSocket sender, MessageWebSocketMessageReceivedEventArgs args)
         {
-            if (args.MessageType == SocketMessageType.Utf8)
-            {
-                //var stream = args.GetDataStream();
-                //uint length = messageReader.ReadUInt32();
-                //string message = messageReader.ReadString(length);
-                throw new InvalidOperationException("Expected a Binary message!");
-            }
-
             try
             {
                 var messageReader = args.GetDataReader();

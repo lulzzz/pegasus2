@@ -150,28 +150,26 @@ namespace Pegasus.Phone.XF
 
             this.AppData.StatusMessage = "Connecting...";
 
-            Task task = Task.Factory.StartNew(() =>
+            messageId = 1;
+            this.lastConnectAttemptTime = DateTime.Now;
+            this.client = DependencyService.Get<IWebSocketClient>();
+            this.client.OnError += client_OnError;
+            this.client.OnClose += client_OnClose;
+            this.client.OnMessage += client_OnMessage;
+            try
             {
-                messageId = 1;
-                this.lastConnectAttemptTime = DateTime.Now;
-                this.client = DependencyService.Get<IWebSocketClient>();
-                this.client.OnError += client_OnError;
-                this.client.OnOpen += client_OnOpen;
-                this.client.OnClose += client_OnClose;
-                this.client.OnMessage += client_OnMessage;
-                try
-                {
-                    this.client.ConnectAsync(Host, SubProtocol, JwtToken).Wait();
-                    this.SubscribeTopic(TelemetryTopicSubscribeUri);
-                    this.SubscribeTopic(GroundTopicSubscribeUri);
-                }
-                catch (Exception e)
-                {
-                    this.client_OnError(client, e);
-                }
-            });
-
-            await task;
+                await this.client.ConnectAsync(Host, SubProtocol, JwtToken);
+                await this.SubscribeTopicAsync(TelemetryTopicSubscribeUri);
+                await this.SubscribeTopicAsync(GroundTopicSubscribeUri);
+            }
+            catch (Exception e)
+            {
+                this.client_OnError(client, e);
+            }
+            finally
+            {
+                this.AppData.BusyCount--;
+            }
         }
 
         public async Task FakeLocationAsync()
@@ -193,14 +191,6 @@ namespace Pegasus.Phone.XF
             this.AppData.StatusMessage = "Sending...";
             this.AppData.BusyCount++;
 
-            await Task.Factory.StartNew(() =>
-            {
-                SendUserMessage(message);
-            });
-        }
-
-        private void SendUserMessage(string message)
-        {
             UserMessage umessage = new UserMessage();
             //adding ticks to the user message for testing latency (not used in production)
             umessage.Message = message + "_" + DateTime.UtcNow.Ticks.ToString();
@@ -215,21 +205,23 @@ namespace Pegasus.Phone.XF
                                                     payload);
 
             byte[] messageBytes = request.Encode();
-            client.SendAsync(messageBytes).Wait();
-            Device.BeginInvokeOnMainThread(() => 
-            { 
+            try
+            {
+                await client.SendAsync(messageBytes);
                 this.AppData.StatusMessage = "Message Sent!";
+            }
+            finally
+            {
                 this.AppData.BusyCount--;
-            });
+            }
         }
 
-        private void SubscribeTopic(string subscribeUri)
+        private Task SubscribeTopicAsync(string subscribeUri)
         {
             Uri resourceUri = new Uri(subscribeUri);
             CoapRequest request = new CoapRequest(messageId++, RequestMessageType.NonConfirmable, MethodType.POST, resourceUri, MediaType.Json);
             byte[] message = request.Encode();
-            client.SendAsync(message).Wait();
-            // Device.BeginInvokeOnMainThread(() => this.AppData.StatusMessage = "Subscribed " + subscribeUri);
+            return client.SendAsync(message);
         }
 
         private void client_OnMessage(object sender, byte[] message)
@@ -273,15 +265,6 @@ namespace Pegasus.Phone.XF
                 // this.AppData.StatusMessage = "Connection closed: " + message;
                 this.client = null;
                 await this.ConnectWebSocketAsync();
-            });
-        }
-
-        private void client_OnOpen(object sender, string message)
-        {
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                // this.AppData.StatusMessage = "Web Socket is open";
-                this.AppData.BusyCount--;
             });
         }
 

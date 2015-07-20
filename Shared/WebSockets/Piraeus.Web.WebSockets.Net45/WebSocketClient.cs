@@ -47,16 +47,16 @@ namespace Piraeus.Web.WebSockets.Net45
             }
         }
 
-        public async Task ConnectAsync(string host)
+        public Task ConnectAsync(string host)
         {
-            await ConnectAsync(host, null, null);
+            return ConnectAsync(host, null, null);
         }
 
         public async Task ConnectAsync(string host, string subprotocol, string securityToken)
         {
             client.Options.SetBuffer(1024, 1024);
             
-            if(!string.IsNullOrEmpty(subprotocol))
+            if (!string.IsNullOrEmpty(subprotocol))
             {
                 this.client.Options.AddSubProtocol(subprotocol);
             }
@@ -65,18 +65,11 @@ namespace Piraeus.Web.WebSockets.Net45
             {
                 client.Options.SetRequestHeader("Authorization", String.Format("Bearer {0}", securityToken));
             }
-            try
-            {
-                await client.ConnectAsync(new Uri(host), CancellationToken.None);
-            }
-            catch(Exception ex)
-            {
-                //Trace.TraceWarning("Web socket client failed to connect.");
-                //Trace.TraceError(ex.Message);
-                throw;
-            }
 
-            ReceiveAsync();
+            await client.ConnectAsync(new Uri(host), CancellationToken.None);
+
+            Thread receiveLoopThread = new Thread(ReceiveLoopAsync);
+            receiveLoopThread.Start();
 
             if (OnOpen != null)
             {
@@ -87,6 +80,7 @@ namespace Piraeus.Web.WebSockets.Net45
         public async Task CloseAsync()
         {
             await client.CloseAsync(WebSocketCloseStatus.NormalClosure, "Web Socket closed by client.", CancellationToken.None);
+            // TODO: reap thread
 
             if(OnClose != null)
             {
@@ -94,15 +88,14 @@ namespace Piraeus.Web.WebSockets.Net45
             }
         }
 
-        public async Task ReceiveAsync()
+        private async void ReceiveLoopAsync()
         {
             Exception exception = null;
             byte[] prefix = null;
-            int offset = 0;
             WebSocketReceiveResult result = null;
             int remainingLength = 0;
 
-            while(client.State == WebSocketState.Open)
+            while(client.State == WebSocketState.Open && exception == null)
             {
                 try
                 {
@@ -152,7 +145,17 @@ namespace Piraeus.Web.WebSockets.Net45
 
             if (exception != null)
             {
-                await CloseAsync();
+                try
+                {
+                    CloseAsync().Wait();
+                }
+                catch (Exception ex)
+                {
+                    if (OnError != null)
+                    {
+                        OnError(this, ex);
+                    }
+                }
 
                 if (OnClose != null)
                 {
