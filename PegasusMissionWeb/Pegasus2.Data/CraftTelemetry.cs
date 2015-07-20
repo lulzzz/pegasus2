@@ -113,9 +113,19 @@ namespace Pegasus2.Data
         [JsonProperty("videoServoOn")]
         public bool VideoServoOn { get; set; }
 
+        [JsonProperty("deploymentAltitude")]
+        public double DeploymentAltitude { get; set; }
+
+        [JsonProperty("releaseTime")]
+        public string ReleaseTime { get; set; }
+
         #endregion
 
-       
+        public static CraftTelemetry FromJson(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<CraftTelemetry>(jsonString);
+        }
+
         public override MessageType GetMessageType()
         {
             return MessageType.CraftTelemetry;
@@ -164,6 +174,8 @@ namespace Pegasus2.Data
             this.LedsActivated = parts[index++] == "0" ? false : true;
             this.BPServoOn = parts[index++] == "0" ? false : true;
             this.VideoServoOn = parts[index++] == "0" ? false : true;
+            this.DeploymentAltitude = Convert.ToDouble(parts[index++]);
+            this.ReleaseTime = parts[index++];
 
             return this;
 
@@ -173,7 +185,7 @@ namespace Pegasus2.Data
         {
             JsonBuilder builder = new JsonBuilder();
             int index = 0;
-            builder.BuildJsonField(Constants.PayloadTelemetry.FieldNames[index++], this.Source.ToString());
+            builder.BuildJsonField(Constants.PayloadTelemetry.FieldNames[index++], this.Source);
             builder.BuildJsonField(Constants.PayloadTelemetry.FieldNames[index++], this.Timestamp.ToString());
             builder.BuildJsonField(Constants.PayloadTelemetry.FieldNames[index++], this.AtmosphericPressure.ToString());
             builder.BuildJsonField(Constants.PayloadTelemetry.FieldNames[index++], this.PressureAltitude.ToString());
@@ -216,14 +228,12 @@ namespace Pegasus2.Data
             builder.BuildJsonFieldBool(Constants.PayloadTelemetry.FieldNames[index++], this.LedsActivated.ToString());
             builder.BuildJsonFieldBool(Constants.PayloadTelemetry.FieldNames[index++], this.BPServoOn.ToString());
             builder.BuildJsonFieldBool(Constants.PayloadTelemetry.FieldNames[index++], this.VideoServoOn.ToString());
+            builder.BuildJsonField(Constants.PayloadTelemetry.FieldNames[index++], this.DeploymentAltitude.ToString());
+            builder.BuildJsonField(Constants.PayloadTelemetry.FieldNames[index++], this.ReleaseTime);
             
             return builder.ToString();
         }
 
-        public override PegasusMessage FromJson(string jsonString)
-        {
-            return JsonConvert.DeserializeObject<CraftTelemetry>(jsonString);
-        }
     }
 
 }

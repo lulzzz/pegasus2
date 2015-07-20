@@ -16,6 +16,11 @@ namespace Pegasus2.Data
         [JsonProperty("position")]
         public VideoPosition Position { get; set; }
 
+        
+        public static CameraCommand FromJson(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<CameraCommand>(jsonString);
+        }
 
         public override MessageType GetMessageType()
         {
@@ -41,9 +46,5 @@ namespace Pegasus2.Data
             return JsonConvert.SerializeObject(this);
         }
 
-        public override PegasusMessage FromJson(string jsonString)
-        {
-            return JsonConvert.DeserializeObject<CameraCommand>(jsonString);
-        }
     }
 }

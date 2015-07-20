@@ -56,6 +56,11 @@ namespace Pegasus2.Data
             }
         }
 
+        public static DeliverySystemCommand FromJson(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<DeliverySystemCommand>(jsonString);
+        }
+
         public override MessageType GetMessageType()
         {
             return MessageType.DeliverySystemCommand;
@@ -79,9 +84,5 @@ namespace Pegasus2.Data
             return JsonConvert.SerializeObject(this);
         }
 
-        public override PegasusMessage FromJson(string jsonString)
-        {
-            return JsonConvert.DeserializeObject<DeliverySystemCommand>(jsonString);
-        }
     }
 }

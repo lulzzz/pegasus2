@@ -14,7 +14,7 @@ namespace Pegasus2.Data
         
         public abstract string ToJson();
 
-        public abstract PegasusMessage FromJson(string jsonString);
+        
 
         public static PegasusMessage Decode(string message)
         {

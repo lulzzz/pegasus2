@@ -57,6 +57,11 @@ namespace Pegasus2.Data
             }
         }
 
+        public static ParachuteCommand FromJson(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<ParachuteCommand>(jsonString);
+        }
+
         public override MessageType GetMessageType()
         {
             return MessageType.ParachuteCommand;
@@ -80,9 +85,5 @@ namespace Pegasus2.Data
             return JsonConvert.SerializeObject(this);
         }
 
-        public override PegasusMessage FromJson(string jsonString)
-        {
-            return JsonConvert.DeserializeObject<ParachuteCommand>(jsonString);
-        }
     }
 }

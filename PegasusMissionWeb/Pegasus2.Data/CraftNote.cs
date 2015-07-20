@@ -15,12 +15,20 @@ namespace Pegasus2.Data
         private const string prefix = "N:";
 
 
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
          [JsonProperty("note")]
         public string Note { get; set; }
 
         public override MessageType GetMessageType()
         {
             return MessageType.CraftNote;
+        }
+
+        public static CraftNote FromJson(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<CraftNote>(jsonString);
         }
 
         public override byte[] ToCraftMessage()
@@ -41,9 +49,5 @@ namespace Pegasus2.Data
             return JsonConvert.SerializeObject(this);
         }
 
-        public override PegasusMessage FromJson(string jsonString)
-        {
-            return JsonConvert.DeserializeObject<CraftNote>(jsonString);
-        }
     }
 }

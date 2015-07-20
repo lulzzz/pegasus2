@@ -59,9 +59,5 @@ namespace Pegasus2.Data
             return JsonConvert.SerializeObject(this);
         }
 
-        public override PegasusMessage FromJson(string jsonString)
-        {
-            return JsonConvert.DeserializeObject<PegasusResponse>(jsonString);
-        }
     }
 }

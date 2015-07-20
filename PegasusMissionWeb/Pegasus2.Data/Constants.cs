@@ -9,7 +9,7 @@ namespace Pegasus2.Data
                                                 "tempOutside", "battery1Level", "battery2Level", "balloonReleased", "mainDeployed", "radiationCps", "videoPositionUp",
                                                 "_9DofAccelerometer", "_9DofGyroscope", "_9DofMagnetometer", "radioStrength", "gpsLatitude", "gpsLongitude", "gpsAltitude", 
                                                 "gpsSpeed", "gpsDirection", "gpsFix", "gpsSatellites", "receptionErrors", "verticalSpeed", "pictureCount", "uvRays",
-                                                "ledsActivated", "bpServoOn", "videoServoOn"};
+                                                "ledsActivated", "bpServoOn", "videoServoOn", "deploymentAltitude", "releaseTime" };
             public static readonly string[] ComplexTypeNames = { "_9DofAccelerometer", "_9DofGyroscope", "_9DofMagnetometer" };
             public static readonly string[] ComplexTypeFieldNames = { "x", "y", "z" };
 

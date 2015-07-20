@@ -19,11 +19,16 @@ namespace Pegasus2.Data
         private const string prefix = "U:";
 
         [JsonProperty("id")]
-        public string id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("message")]
         public string Message { get; set; }
 
+
+        public static UserMessage FromJson(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<UserMessage>(jsonString);
+        }
         public override MessageType GetMessageType()
         {
             return MessageType.UserMessage;
@@ -47,9 +52,5 @@ namespace Pegasus2.Data
             return JsonConvert.SerializeObject(this);
         }
 
-        public override PegasusMessage FromJson(string jsonString)
-        {
-            return JsonConvert.DeserializeObject<UserMessage>(jsonString);
-        }
     }
 }

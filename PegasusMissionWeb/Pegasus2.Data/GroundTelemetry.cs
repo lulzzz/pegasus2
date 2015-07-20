@@ -72,6 +72,11 @@ namespace Pegasus2.Data
 
         #endregion
 
+        public static GroundTelemetry FromJson(string jsonString)
+        {
+            return JsonConvert.DeserializeObject<GroundTelemetry>(jsonString);
+        }
+
         public override MessageType GetMessageType()
         {
             return MessageType.GroundTelemetry;
@@ -136,9 +141,5 @@ namespace Pegasus2.Data
             return builder.ToString();
         }
 
-        public override PegasusMessage FromJson(string jsonString)
-        {
-            return JsonConvert.DeserializeObject<GroundTelemetry>(jsonString);
-        }
     }
 }
