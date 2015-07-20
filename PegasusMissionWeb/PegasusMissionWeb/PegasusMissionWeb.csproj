@@ -208,6 +208,7 @@
     <Content Include="Scripts\External\angular.min.js" />
     <Content Include="Scripts\External\bootstrap.js" />
     <Content Include="Scripts\External\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\pegasusmission2.pubxml" />
     <None Include="Scripts\External\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\External\jquery-1.7.2.min.js" />
     <Content Include="Scripts\External\jquery.validate.js" />

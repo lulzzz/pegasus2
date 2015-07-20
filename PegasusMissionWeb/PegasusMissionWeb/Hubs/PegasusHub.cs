@@ -56,6 +56,7 @@ namespace PegasusMissionWeb.Hubs
             }
             // Call the addNewMessageToPage method to update clients.
             Clients.All.addNewMessageToPage(jsonString);
+           
 
         }
 
@@ -74,8 +75,28 @@ namespace PegasusMissionWeb.Hubs
         {
             CoapMessage coapMessage = CoapMessage.DecodeMessage(message);
             string jsonString = Encoding.UTF8.GetString(coapMessage.Payload);
-            //CraftTelemetry telemetry = JsonConvert.DeserializeObject<CraftTelemetry>(jsonString);
-            Send(jsonString);
+
+            if (coapMessage.ResourceUri.ToString().Contains("/telemetry"))
+            {
+                CraftTelemetry ct = CraftTelemetry.FromJson(jsonString);
+                Send(jsonString);
+                //how does the map get updated for the craft???
+            }
+            else if(coapMessage.ResourceUri.ToString().Contains("/ground"))
+            {
+                //this is the data from the ground stations to use on the map
+
+                GroundTelemetry gt = GroundTelemetry.FromJson(jsonString);
+                if(gt.Source == "mobile") //the mobile ground unit
+                {
+                    //how to update the map for mobile???
+                }
+                else //the launch/stationary ground unit
+                {
+                    //how to update the map for launch???
+                }
+
+            }
 
             //Send(telemetry.GpsLatitude.ToString(), telemetry.GpsLongitude.ToString(), telemetry.Accelerometer.ToString() );
         }
