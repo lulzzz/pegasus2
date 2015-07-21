@@ -30,7 +30,7 @@ namespace PegasusMissionWeb.Hubs
 
         private static bool opened;
 
-        public void Send(string jsonString)
+        public void Send(string jsonString, string telemetryType)
         {
             if (webSocketInstantiated == false)
             {
@@ -47,7 +47,7 @@ namespace PegasusMissionWeb.Hubs
 
                 Task.WhenAll(task);
 
-                while(!opened)
+                while (!opened)
                 {
                     Thread.Sleep(100);
                 }
@@ -55,8 +55,8 @@ namespace PegasusMissionWeb.Hubs
                 Subscribe();
             }
             // Call the addNewMessageToPage method to update clients.
-            Clients.All.addNewMessageToPage(jsonString);
-           
+            Clients.All.addNewMessageToPage(jsonString, telemetryType);
+
 
         }
 
@@ -79,21 +79,21 @@ namespace PegasusMissionWeb.Hubs
             if (coapMessage.ResourceUri.ToString().Contains("/telemetry"))
             {
                 CraftTelemetry ct = CraftTelemetry.FromJson(jsonString);
-                Send(jsonString);
+                Send(jsonString, "balloon");
                 //how does the map get updated for the craft???
             }
-            else if(coapMessage.ResourceUri.ToString().Contains("/ground"))
+            else if (coapMessage.ResourceUri.ToString().Contains("/ground"))
             {
                 //this is the data from the ground stations to use on the map
 
                 GroundTelemetry gt = GroundTelemetry.FromJson(jsonString);
-                if(gt.Source == "mobile") //the mobile ground unit
+                if (gt.Source == "mobile") //the mobile ground unit
                 {
-                    //how to update the map for mobile???
+                    Send(jsonString, "mobile");                    
                 }
                 else //the launch/stationary ground unit
                 {
-                    //how to update the map for launch???
+                    Send(jsonString, "launch");                   
                 }
 
             }

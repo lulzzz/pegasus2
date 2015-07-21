@@ -27,7 +27,7 @@ var imageMobile = 'images/mobile232.gif';
 var imageBalloon = 'images/balloon232.gif';
 
 var markerLaunch = new google.maps.Marker({
-    position: new google.maps.LatLng(0, 0),
+    position: new google.maps.LatLng(46.8301, -119.1643),
     map: map,
     title: locationNameArray[0],
     icon: imageAntenna
@@ -105,15 +105,25 @@ function embedElevation(displayMap, marker, elevatorService, locationLatLon, con
 
 }
 
-function initialize(ltd, lng, ltd2, lng2) {
+function initialize(ltd, lng, telemetryType) {
     //44.8292, -117.8703
-    var launch = new google.maps.LatLng(46.8301, -119.1645);
-    var mobile = new google.maps.LatLng(ltd2, lng2);
-    var balloon = new google.maps.LatLng(ltd, lng);
+    var ltdlng = new google.maps.LatLng(ltd, lng)
 
-    markerLaunch.setPosition(launch);
-    markerMobile.setPosition(mobile);
-    markerBalloon.setPosition(balloon);
+    if (telemetryType == "balloon") {
+        markerBalloon.setPosition(ltdlng);
+    } else if (telemetryType == "mobile") {
+        markerMobile.setPosition(ltdlng);
+    } else if (telemetryType == "launch") {
+        markerLaunch.setPosition(ltdlng);
+    }
+
+    //var launch = new google.maps.LatLng(46.8301, -119.1645);
+    //var mobile = new google.maps.LatLng(ltd2, lng2);
+    //var balloon = new google.maps.LatLng(ltd, lng);
+
+    //markerLaunch.setPosition(launch);
+    //markerMobile.setPosition(mobile);
+    //markerBalloon.setPosition(balloon);
 
     var elevator = new google.maps.ElevationService();
 
@@ -143,21 +153,21 @@ function initialize(ltd, lng, ltd2, lng2) {
       '- 22,500 ft altitude<br>' +
       '- 5.25 miles actual distance<br>';
 
-    embedElevation(map, markerBalloon, elevator, balloon, contentStringBalloon);
-    embedElevation(map, markerLaunch, elevator, launch, contentStringLaunch);
-    embedElevation(map, markerMobile, elevator, mobile, contentStringMobile);
+    embedElevation(map, markerBalloon, elevator, markerBalloon.getPosition(), contentStringBalloon);
+    embedElevation(map, markerLaunch, elevator, markerLaunch.getPosition(), contentStringLaunch);
+    embedElevation(map, markerMobile, elevator, markerMobile.getPosition(), contentStringMobile);
 
     var triangleCoords = [
-        new google.maps.LatLng(ltd, lng),
-        new google.maps.LatLng(ltd2, lng2),
-        new google.maps.LatLng(46.8301, -119.1645),
-        new google.maps.LatLng(ltd, lng)
+        markerBalloon.getPosition(),
+        markerLaunch.getPosition(),
+       markerMobile.getPosition(),
+        markerBalloon.getPosition()
     ];
 
     balloonTriangle.setPaths(triangleCoords);
 
     balloonTriangle.setMap(map);
-    centerMapOnLocations(map, launch, mobile, balloon);
+    centerMapOnLocations(map, markerMobile.getPosition(), markerLaunch.getPosition(), markerBalloon.getPosition());
 }
 
 
