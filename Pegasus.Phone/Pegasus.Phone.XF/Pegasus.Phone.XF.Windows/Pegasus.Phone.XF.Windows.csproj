@@ -159,6 +159,10 @@
     <None Include="Pegasus.Phone.XF.Windows_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="appbar_gauge_25.png" />
+    <Content Include="appbar_link.png" />
+    <Content Include="appbar_map_gps.png" />
+    <Content Include="appbar_message_send.png" />
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />

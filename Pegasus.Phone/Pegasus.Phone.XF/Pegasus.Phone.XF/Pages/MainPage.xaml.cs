@@ -13,14 +13,14 @@ namespace Pegasus.Phone.XF
     public partial class MainPage : ContentPage
     {
         private MainPageViewModel viewModel;
-        private Dictionary<Button, View> buttons = new Dictionary<Button, View>();
+        private Dictionary<Image, View> images = new Dictionary<Image, View>();
 
         private void SwitchToView(object sender, EventArgs e = null)
         {
-            foreach (var kvp in buttons)
+            foreach (var kvp in images)
             {
                 bool match = (kvp.Key == sender);
-                kvp.Key.IsEnabled = !match;
+                kvp.Key.Opacity = match ? 1.0 : 0.5;
                 kvp.Value.IsVisible = match;
 
                 if (match)
@@ -41,14 +41,14 @@ namespace Pegasus.Phone.XF
 
             this.BindingContext = this.viewModel = new MainPageViewModel();
             this.viewModel.AppData.PropertyChanged += AppData_PropertyChanged;
-            this.buttons[this.TelemetryOverviewButton] = this.TelemetryOverviewView;
-            this.buttons[this.LocationsButton] = this.LocationsView;
-            this.buttons[this.TelemetryDetailsButton] = this.TelemetryDetailsView;
-            this.buttons[this.TextCraftButton] = this.TextCraftView;
+            this.images[this.TelemetryOverviewImage] = this.TelemetryOverviewView;
+            this.images[this.MapImage] = this.LocationsView;
+            this.images[this.TelemetryDetailsImage] = this.TelemetryDetailsView;
+            this.images[this.TextCraftImage] = this.TextCraftView;
 
             string defaultView = Settings.HomePageView;
-            Button defaultButton = this.buttons.FirstOrDefault(kvp => kvp.Value.GetType().Name == defaultView).Key ?? this.buttons.First().Key;
-            this.SwitchToView(defaultButton);
+            Image defaultImage = this.images.FirstOrDefault(kvp => kvp.Value.GetType().Name == defaultView).Key ?? this.images.First().Key;
+            this.SwitchToView(defaultImage);
         }
 
         protected override async void OnAppearing()
