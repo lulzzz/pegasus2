@@ -37,10 +37,6 @@
       <Image x:Name="TextCraftImage" Source="Assets/appbar_message_send.png" />
       <Image x:Name="LinksImage" Source="Assets/appbar_links.png" />
       <Button x:Name="TestButton" Text="{Binding MessageCount}" Clicked="DoTest" WidthRequest="50" BindingContext="{Binding AppData}" />
-      <Button x:Name="TelemetryOverviewButton" Text="Overview" Clicked="SwitchToView" />
-      <Button x:Name="LocationsButton" Text="Map" Clicked="SwitchToView"  />
-      <Button x:Name="TelemetryDetailsButton" Text="Details" Clicked="SwitchToView"  />
-      <Button x:Name="TextCraftButton" Text="TextCraft" Clicked="SwitchToView"  />
     </StackLayout>
   </Grid>
 </ContentPage>

@@ -46,6 +46,13 @@ namespace Pegasus.Phone.XF
             this.images[this.TelemetryDetailsImage] = this.TelemetryDetailsView;
             this.images[this.TextCraftImage] = this.TextCraftView;
 
+            TapGestureRecognizer tapImage = new TapGestureRecognizer();
+            tapImage.Tapped += SwitchToView;
+            foreach (Image image in this.images.Keys)
+            {
+                image.GestureRecognizers.Add(tapImage);
+            }
+
             string defaultView = Settings.HomePageView;
             Image defaultImage = this.images.FirstOrDefault(kvp => kvp.Value.GetType().Name == defaultView).Key ?? this.images.First().Key;
             this.SwitchToView(defaultImage);
