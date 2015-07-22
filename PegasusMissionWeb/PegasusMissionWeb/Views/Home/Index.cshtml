@@ -28,8 +28,9 @@
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </a><a class="brand" href="index">The Pegasus Mission</a>
+                @Html.ActionLink("Activate SMS", "ActivateSMS", null, new Dictionary<string, object> { { "class", "btn btn-default" }, { "role", "button" } });
             </div>
-        </div>
+</div>
     </div>
 
     <div class="main" ng-controller="telemetry">
@@ -56,8 +57,30 @@
                                 </div>
                             </div>
                         </div>
+                 
+                        <div class="widget widget-nopad">
+                            <div class="widget-header">
+                                <h3>
+                                    <span class="fa fa-video-camera">&nbsp;</span> Launch video
+                                </h3>
+                                <span class="fa fa-minus-square-o minimizeWidget"></span>
+                            </div>
+                            <!-- /widget-header -->
+                            <div class="widget-content">
+                                <div id='videoControl'>
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/rNhmYaWiPEk" frameborder="0" allowfullscreen></iframe>
+                                    <!-- <video width="320" height="240" srv=>
+                    <source src="assets/dizzy.mp4" type="video/mp4"/>
+                    <source src="assets/dizzy.webm" type="video/webm"/>
+                    <source src="assets/dizzy.ogv" type="video/ogg"/>
+                    Your browser does not support the video tag.
+                </video>-->
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="widget widget-nopad">
+
                             <div class="widget-header">
                                 <h3> <span class="fa fa-rocket">&nbsp;</span> Live telemetry
                                 </h3>
@@ -115,7 +138,7 @@
                                     <div class="widget-content">
                                         <div id="big_stats" class="cf">
                                             <div class="stat">
-                                                <div>Altitude</div> <span class="bigNumbers" ng-bind="gpsAltitude"></span>
+                                                <div>Altitude</div> <span class="bigNumbers" id="gpsAltitude"></span>
                                             </div>
                                             <div class="stat">
                                                 <div>Latitude</div> <span class="bigNumbers" ng-bind="gpsLatitude"></span>
@@ -195,16 +218,17 @@
                             </div>
                             <div class="widget-content" style="align-content: center; align-content: stretch">
                                 <a class="twitter-timeline" href="https://twitter.com/PegasusMission" data-widget-id="605579741039427584">Tweets by @@PegasusMission</a>
-                                <script>
+                 
+                                 <script>
                                     !function (d, s, id) {
-                                        var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                                        if (!d.getElementById(id)) {
-                                            js = d.createElement(s);
-                                            js.id = id;
-                                            js.src = p + "://platform.twitter.com/widgets.js";
-                                            fjs.parentNode.insertBefore(js, fjs);
-                                        }
-                                    }(document, "script", "twitter-wjs");
+                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + "://platform.twitter.com/widgets.js";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, "script", "twitter-wjs");
                                 </script>
 
                             </div>
@@ -300,8 +324,9 @@
                         <h4>The Pegasus Mission</h4>
                         <ul>
                             <li><a target="_blank;" href="http://pegasusmission.com/">Original Website</a></li>
-                            <li><a target="_blank;" href="http://pegasusmission.com/about/">About us</a></li>
-                        </ul>
+                            @*<li><a target="_blank;" href="about">About us</a></li>*@
+                            <li>@Html.ActionLink("About us", "About")</li>
+</ul>
                     </div>
                     <div class="span4">
                         <h4>Social</h4>

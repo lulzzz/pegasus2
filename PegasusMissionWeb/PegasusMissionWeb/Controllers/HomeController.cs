@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PegasusMissionWeb.Hubs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,18 @@ namespace PegasusMissionWeb.Controllers
             ViewBag.Message = "Your application description page.";
 
             return View();
+        }
+
+        public ActionResult ActivateSMS()
+        {
+            string number = "9689370998";
+
+            string jsonString = "{\"Number\":\"" + number + "\"}";
+            //"{\"Number\":\"5302137893\"}"
+
+            //string jsonString = String.Format("{\"Number\":\"{0}\"}", number);
+            SMSManager.AddPhone(jsonString);
+            return RedirectToAction("Index");
         }
 
         public ActionResult Contact()

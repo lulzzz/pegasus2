@@ -60,6 +60,8 @@ namespace PegasusMissionWeb.Hubs
 
         }
 
+
+
         private void Subscribe()
         {
             CoapRequest telemetrySubscription = new CoapRequest(1, RequestMessageType.NonConfirmable, MethodType.POST, new Uri(telemetryUriString), MediaType.Json);

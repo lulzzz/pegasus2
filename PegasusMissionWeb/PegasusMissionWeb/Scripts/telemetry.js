@@ -13,6 +13,10 @@ app.controller('telemetry', ['$scope', function ($scope) {
         var chat = $.connection.pegasusHub;
         chat.client.addNewMessageToPage = function (jsonString, telemetryType) {
             var obj = JSON.parse(jsonString);
+            if (telemetryType == "balloon") {
+                $("#gpsAltitude").text(obj.gpsAltitude);
+            }
+
             if (typeof (obj.gpsAltitude) != "undefined") {
                 $.extend($scope, obj);
                 $scope.$apply();

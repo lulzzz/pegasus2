@@ -54,11 +54,16 @@ function centerMapOnLocations(displayMap, launchLatLon, mobileLatLon, balloonLat
     bounds.extend(launchLatLon);
     bounds.extend(mobileLatLon);
     bounds.extend(balloonLatLon);
-
+    displayMap.setZoom(2);
     displayMap.fitBounds(bounds);
-    displayMap.panToBounds(bounds);
-
+    //displayMap.panToBounds(bounds);
+    displayMap.setZoom(2);
 }
+var zoom = false;
+
+centerMapOnLocations(map, markerLaunch.getPosition(), markerLaunch.getPosition(), markerLaunch.getPosition());
+//map.setCenter(new google.maps.LatLng(46.8301, -119.1643));
+
 
 function embedElevation(displayMap, marker, elevatorService, locationLatLon, content) {
     var elevationData;
@@ -111,6 +116,7 @@ function initialize(ltd, lng, telemetryType) {
 
     if (telemetryType == "balloon") {
         markerBalloon.setPosition(ltdlng);
+
     } else if (telemetryType == "mobile") {
         markerMobile.setPosition(ltdlng);
     } else if (telemetryType == "launch") {
@@ -167,8 +173,11 @@ function initialize(ltd, lng, telemetryType) {
     balloonTriangle.setPaths(triangleCoords);
 
     balloonTriangle.setMap(map);
-    centerMapOnLocations(map, markerMobile.getPosition(), markerLaunch.getPosition(), markerBalloon.getPosition());
-}
+    if (!zoom) {
+        map.setZoom(15);
+        zoom = true;
+    }
+    }
 
 
 
