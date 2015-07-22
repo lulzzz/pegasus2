@@ -15,6 +15,14 @@ app.controller('telemetry', ['$scope', function ($scope) {
             var obj = JSON.parse(jsonString);
             if (telemetryType == "balloon") {
                 $("#gpsAltitude").text(obj.gpsAltitude);
+                $("#gpsLatitude").text(obj.gpsLatitude);
+                $("#gpsLongitude").text(obj.gpsLongitude);
+                $("#gpsSatellites").text(obj.gpsSatellites);
+                $("#gpsSpeed").text(obj.gpsSpeed);
+                $("#gpsDirection").text(obj.gpsDirection);
+                $("#verticalSpeed").text(obj.verticalSpeed);
+                $("#radioStrength").text(obj.radioStrength);
+
             }
 
             if (typeof (obj.gpsAltitude) != "undefined") {
