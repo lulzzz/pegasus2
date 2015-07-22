@@ -238,6 +238,7 @@
     <AndroidResource Include="Resources\drawable\appbar_map_gps.png" />
     <AndroidResource Include="Resources\drawable\appbar_message_send.png" />
     <Content Include="Properties\AndroidManifest.xml" />
+    <AndroidResource Include="Resources\drawable\appbar_home_empty.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\WebSockets\Piraeus.Web.WebSockets.Net45\Piraeus.Web.WebSockets.Net45.csproj">

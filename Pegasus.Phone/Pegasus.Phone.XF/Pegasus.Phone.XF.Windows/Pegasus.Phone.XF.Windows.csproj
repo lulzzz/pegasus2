@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="appbar_gauge_25.png" />
+    <Content Include="appbar_home_empty.png" />
     <Content Include="appbar_link.png" />
     <Content Include="appbar_map_gps.png" />
     <Content Include="appbar_message_send.png" />
