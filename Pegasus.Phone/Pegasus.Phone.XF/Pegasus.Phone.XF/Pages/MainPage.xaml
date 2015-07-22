@@ -14,6 +14,7 @@
     <pegasus:LocationsView x:Name="LocationsView" BindingContext="{Binding LocationsViewModel}" IsVisible="False" />
     <pegasus:TelemetryDetailsView x:Name="TelemetryDetailsView" BindingContext="{Binding TelemetryDetailsViewModel}" IsVisible="False" />
     <pegasus:TextCraftView x:Name="TextCraftView" BindingContext="{Binding TelemetryDetailsViewModel}" IsVisible="False" />
+    <pegasus:LinksView x:Name="LinksView" BindingContext="{Binding LocationsViewModel}" IsVisible="False" />
     <Frame x:Name="ActivityIndicatorBackground" IsVisible="False" Padding="0">
       <Grid>
         <Grid.RowDefinitions>
@@ -30,7 +31,7 @@
       </Grid>
     </Frame>
 
-    <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Center" Padding="20">
+    <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Center" Padding="0">
       <Image x:Name="TelemetryOverviewImage" Source="appbar_home_empty.png" />
       <Image x:Name="MapImage" Source="appbar_map_gps.png" />
       <Image x:Name="TelemetryDetailsImage" Source="appbar_gauge_25.png" />

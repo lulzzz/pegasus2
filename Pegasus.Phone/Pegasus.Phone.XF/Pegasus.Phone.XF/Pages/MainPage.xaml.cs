@@ -45,6 +45,7 @@ namespace Pegasus.Phone.XF
             this.images[this.MapImage] = this.LocationsView;
             this.images[this.TelemetryDetailsImage] = this.TelemetryDetailsView;
             this.images[this.TextCraftImage] = this.TextCraftView;
+            this.images[this.LinksImage] = this.LinksView;
 
             TapGestureRecognizer tapImage = new TapGestureRecognizer();
             tapImage.Tapped += SwitchToView;
