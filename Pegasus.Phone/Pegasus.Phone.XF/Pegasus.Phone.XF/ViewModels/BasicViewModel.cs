@@ -12,10 +12,14 @@ namespace Pegasus.Phone.XF.ViewModels
         public T Data
         {
             get { return data; }
-            set { SetProperty(ref data, value); }
+            set { SetProperty(ref data, value); OnSetData(); }
         }
 
         protected BasicViewModel()
+        {
+        }
+
+        protected virtual void OnSetData()
         {
         }
     }
