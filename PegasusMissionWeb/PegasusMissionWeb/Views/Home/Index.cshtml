@@ -23,12 +23,13 @@
 </head>
 <body ng-app="pegasus" style="background-image:url('/img/sky.jpg'); background-repeat: no-repeat; background-size: cover;">
     <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
+        <div class="navbar-inner">            
             <div class="container">
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </a><a class="brand" href="index">The Pegasus Mission</a>
-                @Html.ActionLink("Activate SMS", "ActivateSMS", null, new Dictionary<string, object> { { "class", "btn btn-default" }, { "role", "button" } });
+                @Html.ActionLink("Flight Notifications", "Notifications", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
+                @*@Html.ActionLink("Activate SMS", "ActivateSMS", null, new Dictionary<string, object> { { "class", "btn btn-default" }, { "role", "button" } });*@
             </div>
 </div>
     </div>
@@ -93,13 +94,13 @@
                                     <div class="widget-content">
                                         <div id="big_stats" class="cf">
                                             <div class="stat">
-                                                <div>Atm pressure</div> <span class="bigNumbers" ng-bind="atmosphericPressure"></span>
+                                                <div>Atm Pressure (mB)</div> <span class="bigNumbers" ng-bind="atmosphericPressure"></span>
                                             </div>
                                             <div class="stat">
-                                                <div>Temp inside</div> <span class="bigNumbers" ng-bind="tempInside"></span>
+                                                <div>Temp Inside (C)</div> <span class="bigNumbers" ng-bind="tempInside"></span>
                                             </div>
                                             <div class="stat">
-                                                <div>Pressure altitude</div> <span class="bigNumbers" ng-bind="pressureAltitude"></span>
+                                                <div>Pressure Altitude (m)</div> <span class="bigNumbers" ng-bind="pressureAltitude"></span>
                                             </div>
                                             <div class="stat">
                                                 <div>Humidity</div> <span class="bigNumbers" ng-bind="humidity"></span>
@@ -108,16 +109,16 @@
                                         <hr />
                                         <div id="big_stats" class="cf">
                                             <div class="stat">
-                                                <div>Pressure temp</div> <span class="bigNumbers" ng-bind="pressureTemp"></span>
+                                                <div>Pressure Temp (C)</div> <span class="bigNumbers" ng-bind="pressureTemp"></span>
                                             </div>
                                             <div class="stat">
-                                                <div>Temp outside</div> <span class="bigNumbers" ng-bind="tempOutside"></span>
+                                                <div>Temp Outside (C)</div> <span class="bigNumbers" ng-bind="tempOutside"></span>
                                             </div>
                                             <div class="stat">
-                                                <div>Battery 1 level</div> <span class="bigNumbers" ng-bind="battery1Level"></span>
+                                                <div>Battery 1 Level</div> <span class="bigNumbers" ng-bind="battery1Level"></span>
                                             </div>
                                             <div class="stat">
-                                                <div>Battery 2 level</div> <span class="bigNumbers" ng-bind="battery2Level"></span>
+                                                <div>Battery 2 Level</div> <span class="bigNumbers" ng-bind="battery2Level"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -138,7 +139,7 @@
                                     <div class="widget-content">
                                         <div id="big_stats" class="cf">
                                             <div class="stat">
-                                                <div>Altitude</div> <span class="bigNumbers" id="gpsAltitude"></span>
+                                                <div>Altitude (m)</div> <span class="bigNumbers" id="gpsAltitude"></span>
                                             </div>
                                             <div class="stat">
                                                 <div>Latitude</div> <span class="bigNumbers" id="gpsLatitude"></span>
@@ -153,16 +154,16 @@
                                         <hr />
                                         <div id="big_stats" class="cf">
                                             <div class="stat">
-                                                <div>Speed</div> <span class="bigNumbers" id="gpsSpeed"></span>
+                                                <div>Ground Speed (k)</div> <span class="bigNumbers" id="gpsSpeed"></span>
                                             </div>
                                             <div class="stat">
-                                                <div>Vertical speed</div> <span class="bigNumbers" id="verticalSpeed"></span>
+                                                <div>Vertical Speed (m/s)</div> <span class="bigNumbers" id="verticalSpeed"></span>
                                             </div>
                                             <div class="stat">
                                                 <div>Direction</div> <span class="bigNumbers" id="gpsDirection"></span>
                                             </div>
                                             <div class="stat">
-                                                <div>Radio strength</div> <span class="bigNumbers" id="radioStrength"></span>
+                                                <div>Radio Strength</div> <span class="bigNumbers" id="radioStrength"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -183,16 +184,16 @@
                                     <div class="widget-content">
                                         <div id="big_stats" class="cf">
                                             <div class="stat">
-                                                <div>UV rays</div> <span class="bigNumbers" ng-bind="uvRays"></span>
+                                                <div>UV Rays (w/cm2)</div> <span class="bigNumbers" ng-bind="uvRays"></span>
                                             </div>
                                             <div class="stat">
-                                                <div>Radiation CPS</div> <span class="bigNumbers" ng-bind="radiationCps"></span>
+                                                <div>Radiation (#/min)</div> <span class="bigNumbers" ng-bind="radiationCps"></span>
                                             </div>
                                             <div class="stat">
-                                                <div>Radiation errors</div> <span class="bigNumbers" ng-bind="receptionErrors"></span>
+                                                <div>Reception Errors</div> <span class="bigNumbers" ng-bind="receptionErrors"></span>
                                             </div>
                                             <div class="stat">
-                                                <div>Picture count</div> <span class="bigNumbers" ng-bind="pictureCount"></span>
+                                                <div>Picture Count</div> <span class="bigNumbers" ng-bind="pictureCount"></span>
                                             </div>
                                         </div>
                                         <hr />
