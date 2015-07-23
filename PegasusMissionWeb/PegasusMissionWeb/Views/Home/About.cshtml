@@ -28,15 +28,41 @@
                 <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </a><a class="brand" href="index">The Pegasus Mission</a>
+                @Html.ActionLink("Home", "Index", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
+                @Html.ActionLink("Flight Notifications", "Notifications", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
+                @Html.ActionLink("Contact the Team", "Contact", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
+                
             </div>
         </div>
     </div>
 
     <div class="main-inner">
-        <div class="container">
+        <div class="container" style="padding-left:2em;">
             <div class="row">
-                <div class="span6">
-[Text]
+                <div class="span6" style="width:800px;font-family:'Segoe UI';font-size:medium;background-color:navy;color:whitesmoke;padding-left:2em;padding-right:2em;">
+                    <b>What is “The Pegasus Mission”?</b><br />
+                    The Pegasus Mission is all about experimentation and the search for new ideas to achieve something that is not currently possible.  This is not our day job, it’s our passion for experimentation. High Altitude Science provides an interesting proving ground for this, where it takes literally a mission to get a craft into the upper atmosphere, 20 miles above the surface of the Earth.   Pegasus uses a high altitude balloon as a delivery system to carry a payload packed with meteorological sensors to stream telemetry and control flight operations in real-time.  It provides both a rich and interesting experience for users viewing the flight as it happens as well as lasting memories for the flight crews.
+                    <p></p>
+                    <b>Pegasus-II</b><br /> 
+                    We are passionate about participation and bringing the drama of High Altitude Science to a very personal level.  Pegasus-II will be a "test" flight that helps us prove scale out of the technologies which means broadening our reach to individuals.  It will include 7 radios, 38 sensors, and 6 cameras.  One of those cameras is moveable and will stream live video from the flight to enhance the experience.  Additionally, we will add phone apps for Android, iOS, and Windows Phones, which will make the experience accessible to many users  by exposing real-time telemetry and an updatable map that shows Pegasus-II and the relationship of the chase team.  Our Web site will show the same as the phone apps, and also provide a link to the streaming video.  We will be adding another interesting experience by allows users to place information onboard the craft during the flight with the apps.
+                    <p></p>
+                    <b>Your Response to Pegasus-I was AWESOME</b><br />
+                    We have received a hugely positive response from the previous mission and we cannot thank you enough for your interest and unwavering support. We are "infected" with the technical passion and freedom that Pegasus provides, but more important is the humbling experience of touching a stranger's life with the awe they experience of a photograph or video at high altitude.  Pegasus truly makes the connection between STEM fields and people in a most unusual way.   It truly takes a village to launch a successful mission and we would like to invite you to join us for another grand and risky experiment to near space, Pegasus-II, and experience the thrill of High Altitude Science.
+                    <p></p>
+                    <b>Mission Parameters</b><br />
+                    <ol>
+                        <li>Where: Cheyenne, WY, USA</li>
+                        <li>When: Week of Sept.7, 2015</li>
+                        <li>Target Altitude: 100,000 ft</li>
+                        <li>Flight Time: ~2 hours</li>
+                        <li>Max Descent Velocity: ~300mph</li>
+                        <li>Video: Onboard live streaming 'eye-in-the-sky', live launch video, 5 onboard cameras</li>
+                        <li>Phone Apps: Live real-time telemetry, iPhone, Android, Windows Phone</li>
+                        <li>Flight Operations: Real-time remote controlled</li>
+                        <li>User Communications to Craft:  Get your message from your phone to the craft inflight and on the video record.</li>
+                                            
+
+                    </ol>
                     </div></div></div></div>
 
 </body>
