@@ -203,7 +203,15 @@
     <Content Include="images\mobile2.gif" />
     <Content Include="images\mobile232.gif" />
     <Content Include="images\mobile32.png" />
+    <Content Include="img\apple-store-download-135px.png" />
+    <Content Include="img\facbook-icon.png" />
+    <Content Include="img\google-play-store-download-135px.png" />
+    <Content Include="img\Pegasus Making 2.jpg" />
+    <Content Include="img\Pegasus Making1.jpg" />
+    <Content Include="img\PegasusMaking3.jpg" />
+    <Content Include="img\PegasusMaking4.jpg" />
     <Content Include="img\sky.jpg" />
+    <Content Include="img\sky3.jpg" />
     <Content Include="img\body-bg.png" />
     <Content Include="img\glyphicons-halflings-white.html" />
     <Content Include="img\glyphicons-halflings.html" />
@@ -211,6 +219,8 @@
     <Content Include="img\message_avatar1.png" />
     <Content Include="img\message_avatar2.png" />
     <Content Include="img\sky2.jpg" />
+    <Content Include="img\twitter-icon.png" />
+    <Content Include="img\windows-phone-135px.png" />
     <Content Include="Scripts\base.js" />
     <Content Include="Scripts\External\angular.min.js" />
     <Content Include="Scripts\External\bootstrap.js" />

@@ -22,35 +22,94 @@
         <![endif]-->
 </head>
 <body ng-app="pegasus" style="background-image:url('/img/sky.jpg'); background-repeat: no-repeat; background-size: cover;">
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">            
-            <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </a><a class="brand" href="index">The Pegasus Mission</a>
-                @Html.ActionLink("Flight Notifications", "Notifications", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
-                @Html.ActionLink("Contact the Team", "Contact", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
-                @Html.ActionLink("About Us", "About", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
-                <span style="padding-left:2em;color:yellow;font-size:small">
-                    Pegasus II phone apps on iPhone, Android, and Windows Phones<br />                    
-                </span>
-                <span style="padding-left:2em;color:aqua;font-size:small">
-                    <b>Sign up for Flight Notifications NOW</b>
-                </span>
-                
-                
+    
+  
+    <nav class="navbar navbar-fixed-top">
+       <div class="navbar-inner">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="brand" href="#"><h1>The Pegasus Mission</h1></a>
             </div>
-</div>
-    </div>
+
+        </div>
+        <div class="container">
+            <div>
+                <ul class="nav nav-pills">
+                    <li class="active"><a href="Index"><h4>Home</h4></a></li>
+
+                    <li class="active"><a href="Notifications"><h4>Flight SMS Notifications</h4></a></li>
+                    <li class="active"><a href="Contact"><h4>Contact the Team</h4></a></li>
+                    <li class="active"><a href="About"><h4>About Us</h4></a></li>
+                    <li class="active"><a href="http://pegasusmission.com/"><h4>Pegasus Mission</h4></a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!--
+        @Html.ActionLink("Flight Notifications", "Notifications", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
+        @Html.ActionLink("Contact the Team", "Contact", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
+        @Html.ActionLink("About Us", "About", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
+
+             <span style="padding-left:2em;color:yellow;font-size:small">
+            Pegasus II phone apps on iPhone, Android, and Windows Phones<br />
+        </span>
+        <span style="padding-left:2em;color:aqua;font-size:small">
+            <b>Sign up for Flight Notifications NOW</b>
+        </span>
+        -->
+        <!--
+        <div class="container">
+
+            <div  class="btn-group btn-group-justified">
+
+                @Html.ActionLink("Flight Notifications", "Notifications", null, new Dictionary<string, object> { { "class", "btn btn-primary" }, { "role", "button" } })
+                @Html.ActionLink("Contact the Team", "Contact", null, new Dictionary<string, object> { { "class", "btn btn-primary" }, { "role", "button" } })
+                @Html.ActionLink("About Us", "About", null, new Dictionary<string, object> { { "class", "btn btn-primary" }, { "role", "button" } })
+
+            </div>
+
+            <br />
+        </div>
+         -->
+        <div class="container">
+            <div class="alert alert-success fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Pegasus mission will launch on the week of Sept. 7 2015!</strong>
+            </div>
+        </div>
+<!--
+        <div class="container">
+            <div class="btn-group">
+                <a href="http://www.apple.com/itunes/charts/free-apps/">
+                    <img src="/img/apple-store-download-135px.png" class="img-rounded">
+                </a>
+                <a href="https://play.google.com/store/apps">
+                    <img src="/img/google-play-store-download-135px.png" class="img-rounded">
+                </a>
+                <a href="https://www.microsoft.com/en-us/store/apps/windows-phone">
+                    <img src="/img/windows-phone-135px.png" class="img-rounded">
+                </a>
+            </div>
+        </div>
+    -->
+
+        </div>
+    </nav>
+
+   
 
     <div class="main" ng-controller="telemetry">
         <div class="main-inner">
             <div class="container">
+
+        
                 <div class="row">
                     <div class="span6">
                         <div class="widget widget-nopad">
                             <div class="widget-header">
-                                <h3> <span class="fa fa-video-camera">&nbsp;</span> Live video feed
+                                <h3>
+                                    <span class="fa fa-video-camera">&nbsp;</span> Live video feed
                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
                             </div>
@@ -67,7 +126,7 @@
                                 </div>
                             </div>
                         </div>
-                 
+
                         <div class="widget widget-nopad">
                             <div class="widget-header">
                                 <h3>
@@ -80,11 +139,11 @@
                                 <div id='videoControl'>
                                     <iframe width="560" height="315" src="https://www.youtube.com/embed/rNhmYaWiPEk" frameborder="0" allowfullscreen></iframe>
                                     <!-- <video width="320" height="240" srv=>
-                    <source src="assets/dizzy.mp4" type="video/mp4"/>
-                    <source src="assets/dizzy.webm" type="video/webm"/>
-                    <source src="assets/dizzy.ogv" type="video/ogg"/>
-                    Your browser does not support the video tag.
-                </video>-->
+                                        <source src="assets/dizzy.mp4" type="video/mp4"/>
+                                        <source src="assets/dizzy.webm" type="video/webm"/>
+                                        <source src="assets/dizzy.ogv" type="video/ogg"/>
+                                        Your browser does not support the video tag.
+                                    </video>-->
                                 </div>
                             </div>
                         </div>
@@ -92,7 +151,8 @@
                         <div class="widget widget-nopad">
 
                             <div class="widget-header">
-                                <h3> <span class="fa fa-rocket">&nbsp;</span> Live telemetry
+                                <h3>
+                                    <span class="fa fa-rocket">&nbsp;</span> Live telemetry
                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
 
@@ -137,7 +197,8 @@
 
                         <div class="widget widget-nopad">
                             <div class="widget-header">
-                                <h3> <span class="fa fa-location-arrow">&nbsp;</span> GPS Info
+                                <h3>
+                                    <span class="fa fa-location-arrow">&nbsp;</span> GPS Info
                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
 
@@ -182,7 +243,8 @@
 
                         <div class="widget widget-nopad">
                             <div class="widget-header">
-                                <h3> <span class="fa fa-tasks">&nbsp;</span> Miscellaneous
+                                <h3>
+                                    <span class="fa fa-tasks">&nbsp;</span> Miscellaneous
                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
 
@@ -221,24 +283,25 @@
 
                         <div class="widget widget-table action-table">
                             <div class="widget-header">
-                                <h3><span class="fa fa-twitter">&nbsp;</span> Live twitter feed
+                                <h3>
+                                    <span class="fa fa-twitter">&nbsp;</span> Live twitter feed
                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
 
                             </div>
                             <div class="widget-content" style="align-content: center; align-content: stretch">
                                 <a class="twitter-timeline" href="https://twitter.com/PegasusMission" data-widget-id="605579741039427584">Tweets by @@PegasusMission</a>
-                 
-                                 <script>
+
+                                <script>
                                     !function (d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                    if (!d.getElementById(id)) {
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = p + "://platform.twitter.com/widgets.js";
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }
-                }(document, "script", "twitter-wjs");
+                                        var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                                        if (!d.getElementById(id)) {
+                                            js = d.createElement(s);
+                                            js.id = id;
+                                            js.src = p + "://platform.twitter.com/widgets.js";
+                                            fjs.parentNode.insertBefore(js, fjs);
+                                        }
+                                    }(document, "script", "twitter-wjs");
                                 </script>
 
                             </div>
@@ -249,7 +312,8 @@
                     <div class="span6">
                         <div class="widget">
                             <div class="widget-header">
-                                <h3> <span class="fa fa-map-marker ">&nbsp;</span> Live location feed
+                                <h3>
+                                    <span class="fa fa-map-marker ">&nbsp;</span> Live location feed
                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
 
@@ -266,7 +330,8 @@
 
                         <div class="widget">
                             <div class="widget-header">
-                                <h3> <span class="fa fa-toggle-on">&nbsp;</span> Important Metrics
+                                <h3>
+                                    <span class="fa fa-toggle-on">&nbsp;</span> Important Metrics
                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
 
@@ -274,42 +339,43 @@
 
                             <!-- /widget-header -->
                             @*<div class="widget-content">*@
-                            
-                                <div class="widget-content">
-                                    <div id="big_stats" class="cf">
-                                        <div class="stat">
-                                            <div>Video position up</div> <span class="bigNumbers fa" ng-class="{'fa-check' : videoPositionUp.toLowerCase() == 'true', 'fa-times' : videoPositionUp.toLowerCase() == 'false' }"></span>
-                                        </div>
-                                        <div class="stat">
-                                            <div>Leds activated</div> <span class="bigNumbers fa" ng-class="{'fa-check' : ledsActivated.toLowerCase() == 'true', 'fa-times' : ledsActivated.toLowerCase() == 'false' }"></span>
-                                        </div>
-                                        <div class="stat">
-                                            <div>Main deployed</div> <span class="bigNumbers fa" ng-class="{'fa-check' : mainDeployed.toLowerCase() == 'true', 'fa-times' : mainDeployed.toLowerCase() == 'false' }"></span>
-                                        </div>
-                                        <div class="stat">
-                                            <div>GPS fix</div> <span class="bigNumbers fa" ng-class="{'fa-check' : gpsFix.toLowerCase() == 'true', 'fa-times' : gpsFix.toLowerCase() == 'false' }"></span>
-                                        </div>
+
+                            <div class="widget-content">
+                                <div id="big_stats" class="cf">
+                                    <div class="stat">
+                                        <div>Video position up</div> <span class="bigNumbers fa" ng-class="{'fa-check' : videoPositionUp.toLowerCase() == 'true', 'fa-times' : videoPositionUp.toLowerCase() == 'false' }"></span>
                                     </div>
-                                    <hr />
-                                    <div id="big_stats" class="cf">
-                                        <div class="stat">
-                                            <div>Video servo on</div> <span class="bigNumbers fa" ng-class="{'fa-check' : videoServoOn.toLowerCase() == 'true', 'fa-times' : videoServoOn.toLowerCase() == 'false' }"></span>
-                                        </div>
-                                        <div class="stat">
-                                            <div>BP servo on</div> <span class="bigNumbers fa" ng-class="{'fa-check' : bpServoOn.toLowerCase() == 'true', 'fa-times' : bpServoOn.toLowerCase() == 'false' }"></span>
-                                        </div>
-                                        <div class="stat">
-                                            <div>Balloon released</div> <span class="bigNumbers fa" ng-class="{'fa-check' : balloonReleased.toLowerCase() == 'true', 'fa-times' : balloonReleased.toLowerCase() == 'false' }"></span>
-                                        </div>
+                                    <div class="stat">
+                                        <div>Leds activated</div> <span class="bigNumbers fa" ng-class="{'fa-check' : ledsActivated.toLowerCase() == 'true', 'fa-times' : ledsActivated.toLowerCase() == 'false' }"></span>
+                                    </div>
+                                    <div class="stat">
+                                        <div>Main deployed</div> <span class="bigNumbers fa" ng-class="{'fa-check' : mainDeployed.toLowerCase() == 'true', 'fa-times' : mainDeployed.toLowerCase() == 'false' }"></span>
+                                    </div>
+                                    <div class="stat">
+                                        <div>GPS fix</div> <span class="bigNumbers fa" ng-class="{'fa-check' : gpsFix.toLowerCase() == 'true', 'fa-times' : gpsFix.toLowerCase() == 'false' }"></span>
                                     </div>
                                 </div>
-                                @*</div>*@
+                                <hr />
+                                <div id="big_stats" class="cf">
+                                    <div class="stat">
+                                        <div>Video servo on</div> <span class="bigNumbers fa" ng-class="{'fa-check' : videoServoOn.toLowerCase() == 'true', 'fa-times' : videoServoOn.toLowerCase() == 'false' }"></span>
+                                    </div>
+                                    <div class="stat">
+                                        <div>BP servo on</div> <span class="bigNumbers fa" ng-class="{'fa-check' : bpServoOn.toLowerCase() == 'true', 'fa-times' : bpServoOn.toLowerCase() == 'false' }"></span>
+                                    </div>
+                                    <div class="stat">
+                                        <div>Balloon released</div> <span class="bigNumbers fa" ng-class="{'fa-check' : balloonReleased.toLowerCase() == 'true', 'fa-times' : balloonReleased.toLowerCase() == 'false' }"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            @*</div>*@
                         </div>
 
                         <!-- /widget -->
                         <div class="widget">
                             <div class="widget-header">
-                                <h3><span class="fa fa-facebook">&nbsp;</span> Live facebook feed
+                                <h3>
+                                    <span class="fa fa-facebook">&nbsp;</span> Live facebook feed
                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
 
@@ -326,44 +392,66 @@
             </div>
         </div>
     </div>
-    <div class="extra">
-        <div class="extra-inner">
-            <div class="container">
-                <div class="row">
-                    <div class="span4">
-                        <h4>The Pegasus Mission</h4>
-                        <ul>
-                            <li><a target="_blank;" href="http://pegasusmission.com/">Original Website</a></li>
-                            @*<li><a target="_blank;" href="about">About us</a></li>*@
-                            <li>@Html.ActionLink("About us", "About")</li>
-</ul>
-                    </div>
-                    <div class="span4">
-                        <h4>Social</h4>
-                        <ul>
-                            <li><a target="_blank;" href="https://twitter.com/PegasusMission">Twitter</a></li>
-                            <li><a target="_blank;" href="https://www.facebook.com/pegasusmission">Facebook</a></li>
-                        </ul>
-                    </div>
-                    <div class="span4">
-                        <h4>Phone apps</h4>
-                        <ul>
-                            <li><a href="">Android</a></li>
-                            <li><a href="">Windows phone</a></li>
-                            <li><a href="">iPhone</a></li>
-                        </ul>
-                    </div>
+
+
+    <nav class="navbar navbar-fixed-bottom">
+        <div class="extra">
+            <div class="extra-inner">
+                <div class="container">
+                    <div class="row">
+
+                        <!--
+                        <div class="span4">
+                            <h4>The Pegasus Mission</h4>
+                            <ul>
+                                <li><a target="_blank;" href="http://pegasusmission.com/">Original Website</a></li>
+                                @*<li><a target="_blank;" href="about">About us</a></li>*@
+                                <li>@Html.ActionLink("About us", "About")</li>
+                            </ul>
+                        </div>
+                        <div class="span4">
+                            <h4>Social</h4>
+                            <ul>
+                                <li><a target="_blank;" href="https://twitter.com/PegasusMission">Twitter</a></li>
+                                <li><a target="_blank;" href="https://www.facebook.com/pegasusmission">Facebook</a></li>
+                            </ul>
+                        </div>
+
+                            -->
+                        <div class="span6">
+                            <a href="http://www.apple.com/itunes/charts/free-apps/">
+                                    <img src="/img/apple-store-download-135px.png" class="img-rounded">
+                                    </a>
+                            <a href="https://play.google.com/store/apps">
+                                <img src="/img/google-play-store-download-135px.png" class="img-rounded">
+                            </a>
+                            <a href="https://www.microsoft.com/en-us/store/apps/windows-phone">
+                                <img src="/img/windows-phone-135px.png" class="img-rounded">
+                            </a>
+                        </div>
+                        <div class="span6">
+                            <a href="https://www.facebook.com/pegasusmission">
+                                <img src="~/img/facbook-icon.png" class="img-rounded">
+                            </a>
+                            <a href="https://twitter.com/PegasusMission">
+                                <img src="~/img/twitter-icon.png" class="img-rounded">
+                            </a>
+                        </div>
+                      
+                        </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script src="~/Scripts/External/jquery-1.7.2.min.js"></script>
-    <script src="~/Scripts/External/bootstrap.js"></script>
-    <script src="~/Scripts/External/angular.min.js"></script>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
-    <script src="~/signalr/hubs"></script>
-    <script src="~/Scripts/base.js"></script>
-    <script src="~/Scripts/telemetry.js"></script>
+    </nav>
+
+        <script src="~/Scripts/External/jquery-1.7.2.min.js"></script>
+        <script src="~/Scripts/External/bootstrap.js"></script>
+        <script src="~/Scripts/External/angular.min.js"></script>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+        <script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
+        <script src="~/signalr/hubs"></script>
+        <script src="~/Scripts/base.js"></script>
+        <script src="~/Scripts/telemetry.js"></script>
+
 </body>
 </html>

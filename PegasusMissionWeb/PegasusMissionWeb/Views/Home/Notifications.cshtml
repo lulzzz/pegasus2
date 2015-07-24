@@ -22,67 +22,148 @@
         <![endif]-->
 </head>
 <body ng-app="pegasus" style="background-image:url('/img/sky.jpg'); background-repeat: no-repeat; background-size: cover;">
-    <div class="navbar navbar-fixed-top">
+    
+
+    <nav class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </a><a class="brand" href="index">The Pegasus Mission</a>
-                @Html.ActionLink("Home", "Index", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
-            </div>
-        </div>
-    </div>
-
-    <div class="main-inner">
-        <div class="container">
-
-            <div class="widget-header" style="width:600px;">
-                <h3>
-                    <span class="fa fa-rocket">&nbsp;</span> Sign up now for Pegasus II Text Notifications.
-                </h3>
-                <span class="fa fa-minus-square-o minimizeWidget"></span>
-
-            </div>
-            <div style="background-color:white;width:600px">
-                <div style="padding-left:5em;font-family:Verdana;">
-                    Pegasus II can send you text notifications to your phone directly from the craft during flight.
-                    Don't miss a moment of this historic flight to near space and sign up for notifications.<br /><br />
-                    <p style="font-size:small;color:blue">Responding to Pegasus II text messages with "STOP" will cancel notifications.  Responding with "START" will restart the notifications.</p><p />
-
-                    <p>Sign up now, the Mission Team does not want you to miss the launch of Pegasus II.</p>
-
-                    @if (@ViewBag.PhoneError != null)
-                    {
-                        <p style="color:red;">@ViewBag.PhoneError</p>
-                    }
-
-                    @using (Html.BeginForm("AddPhone", "Home", FormMethod.Post))
-                    {
-                        <p>
-                            <div style="width:200px">
-                                <b style="width:500px;">Country Code (if not US)</b>
-                            </div>
-                            <div style="width:250px">
-                                @Html.TextBox("countryCode") @*<input type="text" id="countryCode" style="width:50px;" />*@
-                            </div>
-                            <div style="width:200px">
-                                <b style="width:500px;">Phone Number</b>
-                            </div>
-                            <div style="width:250px">
-                                @Html.TextBox("number") @*<input type="text" id="number" style="width:120px" />*@
-                            </div>
-                            <div style="width:200px">
-                            </div>
-                            <div style="width:250px">
-                                <input type="submit" value="Sign Up" />
-                            </div>
-
-                        </p>
-                    }
+                <div class="navbar-header">
+                    <a class="brand" href="#"><h1>The Pegasus Mission</h1></a>
                 </div>
 
             </div>
+            <div class="container">
+                <div>
+                    <ul class="nav nav-pills">
+                        <li class="active"><a href="Index"><h4>Home</h4></a></li>
 
-           
+                        <li class="active"><a href="Notifications"><h4>Flight SMS Notifications</h4></a></li>
+                        <li class="active"><a href="Contact"><h4>Contact the Team</h4></a></li>
+                        <li class="active"><a href="About"><h4>About Us</h4></a></li>
+                        <li class="active"><a href="http://pegasusmission.com/"><h4>Pegasus Mission</h4></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="alert alert-success fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Pegasus mission will launch on the week of Sept. 7 2015!</strong>
+                </div>
+            </div>
+      
         </div>
-    </div>
+    </nav>
+
+   
+     <div class="main-inner">
+
+         <div class="container"><br /></div>
+
+                <div class="container">
+                 <div class="row">
+                     <div class="span6">
+                         <div class="widget widget-nopad">
+                             <div class="widget-header">
+                                 <div>
+                                     <h3>
+                                         <span class="fa fa-rocket">&nbsp;</span> Sign up now for Pegasus II Text Notifications.
+                                     </h3>
+                                     <span class="fa fa-minus-square-o minimizeWidget"></span>
+
+                                 </div>
+                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
+                             </div>
+                             <!-- /widget-header -->
+                             <div class="widget-content">
+                                 <div id='videoControl'>
+                                     <div>
+                                         <div style="padding-left:5em;font-family:Verdana;">
+                                             Pegasus II can send you text notifications to your phone directly from the craft during flight.
+                                             Don't miss a moment of this historic flight to near space and sign up for notifications.<br /><br />
+                                             <p style="font-size:small;color:blue">Responding to Pegasus II text messages with "STOP" will cancel notifications.  Responding with "START" will restart the notifications.</p><p />
+
+                                             <p>Sign up now, the Mission Team does not want you to miss the launch of Pegasus II.</p>
+
+                                             @if (@ViewBag.PhoneError != null)
+                                             {
+                                                 <p style="color:red;">@ViewBag.PhoneError</p>
+                                             }
+
+                                             @using (Html.BeginForm("AddPhone", "Home", FormMethod.Post))
+                                             {
+                                                 <p>
+                                                     <div style="width:200px">
+                                                         <b style="width:500px;">Country Code (if not US)</b>
+                                                     </div>
+                                                     <div style="width:250px">
+                                                         @Html.TextBox("countryCode") @*<input type="text" id="countryCode" style="width:50px;" />*@
+                                                     </div>
+                                                     <div style="width:200px">
+                                                         <b style="width:500px;">Phone Number</b>
+                                                     </div>
+                                                     <div style="width:250px">
+                                                         @Html.TextBox("number") @*<input type="text" id="number" style="width:120px" />*@
+                                                     </div>
+                                                     <div style="width:200px">
+                                                     </div>
+                                                     <div style="width:250px">
+                                                         <input type="submit" value="Sign Up" />
+                                                     </div>
+
+                                                 </p>
+                                             }
+                                         </div>
+
+                                     </div>
+
+                                 </div>
+                             </div>
+                         </div>
+
+
+
+
+
+                     </div>
+                 </div>
+             </div>
+         </div>
+
+        <nav class="navbar navbar-fixed-bottom">
+            <div class="extra">
+                <div class="extra-inner">
+                    <div class="container">
+                        <div class="row">
+
+                 
+                            <div class="span6">
+                                <a href="http://www.apple.com/itunes/charts/free-apps/">
+                                    <img src="/img/apple-store-download-135px.png" class="img-rounded">
+                                </a>
+                                <a href="https://play.google.com/store/apps">
+                                    <img src="/img/google-play-store-download-135px.png" class="img-rounded">
+                                </a>
+                                <a href="https://www.microsoft.com/en-us/store/apps/windows-phone">
+                                    <img src="/img/windows-phone-135px.png" class="img-rounded">
+                                </a>
+                            </div>
+                            <div class="span6">
+                                <a href="https://www.facebook.com/pegasusmission">
+                                    <img src="~/img/facbook-icon.png" class="img-rounded">
+                                </a>
+                                <a href="https://twitter.com/PegasusMission">
+                                    <img src="~/img/twitter-icon.png" class="img-rounded">
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+
+
+</body>
