@@ -35,11 +35,10 @@
         <div class="container">
             <div>
                 <ul class="nav nav-pills">
-                    <li class="active"><a href="Index"><h4>Home</h4></a></li>
-
-                    <li class="active"><a href="Notifications"><h4>Flight SMS Notifications</h4></a></li>
-                    <li class="active"><a href="Contact"><h4>Contact the Team</h4></a></li>
-                    <li class="active"><a href="About"><h4>About Us</h4></a></li>
+                    <li class="active"><a href="../Home/Index"><h4>Home</h4></a></li>
+                    <li class="active"><a href="../Home/Notifications"><h4>Flight SMS Notifications</h4></a></li>
+                    <li class="active"><a href="../Home/Contact"><h4>Contact the Team</h4></a></li>
+                    <li class="active"><a href="../Home/About"><h4>About Us</h4></a></li>
                     <li class="active"><a href="http://pegasusmission.com/"><h4>Pegasus Mission</h4></a></li>
                 </ul>
             </div>
@@ -75,7 +74,8 @@
         <div class="container">
             <div class="alert alert-success fade in">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <strong>Pegasus mission will launch on the week of Sept. 7 2015!</strong>
+                <strong>Pegasus mission will launch on the week of Sept. 7 2015!</strong><br />
+                <strong>Sign up for Flight Notifications NOW. Don't miss the action.</strong>
             </div>
         </div>
 <!--
@@ -109,7 +109,7 @@
                         <div class="widget widget-nopad">
                             <div class="widget-header">
                                 <h3>
-                                    <span class="fa fa-video-camera">&nbsp;</span> Live video feed
+                                    <span class="fa fa-video-camera">&nbsp;</span> Live Inflight Video Feed (Sept 7)
                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
                             </div>
@@ -130,8 +130,8 @@
                         <div class="widget widget-nopad">
                             <div class="widget-header">
                                 <h3>
-                                    <span class="fa fa-video-camera">&nbsp;</span> Launch video
-                                </h3>
+                                    <span class="fa fa-video-camera">&nbsp;</span> Live Launch Video Feed (Sept 7)
+                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
                             </div>
                             <!-- /widget-header -->
@@ -313,7 +313,7 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <h3>
-                                    <span class="fa fa-map-marker ">&nbsp;</span> Live location feed
+                                    <span class="fa fa-map-marker ">&nbsp;</span> Live Flight & Chase Mapping (Sept 7)
                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
 
@@ -343,28 +343,28 @@
                             <div class="widget-content">
                                 <div id="big_stats" class="cf">
                                     <div class="stat">
-                                        <div>Video position up</div> <span class="bigNumbers fa" ng-class="{'fa-check' : videoPositionUp.toLowerCase() == 'true', 'fa-times' : videoPositionUp.toLowerCase() == 'false' }"></span>
+                                        <div>Video Position Up</div> <span class="bigNumbers fa" ng-class="{'fa-check' : videoPositionUp.toLowerCase() == 'true', 'fa-times' : videoPositionUp.toLowerCase() == 'false' }"></span>
                                     </div>
                                     <div class="stat">
-                                        <div>Leds activated</div> <span class="bigNumbers fa" ng-class="{'fa-check' : ledsActivated.toLowerCase() == 'true', 'fa-times' : ledsActivated.toLowerCase() == 'false' }"></span>
+                                        <div>LEDs Activated</div> <span class="bigNumbers fa" ng-class="{'fa-check' : ledsActivated.toLowerCase() == 'true', 'fa-times' : ledsActivated.toLowerCase() == 'false' }"></span>
                                     </div>
                                     <div class="stat">
-                                        <div>Main deployed</div> <span class="bigNumbers fa" ng-class="{'fa-check' : mainDeployed.toLowerCase() == 'true', 'fa-times' : mainDeployed.toLowerCase() == 'false' }"></span>
+                                        <div>Main Parachute Deployed</div> <span class="bigNumbers fa" ng-class="{'fa-check' : mainDeployed.toLowerCase() == 'true', 'fa-times' : mainDeployed.toLowerCase() == 'false' }"></span>
                                     </div>
                                     <div class="stat">
-                                        <div>GPS fix</div> <span class="bigNumbers fa" ng-class="{'fa-check' : gpsFix.toLowerCase() == 'true', 'fa-times' : gpsFix.toLowerCase() == 'false' }"></span>
+                                        <div>GPS Fix</div> <span class="bigNumbers fa" ng-class="{'fa-check' : gpsFix.toLowerCase() == 'true', 'fa-times' : gpsFix.toLowerCase() == 'false' }"></span>
                                     </div>
                                 </div>
                                 <hr />
                                 <div id="big_stats" class="cf">
                                     <div class="stat">
-                                        <div>Video servo on</div> <span class="bigNumbers fa" ng-class="{'fa-check' : videoServoOn.toLowerCase() == 'true', 'fa-times' : videoServoOn.toLowerCase() == 'false' }"></span>
+                                        <div>Video Servo On</div> <span class="bigNumbers fa" ng-class="{'fa-check' : videoServoOn.toLowerCase() == 'true', 'fa-times' : videoServoOn.toLowerCase() == 'false' }"></span>
                                     </div>
                                     <div class="stat">
-                                        <div>BP servo on</div> <span class="bigNumbers fa" ng-class="{'fa-check' : bpServoOn.toLowerCase() == 'true', 'fa-times' : bpServoOn.toLowerCase() == 'false' }"></span>
+                                        <div>BP Servo On</div> <span class="bigNumbers fa" ng-class="{'fa-check' : bpServoOn.toLowerCase() == 'true', 'fa-times' : bpServoOn.toLowerCase() == 'false' }"></span>
                                     </div>
                                     <div class="stat">
-                                        <div>Balloon released</div> <span class="bigNumbers fa" ng-class="{'fa-check' : balloonReleased.toLowerCase() == 'true', 'fa-times' : balloonReleased.toLowerCase() == 'false' }"></span>
+                                        <div>Balloon Released</div> <span class="bigNumbers fa" ng-class="{'fa-check' : balloonReleased.toLowerCase() == 'true', 'fa-times' : balloonReleased.toLowerCase() == 'false' }"></span>
                                     </div>
                                 </div>
                             </div>
