@@ -63,8 +63,13 @@ textarea {
 
 
 
+.timeline {
+    max-width: 100% !important;
+}
 
-
+.navbar .nav>li {
+    border: 1px solid #5D4B4B;
+}
 
 /*------------------------------------------------------------------
 [2. Navbar / .navbar]
@@ -74,15 +79,15 @@ textarea {
 	position: relative;
 }
 
+.navbar .nav>li:hover {
+    background-color: gray;
+}
+
 .navbar-inner {
 	padding: 7px 0;
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
 	border-radius: 0;
-}
-
-.navbar-fixed-top {
-	position: static;
 }
 
 .navbar .nav a {
@@ -256,6 +261,7 @@ textarea {
 	padding-bottom: 2em;
     margin-top: 20px;
 	border-bottom: 1px solid #000;
+    margin-top: 80px;
 }
 
 
@@ -1065,7 +1071,7 @@ table.fc-border-separate {
 	filter: alpha(opacity=30)
 }
 .fc .ui-draggable-dragging .fc-event-bg, .fc-select-helper .fc-event-bg {
-	display: none\9
+    display: none;
 }
 .fc-event-vert .ui-resizable-s {
 	bottom: 0 !important;

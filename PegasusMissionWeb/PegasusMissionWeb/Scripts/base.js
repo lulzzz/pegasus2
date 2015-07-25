@@ -10,6 +10,7 @@ $(function () {
         $(this).parent('.widget').find('.widget-content').toggle("slow");
         $(this).find('.minimizeWidget').toggleClass('fa-minus-square-o').toggleClass('fa-plus-square-o');
     });
+
 });
 var locationNameArray = ["Launch", "Mobile", "Balloon"];
 var map = new google.maps.Map(document.getElementById('map-canvas'));

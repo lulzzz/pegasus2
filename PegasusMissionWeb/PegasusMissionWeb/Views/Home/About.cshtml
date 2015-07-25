@@ -22,89 +22,39 @@
         <![endif]-->
 </head>
 <body ng-app="pegasus" style="background-image:url('/img/sky.jpg'); background-repeat: no-repeat; background-size: cover;">
-   
-    <!--
-     <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </a><a class="brand" href="index">The Pegasus Mission</a>
-                @Html.ActionLink("Home", "Index", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
-                @Html.ActionLink("Flight Notifications", "Notifications", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
-                @Html.ActionLink("Contact the Team", "Contact", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
-                
-            </div>
-        </div>
-    </div>
-        -->
-
 
     <nav class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
                 <div class="navbar-header">
+                    @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>*@
                     <a class="brand" href="#"><h1>The Pegasus Mission</h1></a>
                 </div>
-
-            </div>
-            <div class="container">
-                <div>
-                    <ul class="nav nav-pills">
-                        <li class="active"><a href="../Home/Index"><h4>Home</h4></a></li>
-                        <li class="active"><a href="../Home/Notifications"><h4>Flight SMS Notifications</h4></a></li>
-                        <li class="active"><a href="../Home/Contact"><h4>Contact the Team</h4></a></li>
-                        <li class="active"><a href="../Home/About"><h4>About Us</h4></a></li>
-                    </ul>
+                <div class="collapse navbar" id="myNavbar">
+                    <div>
+                        <ul class="nav nav-pills" style="float: right;margin-top: 9px;">
+                            <li class="active"><a href="../Home/Index"><h4>Home</h4></a></li>
+                            <li class="active"><a href="../Home/Notifications"><h4>Flight SMS Notifications</h4></a></li>
+                            <li class="active"><a href="../Home/Contact"><h4>Contact the Team</h4></a></li>
+                            <li class="active"><a href="../Home/About"><h4>About Us</h4></a></li>
+                            <li class="active"><a target="_blank" href="http://pegasusmission.com/"><h4>Pegasus Mission</h4></a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
-
-            <!--
-            @Html.ActionLink("Flight Notifications", "Notifications", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
-            @Html.ActionLink("Contact the Team", "Contact", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
-            @Html.ActionLink("About Us", "About", null, new Dictionary<string, object> { { "class", "btn btn-link" }, { "role", "button" } })
-
-                 <span style="padding-left:2em;color:yellow;font-size:small">
-                Pegasus II phone apps on iPhone, Android, and Windows Phones<br />
-            </span>
-            <span style="padding-left:2em;color:aqua;font-size:small">
-                <b>Sign up for Flight Notifications NOW</b>
-            </span>
-            -->
-            <!--
-            <div class="container">
-
-                <div  class="btn-group btn-group-justified">
-
-                    @Html.ActionLink("Flight Notifications", "Notifications", null, new Dictionary<string, object> { { "class", "btn btn-primary" }, { "role", "button" } })
-                    @Html.ActionLink("Contact the Team", "Contact", null, new Dictionary<string, object> { { "class", "btn btn-primary" }, { "role", "button" } })
-                    @Html.ActionLink("About Us", "About", null, new Dictionary<string, object> { { "class", "btn btn-primary" }, { "role", "button" } })
-
-                </div>
-
-                <br />
-            </div>
-             -->
-            <div class="container">
-                <div class="alert alert-success fade in">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Pegasus mission will launch on the week of Sept. 7 2015!</strong>
-                </div>
-            </div>
-
-         
-
         </div>
+
     </nav>
 
 
 
 
 
-
-
-    <div class="main-inner">
+    <div class="main-inner" style="margin-top: 100px;margin-bottom: 100px;">
         <div class="container"><br /></div>
 
         <div class="container">
