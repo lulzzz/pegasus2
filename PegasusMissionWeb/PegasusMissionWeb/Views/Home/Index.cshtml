@@ -23,58 +23,11 @@
 </head>
 <body ng-app="pegasus" style="background-image:url('/img/sky.jpg'); background-repeat: no-repeat; background-size: cover;">
 
+    @{
+        Html.RenderPartial("Header");
+    }
 
-<nav class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <div class="navbar-header">
-                @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>*@
-                <a class="brand" href="#"><h1>The Pegasus Mission</h1></a>
-            </div>
-            <div class="collapse navbar" id="myNavbar">
-                <div>
-                    <ul class="nav nav-pills" style="float: right;margin-top: 9px;">
-                        <li class="active"><a href="../Home/Index"><h4>Home</h4></a></li>
-                        <li class="active"><a href="../Home/Notifications"><h4>Flight SMS Notifications</h4></a></li>
-                        <li class="active"><a href="../Home/Contact"><h4>Contact the Team</h4></a></li>
-                        <li class="active"><a href="../Home/About"><h4>About Us</h4></a></li>
-                        <li class="active"><a target="_blank" href="http://pegasusmission.com/"><h4>Pegasus Mission</h4></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</nav>
-
-    @*<nav class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="brand" href="#"><h1>The Pegasus Mission</h1></a>
-                </div>
-            </div>
-            <div class="container">
-                <div>
-                    <ul class="nav nav-pills">
-                        <li class="active"><a href="../Home/Index"><h4>Home</h4></a></li>
-                        <li class="active"><a href="../Home/Notifications"><h4>Flight SMS Notifications</h4></a></li>
-                        <li class="active"><a href="../Home/Contact"><h4>Contact the Team</h4></a></li>
-                        <li class="active"><a href="../Home/About"><h4>About Us</h4></a></li>
-                        <li class="active"><a href="http://pegasusmission.com/"><h4>Pegasus Mission</h4></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>*@
-
-
-
-    <div class="main" ng-controller="telemetry" style="margin-bottom: 60px;">
+    <div class="main" ng-controller="telemetry" style="margin-bottom: 52px;">
         <div class="main-inner">
 
             <div class="container">
@@ -378,56 +331,10 @@
         </div>
     </div>
 
-
-    <nav class="navbar navbar-fixed-bottom">
-        <div class="extra">
-            <div class="extra-inner">
-                <div class="container">
-                    <div class="row">
-
-                        <!--
-                        <div class="span4">
-                            <h4>The Pegasus Mission</h4>
-                            <ul>
-                                <li><a target="_blank;" href="http://pegasusmission.com/">Original Website</a></li>
-                                @*<li><a target="_blank;" href="about">About us</a></li>*@
-                                <li>@Html.ActionLink("About us", "About")</li>
-                            </ul>
-                        </div>
-                        <div class="span4">
-                            <h4>Social</h4>
-                            <ul>
-                                <li><a target="_blank;" href="https://twitter.com/PegasusMission">Twitter</a></li>
-                                <li><a target="_blank;" href="https://www.facebook.com/pegasusmission">Facebook</a></li>
-                            </ul>
-                        </div>
-
-                            -->
-                        <div class="span6">
-                            <a href="http://www.apple.com/itunes/charts/free-apps/">
-                                <img src="/img/apple-store-download-135px.png" class="img-rounded">
-                            </a>
-                            <a href="https://play.google.com/store/apps">
-                                <img src="/img/google-play-store-download-135px.png" class="img-rounded">
-                            </a>
-                            <a href="https://www.microsoft.com/en-us/store/apps/windows-phone">
-                                <img src="/img/windows-phone-135px.png" class="img-rounded">
-                            </a>
-                        </div>
-                        <div class="span6">
-                            <a href="https://www.facebook.com/pegasusmission">
-                                <img src="~/img/facbook-icon.png" class="img-rounded">
-                            </a>
-                            <a href="https://twitter.com/PegasusMission">
-                                <img src="~/img/twitter-icon.png" class="img-rounded">
-                            </a>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+    @{
+        Html.RenderPartial("Footer"); 
+    }
+   
 
     <script src="~/Scripts/External/jquery-1.7.2.min.js"></script>
     <script src="~/Scripts/External/bootstrap.js"></script>

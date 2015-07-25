@@ -206,6 +206,7 @@
     <Content Include="img\apple-store-download-135px.png" />
     <Content Include="img\facbook-icon-old.png" />
     <Content Include="img\facbook-icon.png" />
+    <Content Include="img\facebook_logo_detail-550x588.jpg" />
     <Content Include="img\google-play-store-download-135px.png" />
     <Content Include="img\Pegasus Making 2.jpg" />
     <Content Include="img\Pegasus Making1.jpg" />
@@ -219,6 +220,7 @@
     <Content Include="img\message_avatar1.png" />
     <Content Include="img\message_avatar2.png" />
     <Content Include="img\sky2.jpg" />
+    <Content Include="img\twitter-667462_640.png" />
     <Content Include="img\twitter-icon-ols.png" />
     <Content Include="img\twitter-icon.png" />
     <Content Include="img\windows-phone-135px.png" />
@@ -258,6 +260,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
     <Content Include="Views\Home\Notifications.cshtml" />
+    <Content Include="Views\Shared\Footer.cshtml" />
+    <Content Include="Views\Shared\Header.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -366,7 +370,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
