@@ -1,123 +1,330 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Pegasus.Phone.XF.TelemetryOverviewView">
+<ContentView
+  xmlns="http://xamarin.com/schemas/2014/forms"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:converters="clr-namespace:Pegasus.Phone.XF.Converters"
+  x:Class="Pegasus.Phone.XF.TelemetryOverviewView">
+  <ContentView.Resources>
+    <ResourceDictionary>
+      <converters:DegreesToCompassPointConverter x:Key="DegreesToCompassPointConverter" />
+    </ResourceDictionary>
+  </ContentView.Resources>
 	<ContentView.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="3*" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="2*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
+      <Grid Padding="5">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="2*" />
+          <RowDefinition Height="10" />
+          <RowDefinition Height="2*" />
+          <RowDefinition Height="10" />
+          <RowDefinition Height="3*" />
+          <RowDefinition Height="10" />
+          <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="1*" />
+          <ColumnDefinition Width="10" />
+          <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <Label
+            Grid.Column="0" Grid.Row="0"
+            Text="Live"
+            TextColor="Gray"
+            FontSize="Small"
+            XAlign="Start"
+            />
+
+        <Label
+            Grid.Column="2" Grid.Row="0"
+            Text="GPS"
+            TextColor="Gray"
+            FontSize="Small"
+            XAlign="End"
+            />
+
+        <!-- time -->
+        <StackLayout
+            Grid.Row="1"
+            Orientation="Vertical"
+            VerticalOptions="Center"
+            >
+          <Label
+              Text="time"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+
+          <Label
+              Text="{Binding CraftTelemetry.Data.Timestamp, StringFormat='{0:HH:mm}'}"
+              FontSize="Large"
+              TextColor="White"
+              XAlign="Center"
+                />
+
+          <Label
+              Text="hh:mm"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+        </StackLayout>
+
+        <BoxView
+            Grid.Column="1" Grid.Row="1"
+            Color="Gray"
+            WidthRequest="2"
+            HorizontalOptions="Center"
+            />
+
+        <!-- air pressure -->
+        <StackLayout
+            Grid.Column="2"
+            Grid.Row="1"
+            Orientation="Vertical"
+            VerticalOptions="Center"
+            >
+          <Label
+              Text="air pressure"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+
+          <Label
+              Text="{Binding CraftTelemetry.Data.AtmosphericPressure}"
+              FontSize="Large"
+              TextColor="White"
+              XAlign="Center"
+                />
+
+          <Label
+              Text="mbar"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+        </StackLayout>
+
+        <BoxView
+              Grid.ColumnSpan="3" Grid.Row="2"
+              Color="Gray"
+              HeightRequest="2"
+              VerticalOptions="Center"
+              />
+
+        <!-- radiation -->
+        <StackLayout
+            Grid.Row="3"
+            Orientation="Vertical"
+            VerticalOptions="Center"
+            >
+          <Label
+              Text="radiation"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+
+          <Label
+              Text="{Binding CraftTelemetry.Data.RadiationCps}"
+              FontSize="Large"
+              TextColor="White"
+              XAlign="Center"
+                />
+
+          <Label
+              Text="cps"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+        </StackLayout>
+
+        <BoxView
+            Grid.Column="1" Grid.Row="3"
+            Color="Gray"
+            WidthRequest="2"
+            HorizontalOptions="Center"
+            />
+
+        <!-- temp -->
+        <StackLayout
+            Grid.Column="2"
+            Grid.Row="3"
+            Orientation="Vertical"
+            VerticalOptions="Center"
+            >
+          <Label
+              Text="temp"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+
+          <Label
+              Text="{Binding CraftTelemetry.Data.TempOutside}"
+              FontSize="Large"
+              TextColor="White"
+              XAlign="Center"
+                />
+
+          <Label
+              Text="&#x2103;"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+        </StackLayout>
+
+        <BoxView
+              Grid.ColumnSpan="3" Grid.Row="4"
+              Color="Gray"
+              HeightRequest="2"
+              VerticalOptions="Center"
+              />
+
+        <!-- altitude -->
+        <StackLayout
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Grid.Row="5"
+            Orientation="Vertical"
+            VerticalOptions="Center"
+            >
+          <Label
+              Text="altitude"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+
+          <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+            <Label
+                x:Name="GpsAltitude"
+                Text="{Binding CraftTelemetry.Data.GpsAltitude}"
+                FontSize="Large"
+                TextColor="White"
+                  />
+            <Label
+                Text="^"
+                FontSize="Large"
+                TextColor="Green"
+                YAlign="Start"
+                  />
+            <Label
+                Text="v"
+                FontSize="Large"
+                TextColor="Red"
+                YAlign="End"
+                  />
+          </StackLayout>
+
+          <Label
+              Text="ft"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+        </StackLayout>
+
+        <BoxView
+              Grid.ColumnSpan="3" Grid.Row="6"
+              Color="Gray"
+              HeightRequest="2"
+              VerticalOptions="Center"
+              />
+
+        <!-- vertical speed -->
+        <StackLayout
+            Grid.Row="7"
+            Orientation="Vertical"
+            VerticalOptions="Center"
+            >
+          <Label
+              Text="vertical speed"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+
+          <Label
+              Text="{Binding CraftTelemetry.Data.VerticalSpeed}"
+              FontSize="Large"
+              TextColor="White"
+              XAlign="Center"
+                />
+
+          <Label
+              Text="FPS"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+        </StackLayout>
+
+        <BoxView
+            Grid.Column="1" Grid.Row="7"
+            Color="Gray"
+            WidthRequest="2"
+            HorizontalOptions="Center"
+            />
+
+        <!-- ground speed -->
+        <StackLayout
+            Grid.Column="2"
+            Grid.Row="7"
+            Orientation="Vertical"
+            VerticalOptions="Center"
+            >
+          <Label
+              Text="ground speed"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
+                />
+
+          <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+            <Label
+                Text="{Binding CraftTelemetry.Data.GpsSpeed}"
+                FontSize="Large"
+                TextColor="White"
+                  />
 
             <Label
-                Grid.Column="0" Grid.Row="0"
-                Text="Live"
-                TextColor="Gray"
+                Text="{Binding CraftTelemetry.Data.GpsDirection, Converter={StaticResource DegreesToCompassPointConverter}"
                 FontSize="Small"
-                XAlign="Start"
-                />
-
-            <Label
-                Grid.Column="2" Grid.Row="0"
-                Text="GPS"
                 TextColor="Gray"
-                FontSize="Small"
-                XAlign="End"
-                />
-            
-            <StackLayout
-                Grid.Row="1"
-                Orientation="Vertical"
-                VerticalOptions="Center"
-                >
-                <Label
-                    Text="time"
-                    FontSize="Small"
-                    TextColor="Gray"
-                    XAlign="Center"
-                    />
+                YAlign="End"
+                  />
+          </StackLayout>
 
-                <Label
-                    Text="{Binding CraftTelemetry.TimestampInHhmm}"
-                    FontSize="Large"
-                    TextColor="White"
-                    XAlign="Center"
-                    />
-
-                <Label
-                    Text="hh:mm"
-                    FontSize="Small"
-                    TextColor="Gray"
-                    XAlign="Center"
-                    />
-
-
-            </StackLayout>
-
-            <Label
-                Grid.ColumnSpan="3" Grid.Row="8"
-                Text="{Binding CraftTelemetry.Data.MainDeployStatus, StringFormat='Parachute - {0}'}"
-                FontSize="Medium"
-                BackgroundColor="Navy"
-                XAlign="Center"
+          <Label
+              Text="mph"
+              FontSize="Small"
+              TextColor="Gray"
+              XAlign="Center"
                 />
+        </StackLayout>
+      </Grid>
 
-            <BoxView
-                Grid.ColumnSpan="3" Grid.Row="2"
-                Color="Gray"
-                HeightRequest="2"
-                VerticalOptions="Center"
-                />
- 
-            <BoxView
-                Grid.ColumnSpan="3" Grid.Row="4"
-                Color="Gray"
-                HeightRequest="2"
-                VerticalOptions="Center"
-                />
- 
-            <BoxView
-                Grid.ColumnSpan="3" Grid.Row="6"
-                Color="Gray"
-                HeightRequest="2"
-                VerticalOptions="Center"
-                />
-
-             <BoxView
-                Grid.Column="1" Grid.Row="1"
-                Color="Gray"
-                WidthRequest="2"
-                HorizontalOptions="Center"
-                />
- 
-             <BoxView
-                Grid.Column="1" Grid.Row="3"
-                Color="Gray"
-                WidthRequest="2"
-                HorizontalOptions="Center"
-                />
-            
-             <BoxView
-                Grid.Column="1" Grid.Row="7"
-                Color="Gray"
-                WidthRequest="2"
-                HorizontalOptions="Center"
-                />
-            
-
-            
-        </Grid>
+      <Label
+          Grid.Row="1"
+          Text="{Binding CraftTelemetry.Data.MainDeployStatus, StringFormat='Parachute - {0}'}"
+          FontSize="Medium"
+          BackgroundColor="Navy"
+          XAlign="Center"
+          />
+    </Grid>
  <!--
     <StackLayout Padding="5, 5, 5, 5"
                  Orientation="Vertical"

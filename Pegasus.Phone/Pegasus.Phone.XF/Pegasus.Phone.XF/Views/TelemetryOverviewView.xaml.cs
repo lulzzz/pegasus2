@@ -9,6 +9,7 @@ namespace Pegasus.Phone.XF
 		public TelemetryOverviewView ()
 		{
 			InitializeComponent ();
+            GpsAltitude.FontSize *= 2;
 		}
 	}
 }
