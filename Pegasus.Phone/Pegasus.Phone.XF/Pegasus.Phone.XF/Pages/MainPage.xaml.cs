@@ -57,6 +57,10 @@ namespace Pegasus.Phone.XF
             string defaultView = Settings.HomePageView;
             Image defaultImage = this.images.FirstOrDefault(kvp => kvp.Value.GetType().Name == defaultView).Key ?? this.images.First().Key;
             this.SwitchToView(defaultImage);
+
+#if DEBUG
+            this.TestButton.IsVisible = true;
+#endif
         }
 
         protected override async void OnAppearing()

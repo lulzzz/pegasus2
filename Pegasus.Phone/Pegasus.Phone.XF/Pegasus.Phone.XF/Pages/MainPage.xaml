@@ -32,12 +32,12 @@
     </Frame>
 
     <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Center" Padding="0">
+      <Button x:Name="TestButton" Text="{Binding MessageCount}" Clicked="DoTest" WidthRequest="50" BindingContext="{Binding AppData}" IsVisible="False" />
       <Image x:Name="TelemetryOverviewImage" Source="appbar_home_empty.png" />
       <Image x:Name="MapImage" Source="appbar_map_gps.png" />
       <Image x:Name="TelemetryDetailsImage" Source="appbar_gauge_25.png" />
       <Image x:Name="TextCraftImage" Source="appbar_message_send.png" />
       <Image x:Name="LinksImage" Source="appbar_link.png" />
-      <Button x:Name="TestButton" Text="{Binding MessageCount}" Clicked="DoTest" WidthRequest="50" BindingContext="{Binding AppData}" />
     </StackLayout>
   </Grid>
 </ContentPage>
