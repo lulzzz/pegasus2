@@ -48,6 +48,63 @@ var markerBalloon = new google.maps.Marker({
     icon: imageBalloon
 });
 
+var contentStringBalloon = '<div id="content">' +
+     '<div id="siteNotice">' +
+     '</div>' +
+     '<h1 id="firstHeading" class="firstHeading">Balloon</h1>' +
+     '<div id="bodyContent">' +
+     'Altitude: 22,500 ft<br>' +
+     'Direction: SE<br>';
+
+var contentStringLaunch = '<div id="content">' +
+  '<div id="siteNotice">' +
+  '</div>' +
+  '<h1 id="firstHeading" class="firstHeading">Launch</h1>' +
+  '<div id="bodyContent">' +
+  'Balloon: 10.5 miles downrange<br>' +
+  '- 22,500 ft altitude<br>' +
+  '- 12.75 miles actual distance<br>';
+
+var contentStringMobile = '<div id="content">' +
+  '<div id="siteNotice">' +
+  '</div>' +
+  '<h1 id="firstHeading" class="firstHeading">Chase</h1>' +
+  '<div id="bodyContent">' +
+  'Balloon: 2.65 miles downrange<br>' +
+  '- 22,500 ft altitude<br>' +
+  '- 5.25 miles actual distance<br>';
+
+var finalcontent;
+
+var infowindow = new google.maps.InfoWindow();
+
+var infowindow2 = new google.maps.InfoWindow();
+
+var infowindow3 = new google.maps.InfoWindow();
+
+google.maps.event.addListener(markerBalloon, 'click', function () {
+    infowindowvisible = true;
+    infowindow.open(map, markerBalloon);
+
+});
+
+google.maps.event.addListener(markerLaunch, 'click', function () {
+    infowindowvisible = true;
+    infowindow2.open(map, markerLaunch);
+
+});
+
+google.maps.event.addListener(markerMobile, 'click', function () {
+    infowindowvisible = true;
+    infowindow3.open(map, markerMobile);
+
+});
+
+google.maps.event.addListener(infowindow, 'closeclick', function () {
+
+    infowindow.close();
+    fowindowvisible = false;
+});
 
 function centerMapOnLocations(displayMap, launchLatLon, mobileLatLon, balloonLatLon) {
     var bounds = new google.maps.LatLngBounds();
@@ -61,12 +118,13 @@ function centerMapOnLocations(displayMap, launchLatLon, mobileLatLon, balloonLat
     displayMap.setZoom(2);
 }
 var zoom = false;
+var infowindowvisible = false;
 
 centerMapOnLocations(map, markerLaunch.getPosition(), markerLaunch.getPosition(), markerLaunch.getPosition());
 //map.setCenter(new google.maps.LatLng(46.8301, -119.1643));
 
 
-function embedElevation(displayMap, marker, elevatorService, locationLatLon, content) {
+function embedElevation(displayMap, marker, elevatorService, locationLatLon, content, type) {
     var elevationData;
 
     var locations = [];
@@ -95,15 +153,14 @@ function embedElevation(displayMap, marker, elevatorService, locationLatLon, con
             content += '</p>' +
                   '</div>' +
                   '</div>';
+            if (type == "balloon") {
+                infowindow.setContent(content);
+            } else if (type == "mobile") {
+                infowindow3.setContent(content);
+            } else if (type == "launch") {
+                infowindow2.setContent(content);
+            }
 
-            var infowindow = new google.maps.InfoWindow({
-                content: content
-            });
-
-
-            google.maps.event.addListener(marker, 'click', function () {
-                infowindow.open(displayMap, marker);
-            });
         } else {
             alert('Elevation service failed due to: ' + status);
         }
@@ -134,36 +191,12 @@ function initialize(ltd, lng, telemetryType) {
 
     var elevator = new google.maps.ElevationService();
 
-    var contentStringBalloon = '<div id="content">' +
-      '<div id="siteNotice">' +
-      '</div>' +
-      '<h1 id="firstHeading" class="firstHeading">Balloon</h1>' +
-      '<div id="bodyContent">' +
-      'Altitude: 22,500 ft<br>' +
-      'Direction: SE<br>';
-
-    var contentStringLaunch = '<div id="content">' +
-      '<div id="siteNotice">' +
-      '</div>' +
-      '<h1 id="firstHeading" class="firstHeading">Launch</h1>' +
-      '<div id="bodyContent">' +
-      'Balloon: 10.5 miles downrange<br>' +
-      '- 22,500 ft altitude<br>' +
-      '- 12.75 miles actual distance<br>';
-
-    var contentStringMobile = '<div id="content">' +
-      '<div id="siteNotice">' +
-      '</div>' +
-      '<h1 id="firstHeading" class="firstHeading">Chase</h1>' +
-      '<div id="bodyContent">' +
-      'Balloon: 2.65 miles downrange<br>' +
-      '- 22,500 ft altitude<br>' +
-      '- 5.25 miles actual distance<br>';
-
-    embedElevation(map, markerBalloon, elevator, markerBalloon.getPosition(), contentStringBalloon);
-    embedElevation(map, markerLaunch, elevator, markerLaunch.getPosition(), contentStringLaunch);
-    embedElevation(map, markerMobile, elevator, markerMobile.getPosition(), contentStringMobile);
-
+    var elevator = new google.maps.ElevationService();
+    if (!infowindowvisible) {
+        embedElevation(map, markerBalloon, elevator, markerBalloon.getPosition(), contentStringBalloon, "balloon");
+        embedElevation(map, markerLaunch, elevator, markerLaunch.getPosition(), contentStringLaunch, "launch");
+        embedElevation(map, markerMobile, elevator, markerMobile.getPosition(), contentStringMobile, "mobile");
+    }
     var triangleCoords = [
         markerBalloon.getPosition(),
         markerLaunch.getPosition(),
