@@ -215,21 +215,22 @@
             <Label
                 x:Name="GpsAltitude"
                 Text="{Binding CraftTelemetry.Data.GpsAltitude, StringFormat='{0:0,0}'}"
+                LineBreakMode="NoWrap"
                 FontSize="Large"
                 TextColor="White"
                   />
             <Label
-                Text="^"
+                Text="&#x2191;"
                 FontSize="Large"
                 TextColor="Green"
-                YAlign="Start"
+                YAlign="Center"
                 IsVisible="{Binding CraftTelemetry.Data.VerticalSpeed, Converter={StaticResource VerticalSpeedToVisibilityConverterUp}}"
                   />
             <Label
-                Text="v"
+                Text="&#x2193;"
                 FontSize="Large"
                 TextColor="Red"
-                YAlign="End"
+                YAlign="Center"
                 IsVisible="{Binding CraftTelemetry.Data.VerticalSpeed, Converter={StaticResource VerticalSpeedToVisibilityConverterDown}}"
                   />
           </StackLayout>
