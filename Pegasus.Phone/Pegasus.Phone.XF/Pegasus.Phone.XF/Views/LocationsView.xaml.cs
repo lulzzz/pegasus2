@@ -11,6 +11,8 @@ namespace Pegasus.Phone.XF
 {
 	public partial class LocationsView : ContentView
 	{
+        static readonly TimeSpan telemetryRefreshPeriod = TimeSpan.FromSeconds(10);
+        DateTime telemetryLastChanged;
         LocationsViewModel viewModel;
         Distance? oldDistance;
         Distance? oldViewRadius;
@@ -71,6 +73,18 @@ namespace Pegasus.Phone.XF
             if (viewModel.CraftTelemetry.Data == null)
             {
                 return;
+            }
+
+            // Only update every N seconds, because updating too often is expensive (on Android, at least)
+            // Also, only put this limit in place when there are three pins, so we don't start with
+            // a limited display for a while!
+            if (Device.OS == TargetPlatform.Android && Map.Pins.Count == 3)
+            {
+                if ((DateTime.Now - telemetryLastChanged) < telemetryRefreshPeriod)
+                {
+                    return;
+                }
+                telemetryLastChanged = DateTime.Now;
             }
 
             Pin pin;
