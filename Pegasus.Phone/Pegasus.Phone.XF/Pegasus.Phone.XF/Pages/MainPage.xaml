@@ -3,10 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:pegasus="clr-namespace:Pegasus.Phone.XF;assembly=Pegasus.Phone.XF"
              x:Class="Pegasus.Phone.XF.MainPage">
-  <Grid VerticalOptions="FillAndExpand">
+  <Grid VerticalOptions="FillAndExpand" RowSpacing="0">
     <Grid.RowDefinitions>
       <RowDefinition Height="1*" />
-      <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
@@ -31,8 +30,8 @@
       </Grid>
     </Frame>
 
-    <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="Center" Padding="0">
-      <Button x:Name="TestButton" Text="{Binding MessageCount}" Clicked="DoTest" WidthRequest="50" BindingContext="{Binding AppData}" IsVisible="False" />
+    <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center" Padding="-7">
+      <Button x:Name="TestButton" Text="{Binding MessageCount}" Clicked="DoTest" HeightRequest="20" WidthRequest="50" BindingContext="{Binding AppData}" IsVisible="False" />
       <Image x:Name="TelemetryOverviewImage" Source="appbar_home_empty.png" />
       <Image x:Name="MapImage" Source="appbar_map_gps.png" />
       <Image x:Name="TelemetryDetailsImage" Source="appbar_gauge_25.png" />
