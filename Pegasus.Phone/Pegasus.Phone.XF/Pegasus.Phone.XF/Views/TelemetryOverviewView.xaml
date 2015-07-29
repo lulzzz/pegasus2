@@ -7,6 +7,8 @@
   <ContentView.Resources>
     <ResourceDictionary>
       <converters:DegreesToCompassPointConverter x:Key="DegreesToCompassPointConverter" />
+      <converters:VerticalSpeedToVisibilityConverter x:Key="VerticalSpeedToVisibilityConverterUp" />
+      <converters:VerticalSpeedToVisibilityConverter x:Key="VerticalSpeedToVisibilityConverterDown" PositiveIsInvisible="True" />
     </ResourceDictionary>
   </ContentView.Resources>
 	<ContentView.Content>
@@ -222,12 +224,14 @@
                 FontSize="Large"
                 TextColor="Green"
                 YAlign="Start"
+                IsVisible="{Binding CraftTelemetry.Data.VerticalSpeed, Converter={StaticResource VerticalSpeedToVisibilityConverterUp}}"
                   />
             <Label
                 Text="v"
                 FontSize="Large"
                 TextColor="Red"
                 YAlign="End"
+                IsVisible="{Binding CraftTelemetry.Data.VerticalSpeed, Converter={StaticResource VerticalSpeedToVisibilityConverterDown}}"
                   />
           </StackLayout>
 

@@ -38,6 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Converters\VerticalSpeedToVisibilityConverter.cs" />
     <Compile Include="Converters\DegreesToCompassPointConverter.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
