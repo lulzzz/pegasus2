@@ -152,9 +152,8 @@ namespace Pegasus.Phone.XF
 
             messageId = 1;
             this.lastConnectAttemptTime = DateTime.Now;
-            this.client = DependencyService.Get<IWebSocketClient>();
+            this.client = DependencyService.Get<IWebSocketClient>(DependencyFetchTarget.NewInstance);
             this.client.OnError += client_OnError;
-            this.client.OnClose += client_OnClose;
             this.client.OnMessage += client_OnMessage;
             try
             {
@@ -256,16 +255,6 @@ namespace Pegasus.Phone.XF
                     this.CurrentCraftTelemetry.Data = telemetry;
                 });
             }
-        }
-
-        private void client_OnClose(object sender, string message)
-        {
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                // this.AppData.StatusMessage = "Connection closed: " + message;
-                this.client = null;
-                await this.ConnectWebSocketAsync();
-            });
         }
 
         private void client_OnError(object sender, Exception ex)

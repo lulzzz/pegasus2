@@ -16,7 +16,6 @@ namespace Piraeus.Web.WebSockets.WinRT
     {
         private const int receiveChunkSize = 1024;
         private MessageWebSocket client;
-        private bool connected = false;
 
         public event WebSocketEventHandler OnOpen;
         public event WebSocketEventHandler OnClose;
@@ -62,8 +61,6 @@ namespace Piraeus.Web.WebSockets.WinRT
                 throw;
             }
 
-            connected = true;
-
             if (OnOpen != null)
             {
                 OnOpen(this, "Web socket is opened.");
@@ -92,7 +89,11 @@ namespace Piraeus.Web.WebSockets.WinRT
 
                 client.Dispose();
                 client = null;
-                connected = false;
+
+                if (OnError != null)
+                {
+                    OnError(this, ex);
+                }
             }
         }
 
@@ -127,7 +128,11 @@ namespace Piraeus.Web.WebSockets.WinRT
 
                 client.Dispose();
                 client = null;
-                connected = false;
+
+                if (OnError != null)
+                {
+                    OnError(this, ex);
+                }
             }
         }
     }

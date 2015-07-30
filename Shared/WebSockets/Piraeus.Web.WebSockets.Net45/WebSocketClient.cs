@@ -31,7 +31,6 @@ namespace Piraeus.Web.WebSockets.Net45
             this.messageQueue = new Queue<byte[]>();
         }
 
-
         public bool IsConnected
         {
             get
@@ -82,7 +81,7 @@ namespace Piraeus.Web.WebSockets.Net45
             await client.CloseAsync(WebSocketCloseStatus.NormalClosure, "Web Socket closed by client.", CancellationToken.None);
             // TODO: reap thread
 
-            if(OnClose != null)
+            if (OnClose != null)
             {
                 OnClose(this, "Web socket is closed.");
             }
@@ -95,7 +94,7 @@ namespace Piraeus.Web.WebSockets.Net45
             WebSocketReceiveResult result = null;
             int remainingLength = 0;
 
-            while(client.State == WebSocketState.Open && exception == null)
+            while (client.State == WebSocketState.Open && exception == null)
             {
                 try
                 {
@@ -121,21 +120,20 @@ namespace Piraeus.Web.WebSockets.Net45
                             remainingLength = buffer.Length - index;
                         } while (remainingLength > 0);
 
-
                         prefix = null;
 
-                        if(!result.EndOfMessage)
+                        if (!result.EndOfMessage)
                         {
                             throw new WebSocketException("Expected EOF for Web Socket message received.");
                         }
 
-                        if(OnMessage != null)
+                        if (OnMessage != null)
                         {
                             OnMessage(this, message);
                         }
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     exception = ex;
                     //Trace.TraceWarning("Web socket receive faulted.");
@@ -145,21 +143,9 @@ namespace Piraeus.Web.WebSockets.Net45
 
             if (exception != null)
             {
-                try
+                if (OnError != null)
                 {
-                    CloseAsync().Wait();
-                }
-                catch (Exception ex)
-                {
-                    if (OnError != null)
-                    {
-                        OnError(this, ex);
-                    }
-                }
-
-                if (OnClose != null)
-                {
-                    OnClose(this, "Client forced to close.");
+                    OnError(this, exception);
                 }
             }
         }
@@ -187,21 +173,8 @@ namespace Piraeus.Web.WebSockets.Net45
                         Buffer.BlockCopy(messageBuffer, index, buffer, 0, bufferSize);
                         index += bufferSize;
                         remainingLength = messageBuffer.Length - index;
-                        try
-                        {
-                            await client.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Binary, remainingLength == 0, CancellationToken.None);
-                        }
-                        catch (Exception ex)
-                        {
-                            //Trace.TraceWarning("Web Socket send fault.");
-                            //Trace.TraceError(ex.Message);
-                            throw;
-                            
-                        }
-                        finally
-                        {
-                            this.messageQueue.Dequeue();
-                        }
+                        await client.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Binary, remainingLength == 0, CancellationToken.None);
+                        this.messageQueue.Dequeue();
                     } while (remainingLength > 0);
                 }
             }
@@ -214,11 +187,9 @@ namespace Piraeus.Web.WebSockets.Net45
 
             if (exception != null)
             {
-                await CloseAsync();
-
-                if (OnClose != null)
+                if (OnError != null)
                 {
-                    OnClose(this, "Client forced to close.");
+                    OnError(this, exception);
                 }
             }
         }

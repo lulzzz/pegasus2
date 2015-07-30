@@ -28,6 +28,11 @@ namespace Pegasus.Phone.XF.ViewModels
             get { return busyCount; }
             set
             {
+                if (value < 0)
+                {
+                    value = 0;
+                }
+
                 SetProperty(ref busyCount, value);
                 IsBusy = true; // value doesn't matter
             }
