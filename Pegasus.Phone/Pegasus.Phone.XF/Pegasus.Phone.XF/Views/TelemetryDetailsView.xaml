@@ -2,7 +2,7 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Pegasus.Phone.XF.TelemetryDetailsView">
 	<ContentView.Content>
     <ScrollView  Orientation = "Vertical" VerticalOptions="StartAndExpand">
-      <Grid VerticalOptions="StartAndExpand" ColumnSpacing="5">
+      <Grid VerticalOptions="StartAndExpand" ColumnSpacing="5" RowSpacing="5" Padding="10">
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
           <RowDefinition Height="Auto" />
@@ -22,38 +22,45 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label Text="Measurement"
-               FontSize="Medium"
-               Grid.Row="0" Grid.Column="0"
-               TextColor="White"
-               BackgroundColor="Navy"/>
+        <Grid
+            Grid.ColumnSpan="2"
+            Padding="-10,-10,-10,0"
+            >
+            <BoxView HorizontalOptions="FillAndExpand" Color="Navy" />
 
-        <Label Text="Value"
-               FontSize="Medium"
-               Grid.Row="0" Grid.Column="1"
-               TextColor="White"
-               BackgroundColor="Navy"/>
+            <StackLayout Orientation="Horizontal" Padding="10" HorizontalOptions="FillAndExpand">
+                <Label
+                    Text="Measurement"
+                    FontSize="Large"
+                    TextColor="White"
+                    />
+
+                <Label
+                    Text="Value"
+                    FontSize="Large"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"
+                    XAlign="End"
+                    />                        
+            </StackLayout>
+        </Grid>
 
         <Label Text="Altitude" FontSize="Medium" Grid.Row="1" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.GpsAltitude, StringFormat='{0} m'}" FontSize="Medium" Grid.Row="1" Grid.Column="1"/>
+        <Label Text="{Binding CraftTelemetry.Data.GpsAltitude, StringFormat='{0:0,0} ft'}" FontSize="Medium" Grid.Row="1" Grid.Column="1" XAlign="End"/>
         <Label Text="Air Pressure" FontSize="Medium" Grid.Row="2" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.AtmosphericPressure, StringFormat='{0} mbars'}" FontSize="Medium" Grid.Row="2" Grid.Column="1"/>
+        <Label Text="{Binding CraftTelemetry.Data.AtmosphericPressure, StringFormat='{0} mbar'}" FontSize="Medium" Grid.Row="2" Grid.Column="1" XAlign="End" />
         <Label Text="Outside Temp" FontSize="Medium" Grid.Row="3" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.TempOutside, StringFormat='{0} C'}" FontSize="Medium" Grid.Row="3" Grid.Column="1"/>
+        <Label Text="{Binding CraftTelemetry.Data.TempOutside, StringFormat='{0} &#x2103;'}" FontSize="Medium" Grid.Row="3" Grid.Column="1" XAlign="End" />
         <Label Text="Inside Temp" FontSize="Medium" Grid.Row="4" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.TempInside, StringFormat='{0} C'}" FontSize="Medium" Grid.Row="4" Grid.Column="1"/>
+        <Label Text="{Binding CraftTelemetry.Data.TempInside, StringFormat='{0} &#x2103;'}" FontSize="Medium" Grid.Row="4" Grid.Column="1" XAlign="End" />
         <Label Text="Battery 1" FontSize="Medium" Grid.Row="5" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.Battery1Level, StringFormat='{0} V'}" FontSize="Medium" Grid.Row="5" Grid.Column="1"/>
+        <Label Text="{Binding CraftTelemetry.Data.Battery1Level, StringFormat='{0} V'}" FontSize="Medium" Grid.Row="5" Grid.Column="1" XAlign="End" />
         <Label Text="Battery 2" FontSize="Medium" Grid.Row="6" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.Battery2Level, StringFormat='{0} V'}" FontSize="Medium" Grid.Row="6" Grid.Column="1"/>
-        <Label Text="Parachute" FontSize="Medium" Grid.Row="7" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.MainDeployStatus}" FontSize="Medium" Grid.Row="7" Grid.Column="1"/>
-        <Label Text="Balloon" FontSize="Medium" Grid.Row="8" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.BalloonReleaseStatus}" FontSize="Medium" Grid.Row="8" Grid.Column="1"/>
+        <Label Text="{Binding CraftTelemetry.Data.Battery2Level, StringFormat='{0} V'}" FontSize="Medium" Grid.Row="6" Grid.Column="1" XAlign="End" />
         <Label Text="Magnetometer" FontSize="Medium" Grid.Row="9" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.Magnetometer.FriendlyFormat, StringFormat='{0} Gs'}" FontSize="Medium" Grid.Row="9" Grid.Column="1"/>
+        <Label Text="{Binding CraftTelemetry.Data.Magnetometer.FriendlyFormat, StringFormat='{0} Gs'}" FontSize="Medium" Grid.Row="9" Grid.Column="1" XAlign="End" />
         <Label Text="Accelerometer" FontSize="Medium" Grid.Row="10" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.Accelerometer.FriendlyFormat, StringFormat='{0} G'}" FontSize="Medium" Grid.Row="10" Grid.Column="1"/>
+        <Label Text="{Binding CraftTelemetry.Data.Accelerometer.FriendlyFormat, StringFormat='{0} G'}" FontSize="Medium" Grid.Row="10" Grid.Column="1" XAlign="End" />
       </Grid>
     </ScrollView>
   </ContentView.Content>
