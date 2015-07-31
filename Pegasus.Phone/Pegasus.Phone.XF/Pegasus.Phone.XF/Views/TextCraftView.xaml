@@ -15,7 +15,7 @@
       <Label
         Text="{Binding CraftTelemetry.Data.AltitudeSpeed, StringFormat='Craft - {0}'}"
              FontSize="Small"
-             BackgroundColor="Teal"
+             BackgroundColor="Accent"
              XAlign="Center" />
 
       <Editor x:Name="MessageEditor" HeightRequest="200">

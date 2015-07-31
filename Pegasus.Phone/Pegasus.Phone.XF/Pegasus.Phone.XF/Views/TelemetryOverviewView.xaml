@@ -84,7 +84,7 @@
 
         <BoxView
             Grid.Column="1" Grid.Row="1"
-            Color="Gray"
+            Color="#FF333333"
             WidthRequest="2"
             HorizontalOptions="Center"
             />
@@ -120,7 +120,7 @@
 
         <BoxView
               Grid.ColumnSpan="3" Grid.Row="2"
-              Color="Gray"
+              Color="#FF333333"
               HeightRequest="2"
               VerticalOptions="Center"
               />
@@ -155,7 +155,7 @@
 
         <BoxView
             Grid.Column="1" Grid.Row="3"
-            Color="Gray"
+            Color="#FF333333"
             WidthRequest="2"
             HorizontalOptions="Center"
             />
@@ -191,7 +191,7 @@
 
         <BoxView
               Grid.ColumnSpan="3" Grid.Row="4"
-              Color="Gray"
+              Color="#FF333333"
               HeightRequest="2"
               VerticalOptions="Center"
               />
@@ -245,7 +245,7 @@
 
         <BoxView
               Grid.ColumnSpan="3" Grid.Row="6"
-              Color="Gray"
+              Color="#FF333333"
               HeightRequest="2"
               VerticalOptions="Center"
               />
@@ -280,7 +280,7 @@
 
         <BoxView
             Grid.Column="1" Grid.Row="7"
-            Color="Gray"
+            Color="#FF333333"
             WidthRequest="2"
             HorizontalOptions="Center"
             />
@@ -327,7 +327,7 @@
           Grid.Row="1"
           Text="{Binding CraftTelemetry.Data.MainDeployStatus, StringFormat='Parachute - {0}'}"
           FontSize="Medium"
-          BackgroundColor="Navy"
+          BackgroundColor="Accent"
           XAlign="Center"
           />
     </Grid>
