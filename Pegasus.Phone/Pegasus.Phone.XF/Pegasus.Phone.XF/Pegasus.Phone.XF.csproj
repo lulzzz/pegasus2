@@ -51,6 +51,7 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BasicViewModel.cs" />
     <Compile Include="ViewModels\Views\GroundTelemetryViewModel.cs" />
+    <Compile Include="ViewModels\Views\TextCraftViewModel.cs" />
     <Compile Include="ViewModels\Views\TelemetryDetailsViewModel.cs" />
     <Compile Include="ViewModels\Views\LocationsViewModel.cs" />
     <Compile Include="ViewModels\Views\CraftTelemetryViewModel.cs" />

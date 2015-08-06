@@ -43,6 +43,20 @@ namespace Pegasus.Phone.XF.ViewModels.Pages
             }
         }
 
+        private TextCraftViewModel textCraftViewModel;
+        public TextCraftViewModel TextCraftViewModel
+        {
+            get
+            {
+                if (textCraftViewModel == null)
+                {
+                    textCraftViewModel = new TextCraftViewModel();
+                }
+
+                return textCraftViewModel;
+            }
+        }
+
         public MainPageViewModel()
         {
         }
