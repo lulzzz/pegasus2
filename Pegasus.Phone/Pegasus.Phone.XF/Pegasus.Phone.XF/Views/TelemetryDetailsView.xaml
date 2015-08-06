@@ -50,35 +50,35 @@
         </Grid>
 
         <Label Text="Altitude" FontSize="Medium" Grid.Row="1" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.GpsAltitude, StringFormat='{0:0,0} ft'}" FontSize="Medium" Grid.Row="1" Grid.Column="1" XAlign="End" TextColor="White" />
+        <Label Text="{Binding CraftTelemetry.Data.GpsAltitude, StringFormat='{0:0,0} ft'}" FontSize="Medium" Grid.Row="1" Grid.Column="1" XAlign="End" TextColor="White" LineBreakMode="NoWrap" />
         <StackLayout Grid.Row="2" Grid.ColumnSpan="2" Padding="10,2,10,2"><BoxView Color="#FF333333" HeightRequest="1"></BoxView></StackLayout>
 
         <Label Text="Air Pressure" FontSize="Medium" Grid.Row="3" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.AtmosphericPressure, StringFormat='{0} mbar'}" FontSize="Medium" Grid.Row="3" Grid.Column="1" XAlign="End" TextColor="White" />
+        <Label Text="{Binding CraftTelemetry.Data.AtmosphericPressure, StringFormat='{0} mbar'}" FontSize="Medium" Grid.Row="3" Grid.Column="1" XAlign="End" TextColor="White" LineBreakMode="NoWrap" />
         <StackLayout Grid.Row="4" Grid.ColumnSpan="2" Padding="10,2,10,2"><BoxView Color="#FF333333" HeightRequest="1"></BoxView></StackLayout>
 
         <Label Text="Outside Temp" FontSize="Medium" Grid.Row="5" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.TempOutside, StringFormat='{0} &#x2103;'}" FontSize="Medium" Grid.Row="5" Grid.Column="1" XAlign="End" TextColor="White" />
+        <Label Text="{Binding CraftTelemetry.Data.TempOutside, StringFormat='{0} &#x2103;'}" FontSize="Medium" Grid.Row="5" Grid.Column="1" XAlign="End" TextColor="White" LineBreakMode="NoWrap" />
         <StackLayout Grid.Row="6" Grid.ColumnSpan="2" Padding="10,2,10,2"><BoxView Color="#FF333333" HeightRequest="1"></BoxView></StackLayout>
 
         <Label Text="Inside Temp" FontSize="Medium" Grid.Row="7" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.TempInside, StringFormat='{0} &#x2103;'}" FontSize="Medium" Grid.Row="7" Grid.Column="1" XAlign="End" TextColor="White" />
+        <Label Text="{Binding CraftTelemetry.Data.TempInside, StringFormat='{0} &#x2103;'}" FontSize="Medium" Grid.Row="7" Grid.Column="1" XAlign="End" TextColor="White" LineBreakMode="NoWrap" />
         <StackLayout Grid.Row="8" Grid.ColumnSpan="2" Padding="10,2,10,2"><BoxView Color="#FF333333" HeightRequest="1"></BoxView></StackLayout>
 
         <Label Text="Battery 1" FontSize="Medium" Grid.Row="9" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.Battery1Level, StringFormat='{0} V'}" FontSize="Medium" Grid.Row="9" Grid.Column="1" XAlign="End" TextColor="White" />
+        <Label Text="{Binding CraftTelemetry.Data.Battery1Level, StringFormat='{0} V'}" FontSize="Medium" Grid.Row="9" Grid.Column="1" XAlign="End" TextColor="White" LineBreakMode="NoWrap" />
         <StackLayout Grid.Row="10" Grid.ColumnSpan="2" Padding="10,2,10,2"><BoxView Color="#FF333333" HeightRequest="1"></BoxView></StackLayout>
 
         <Label Text="Battery 2" FontSize="Medium" Grid.Row="11" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.Battery2Level, StringFormat='{0} V'}" FontSize="Medium" Grid.Row="11" Grid.Column="1" XAlign="End" TextColor="White" />
+        <Label Text="{Binding CraftTelemetry.Data.Battery2Level, StringFormat='{0} V'}" FontSize="Medium" Grid.Row="11" Grid.Column="1" XAlign="End" TextColor="White" LineBreakMode="NoWrap" />
         <StackLayout Grid.Row="12" Grid.ColumnSpan="2" Padding="10,2,10,2"><BoxView Color="#FF333333" HeightRequest="1"></BoxView></StackLayout>
 
         <Label Text="Magnetometer" FontSize="Medium" Grid.Row="13" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.Magnetometer.FriendlyFormat, StringFormat='{0} Gs'}" FontSize="Medium" Grid.Row="13" Grid.Column="1" XAlign="End" TextColor="White" />
+        <Label Text="{Binding CraftTelemetry.Data.Magnetometer.FriendlyFormat, StringFormat='{0} Gs'}" FontSize="Medium" Grid.Row="13" Grid.Column="1" XAlign="End" TextColor="White" LineBreakMode="NoWrap" />
         <StackLayout Grid.Row="14" Grid.ColumnSpan="2" Padding="10,2,10,2"><BoxView Color="#FF333333" HeightRequest="1"></BoxView></StackLayout>
 
         <Label Text="Accelerometer" FontSize="Medium" Grid.Row="15" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.Accelerometer.FriendlyFormat, StringFormat='{0} G'}" FontSize="Medium" Grid.Row="15" Grid.Column="1" XAlign="End" TextColor="White" />
+        <Label Text="{Binding CraftTelemetry.Data.Accelerometer.FriendlyFormat, StringFormat='{0} G'}" FontSize="Medium" Grid.Row="15" Grid.Column="1" XAlign="End" TextColor="White" LineBreakMode="NoWrap" />
       </Grid>
     </ScrollView>
   </ContentView.Content>
