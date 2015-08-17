@@ -22,8 +22,8 @@ namespace PegasusMissionWeb.Hubs
     {
 
         //private static string host = "ws://habtest.azurewebsites.net/api/connect";
-        //private string host = "ws://broker.pegasusmission.io/api/connect";
-        private string host = "ws://localhost:11748/api/connect";
+        private string host = "ws://broker.pegasusmission.io/api/connect";
+        //private string host = "ws://localhost:11748/api/connect";
         private string subprotocol = "coap.v1";
         //private static string tokenString = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL25hbWUiOiIwZWFjNjZlZi1jMDNkLTQ1ZDQtYmNjMS01NzMyYjQyMTQ2YTQiLCJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL3JvbGUiOiJ1c2VyIiwiaXNzIjoidXJuOnBlZ2FzdXNtaXNzaW9uLmlvIiwiYXVkIjoiaHR0cDovL2Jyb2tlci5wZWdhc3VzbWlzc2lvbi5pby9hcGkvY29ubmVjdCIsImV4cCI6MTQ2ODk1NjQ0NSwibmJmIjoxNDM3NDIwNDQ1fQ.VW85TZ_LrIvMQv3d7tVMFGJvE8M7H60MIe1xF8bcv1g";
         private string telemetryUriString = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/telemetry";
