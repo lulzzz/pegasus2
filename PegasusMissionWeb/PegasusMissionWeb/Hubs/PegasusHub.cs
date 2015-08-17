@@ -12,36 +12,60 @@ using System.Threading.Tasks;
 using Pegasus2.Data;
 using Piraeus.Web.WebSockets;
 using Newtonsoft.Json;
+using PegasusMissionWeb.Security;
+using System.Security.Claims;
+using System.Diagnostics;
 
 namespace PegasusMissionWeb.Hubs
 {
     public class PegasusHub : Hub
     {
+
         //private static string host = "ws://habtest.azurewebsites.net/api/connect";
-        private static string host = "ws://broker.pegasusmission.io/api/connect";
-        private static string subprotocol = "coap.v1";
-        private static string tokenString = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL25hbWUiOiIwZWFjNjZlZi1jMDNkLTQ1ZDQtYmNjMS01NzMyYjQyMTQ2YTQiLCJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL3JvbGUiOiJ1c2VyIiwiaXNzIjoidXJuOnBlZ2FzdXNtaXNzaW9uLmlvIiwiYXVkIjoiaHR0cDovL2Jyb2tlci5wZWdhc3VzbWlzc2lvbi5pby9hcGkvY29ubmVjdCIsImV4cCI6MTQ2ODk1NjQ0NSwibmJmIjoxNDM3NDIwNDQ1fQ.VW85TZ_LrIvMQv3d7tVMFGJvE8M7H60MIe1xF8bcv1g";
-        private static string telemetryUriString = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/telemetry";
-        private static string groundUriString = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/ground";
-        private static string noteUriString = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/craftnote";
-        WebSocketClient client = new WebSocketClient();
+        //private string host = "ws://broker.pegasusmission.io/api/connect";
+        private string host = "ws://localhost:11748/api/connect";
+        private string subprotocol = "coap.v1";
+        //private static string tokenString = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL25hbWUiOiIwZWFjNjZlZi1jMDNkLTQ1ZDQtYmNjMS01NzMyYjQyMTQ2YTQiLCJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL3JvbGUiOiJ1c2VyIiwiaXNzIjoidXJuOnBlZ2FzdXNtaXNzaW9uLmlvIiwiYXVkIjoiaHR0cDovL2Jyb2tlci5wZWdhc3VzbWlzc2lvbi5pby9hcGkvY29ubmVjdCIsImV4cCI6MTQ2ODk1NjQ0NSwibmJmIjoxNDM3NDIwNDQ1fQ.VW85TZ_LrIvMQv3d7tVMFGJvE8M7H60MIe1xF8bcv1g";
+        private string telemetryUriString = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/telemetry";
+        private string groundUriString = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/ground";
+        private string noteUriString = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/craftnote";
+
+
+        private string issuer = "urn:pegasusmission.io";
+        private string audience = "http://broker.pegasusmission.io/api/connect";
+        private string signingKey = "cW0iA3P/mhFi0/O4EAja7UuJ16q6Aeg4cOzL7SIvLL8=";
+
+        private WebSocketClient client;
 
         public bool webSocketInstantiated = false;
 
-        private static bool opened;
+        private bool opened;
 
         public void Send(string jsonString, string telemetryType)
         {
             if (webSocketInstantiated == false)
             {
-                //WebSocketClient client = new WebSocketClient();
-                webSocketInstantiated = true;
-                client.OnError += client_OnError;
-                client.OnOpen += client_OnOpen;
-                client.OnClose += client_OnClose;
-                client.OnMessage += client_OnMessage;
                 Task task = Task.Factory.StartNew(async () =>
                 {
+                    if(client != null)
+                    {
+                        await client.CloseAsync();
+                    }
+
+                    client = new WebSocketClient();
+                    webSocketInstantiated = true;
+                    client.OnError += client_OnError;
+                    client.OnOpen += client_OnOpen;
+                    client.OnClose += client_OnClose;
+                    client.OnMessage += client_OnMessage;
+
+                    List<Claim> claims = new List<Claim>();
+                    claims.Add(new Claim("http://pegasusmission.io/claims/name", Guid.NewGuid().ToString()));
+                    claims.Add(new Claim("http://pegasusmission.io/claims/role", "user"));
+
+                    string tokenString = JwtSecurityTokenBuilder.Create(issuer, audience, claims, 20000, signingKey);
+                
+                
                     await client.ConnectAsync(host, subprotocol, tokenString);
                 });
 
@@ -64,18 +88,52 @@ namespace PegasusMissionWeb.Hubs
 
         private void Subscribe()
         {
-            CoapRequest telemetrySubscription = new CoapRequest(1, RequestMessageType.NonConfirmable, MethodType.POST, new Uri(telemetryUriString), MediaType.Json);
-            CoapRequest groundSubscription = new CoapRequest(2, RequestMessageType.NonConfirmable, MethodType.POST, new Uri(groundUriString), MediaType.Json);
-            CoapRequest noteSubscription = new CoapRequest(3, RequestMessageType.NonConfirmable, MethodType.POST, new Uri(noteUriString), MediaType.Json);
+            Random ran = new Random();
+            ushort id = (ushort)ran.Next(1, Convert.ToInt32(ushort.MaxValue - 10));
+            CoapRequest telemetrySubscription = new CoapRequest(id++, RequestMessageType.NonConfirmable, MethodType.POST, new Uri(telemetryUriString), MediaType.Json);
+            CoapRequest groundSubscription = new CoapRequest(id++, RequestMessageType.NonConfirmable, MethodType.POST, new Uri(groundUriString), MediaType.Json);
+            CoapRequest noteSubscription = new CoapRequest(id++, RequestMessageType.NonConfirmable, MethodType.POST, new Uri(noteUriString), MediaType.Json);
 
-            client.SendAsync(telemetrySubscription.Encode()).Wait();
-            client.SendAsync(groundSubscription.Encode()).Wait();
-            client.SendAsync(noteSubscription.Encode()).Wait();
+            byte[] telemetrySubscribe = telemetrySubscription.Encode();
+            byte[] groundSubscribe = groundSubscription.Encode();
+            byte[] noteSubscribe = noteSubscription.Encode();
+
+            client.Send(groundSubscribe);
+            client.Send(telemetrySubscribe);
+            client.Send(noteSubscribe);
+            //client.SendAsync(groundSubscribe).Wait();
+            //client.SendAsync(telemetrySubscribe).Wait();
+            //client.SendAsync(noteSubscribe).Wait();
+
+
+            //Task task1 = Task.Factory.StartNew(async () =>
+            //    {
+            //        await client.SendAsync(telemetrySubscribe);
+            //    });
+
+            //Task.WhenAll(task1);
+
+            //Task task2 = Task.Factory.StartNew(async () =>
+            //{
+            //    await client.SendAsync(groundSubscribe);
+            //});
+
+            //Task.WhenAll(task2);
+
+
+            //Task task3 = Task.Factory.StartNew(async () =>
+            //{
+            //    await client.SendAsync(noteSubscribe);
+            //});
+
+            //Task.WhenAll(task3);
         }
+
 
         public void client_OnMessage(object sender, byte[] message)
         {
             CoapMessage coapMessage = CoapMessage.DecodeMessage(message);
+            //Trace.TraceInformation(coapMessage.ResourceUri.ToString());
             string jsonString = Encoding.UTF8.GetString(coapMessage.Payload);
 
             if (coapMessage.ResourceUri.ToString().Contains("/telemetry"))
@@ -103,19 +161,21 @@ namespace PegasusMissionWeb.Hubs
             //Send(telemetry.GpsLatitude.ToString(), telemetry.GpsLongitude.ToString(), telemetry.Accelerometer.ToString() );
         }
 
-        static void client_OnClose(object sender, string message)
+        void client_OnClose(object sender, string message)
         {
             opened = false;
+            webSocketInstantiated = false;
         }
 
-        static void client_OnOpen(object sender, string message)
+        void client_OnOpen(object sender, string message)
         {
             opened = true;
         }
 
-        static void client_OnError(object sender, Exception ex)
+        void client_OnError(object sender, Exception ex)
         {
             opened = false;
+            
         }
     }
 }
