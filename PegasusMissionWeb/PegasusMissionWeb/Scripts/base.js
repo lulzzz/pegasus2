@@ -162,7 +162,9 @@ function embedElevation(displayMap, marker, elevatorService, locationLatLon, con
             }
 
         } else {
-            alert('Elevation service failed due to: ' + status);
+            //alert('Elevation service failed due to: ' + status);   
+            setTimeout(function () { }, 3000);
+            
         }
     });
 
