@@ -29,8 +29,9 @@ namespace PegasusMissionWeb.Hubs
         private string telemetryUriString = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/telemetry";
         private string groundUriString = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/ground";
         private string noteUriString = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/craftnote";
-
-
+        private string balloonInit = "{\"source\": \"mobile\",\"timestamp\": \"1/28/2015 3:49:30 PM\",\"atmosphericPressure\": \"981.2\",\"pressureAltitude\": \"270.3\",\"pressureTemp\": \"13\",\"humidity\": \"78.8\",\"tempInside\": \"13\",\"tempOutside\": \"0.8\",\"battery1Level\": \"7.5\",\"battery2Level\": \"7.4\",\"balloonReleased\": \"False\",\"mainDeployed\": \"False\",\"radiationCps\": \"1\",\"videoPositionUp\": \"False\",\"_9DofAccelerometer\": {\"x\": \"-2624\",\"y\": \"1536\",\"z\": \"17856\"},\"_9DofGyroscope\": {\"x\": \"-2624\",\"y\": \"1536\",\"z\": \"17856\"},\"_9DofMagnetometer\": {\"x\": \"-2624\",\"y\": \"1536\",\"z\": \"17856\"},\"radioStrength\": \"1\",\"gpsLatitude\": \"46.8298\",\"gpsLongitude\": \"-119.1646\",\"gpsAltitude\": \"270.3\",\"gpsSpeed\": \"7.4\",\"gpsDirection\": \"200.27\",\"gpsFix\": \"True\",\"gpsSatellites\": \"7\",\"receptionErrors\": \"0\",\"verticalSpeed\": \"5.5\",\"pictureCount\": \"0\",\"uvRays\": \"0\",\"ledsActivated\": \"True\",\"bpServoOn\": \"False\",\"videoServoOn\": \"False\",\"deploymentAltitude\": \"1000\",\"releaseTime\": \"02:30\"}";
+        private string launchInit ="{\"source\":\"launch\",\"timestamp\":\"2015-01-28T15:49:30\",\"temp\":19.0,\"gpsLatitude\":46.8301,\"gpsLongitude\":-119.1643,\"gpsAltitude\":198.8,\"gpsSpeed\":0.0,\"gpsDirection\":0.0,\"gpsFix\":true,\"gpsSatellites\":2.0,\"azimuth\":64.0,\"elevation\":26.0,\"radioStrength\":62.0,\"receptionErrors\":0.0,\"batteryLevel\":1.7919540665074971,\"groundDistance\":0.025096005446082582,\"actualDistance\":0.051026062243078374,\"peerDistance\":0.0}";
+        private string mobileInit = "{\"source\":\"mobile\",\"timestamp\":\"2015-01-28T15:49:30\",\"temp\":19.0,\"gpsLatitude\":46.8409,\"gpsLongitude\":-119.1535,\"gpsAltitude\":525.0,\"gpsSpeed\":20.0,\"gpsDirection\":87.0,\"gpsFix\":true,\"gpsSatellites\":2.0,\"azimuth\":0.0,\"elevation\":0.0,\"radioStrength\":62.0,\"receptionErrors\":0.0,\"batteryLevel\":1.7919540665074971,\"groundDistance\":0.92852339403928819,\"actualDistance\":0.941914503422876,\"peerDistance\":0.92852339403928819}";
         private string issuer = "urn:pegasusmission.io";
         private string audience = "http://broker.pegasusmission.io/api/connect";
         private string signingKey = "cW0iA3P/mhFi0/O4EAja7UuJ16q6Aeg4cOzL7SIvLL8=";
@@ -88,6 +89,10 @@ namespace PegasusMissionWeb.Hubs
                 Subscribe();
             }
 
+            
+            Send(balloonInit, "balloon");
+            Send(launchInit, "launch");
+            Send(mobileInit, "mobile");
             return base.OnConnected();
         }
 
