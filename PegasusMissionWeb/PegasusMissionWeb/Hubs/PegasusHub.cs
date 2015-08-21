@@ -35,24 +35,32 @@ namespace PegasusMissionWeb.Hubs
         private string audience = "http://broker.pegasusmission.io/api/connect";
         private string signingKey = "cW0iA3P/mhFi0/O4EAja7UuJ16q6Aeg4cOzL7SIvLL8=";
 
-        private WebSocketClient client;
+        //private WebSocketClient client;
 
         public bool webSocketInstantiated = false;
 
         private bool opened;
 
-        public void Send(string jsonString, string telemetryType)
+        public override Task OnDisconnected(bool stopCalled)
         {
+            ClientManager.Disconnect(Context.ConnectionId);
+            return base.OnDisconnected(stopCalled);
+        }
+        
+        public override Task OnConnected()
+        {            
             if (webSocketInstantiated == false)
             {
+                WebSocketClient client = new WebSocketClient();
+
                 Task task = Task.Factory.StartNew(async () =>
                 {
-                    if(client != null)
-                    {
-                        await client.CloseAsync();
-                    }
+                    //if (client != null)
+                    //{
+                    //    await client.CloseAsync();
+                    //}
 
-                    client = new WebSocketClient();
+                    //client = new WebSocketClient();
                     webSocketInstantiated = true;
                     client.OnError += client_OnError;
                     client.OnOpen += client_OnOpen;
@@ -64,8 +72,8 @@ namespace PegasusMissionWeb.Hubs
                     claims.Add(new Claim("http://pegasusmission.io/claims/role", "user"));
 
                     string tokenString = JwtSecurityTokenBuilder.Create(issuer, audience, claims, 20000, signingKey);
-                
-                
+
+
                     await client.ConnectAsync(host, subprotocol, tokenString);
                 });
 
@@ -76,8 +84,17 @@ namespace PegasusMissionWeb.Hubs
                     Thread.Sleep(100);
                 }
 
+                ClientManager.Add(Context.ConnectionId, client);
                 Subscribe();
             }
+
+            return base.OnConnected();
+        }
+
+
+        public void Send(string jsonString, string telemetryType)
+        {
+            
             // Call the addNewMessageToPage method to update clients.
             Clients.All.addNewMessageToPage(jsonString, telemetryType);
 
@@ -88,6 +105,7 @@ namespace PegasusMissionWeb.Hubs
 
         private void Subscribe()
         {
+            WebSocketClient client = ClientManager.Get(Context.ConnectionId);
             Random ran = new Random();
             ushort id = (ushort)ran.Next(1, Convert.ToInt32(ushort.MaxValue - 10));
             CoapRequest telemetrySubscription = new CoapRequest(id++, RequestMessageType.NonConfirmable, MethodType.POST, new Uri(telemetryUriString), MediaType.Json);
@@ -100,7 +118,7 @@ namespace PegasusMissionWeb.Hubs
 
             client.Send(groundSubscribe);
             client.Send(telemetrySubscribe);
-            client.Send(noteSubscribe);
+            //client.Send(noteSubscribe);
             //client.SendAsync(groundSubscribe).Wait();
             //client.SendAsync(telemetrySubscribe).Wait();
             //client.SendAsync(noteSubscribe).Wait();
