@@ -12,16 +12,16 @@
              FontSize="Medium"
              HorizontalOptions="Center" />
 
-      <Editor HeightRequest="100" Text="{Binding Message}" />
+      <Editor x:Name="MessageEditor" HeightRequest="100" Text="{Binding Message}" />
       <Label Text="{Binding CharactersLeft,StringFormat='{0} characters left'}" TextColor="{Binding ErrorColor}" />
 
       <Button 
         x:Name ="SendMessageButton"
         IsEnabled="{Binding CanSubmit}"
         Text="Send"
-              Command="{Binding SendCommand}"
-              HorizontalOptions="Center"
-              VerticalOptions="Start" />
+        Clicked="SendMessage"
+        HorizontalOptions="Center"
+        VerticalOptions="Start" />
     </StackLayout>
   </ContentView.Content>
 </ContentView>

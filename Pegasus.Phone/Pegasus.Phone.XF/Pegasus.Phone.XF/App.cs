@@ -191,8 +191,11 @@ namespace Pegasus.Phone.XF
             this.AppData.BusyCount++;
 
             UserMessage umessage = new UserMessage();
+            umessage.Message = message;
+#if DEBUG
             //adding ticks to the user message for testing latency (not used in production)
-            umessage.Message = message + "_" + DateTime.UtcNow.Ticks.ToString();
+            umessage.Message += "_" + DateTime.UtcNow.Ticks.ToString();
+#endif
             umessage.id = Guid.NewGuid().ToString();
             string jsonString = umessage.ToJson();
             byte[] payload = Encoding.UTF8.GetBytes(jsonString);
@@ -207,7 +210,6 @@ namespace Pegasus.Phone.XF
             try
             {
                 await client.SendAsync(messageBytes);
-                this.AppData.StatusMessage = "Message Sent!";
             }
             finally
             {

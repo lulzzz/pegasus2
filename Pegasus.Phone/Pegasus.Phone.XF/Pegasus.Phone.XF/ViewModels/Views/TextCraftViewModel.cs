@@ -11,7 +11,7 @@ namespace Pegasus.Phone.XF.ViewModels.Views
 {
     public class TextCraftViewModel : BaseViewModel
     {
-        string message = String.Empty;
+        private string message = String.Empty;
 
         public string Message
         {
@@ -41,19 +41,6 @@ namespace Pegasus.Phone.XF.ViewModels.Views
         {
             get { return 40 - (Message ?? String.Empty).Length; }
             set { OnPropertyChanged(); }
-        }
-
-        public Command SendCommand
-        {
-            get { return new Command(SendMessage); }
-        }
-
-        private async void SendMessage()
-        {
-            if (this.CanSubmit)
-            {
-                await App.Instance.SendUserMessageAsync(this.Message);
-            }
         }
 
         public TextCraftViewModel()
