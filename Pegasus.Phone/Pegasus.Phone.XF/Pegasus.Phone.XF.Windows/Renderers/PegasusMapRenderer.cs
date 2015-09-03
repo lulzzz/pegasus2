@@ -25,7 +25,7 @@ namespace Pegasus.Phone.XF.Windows.Renderers
             }
 
             SetNativeControl(new MapRenderControl());
-            Control.Map.Credentials = "AtxO1mWPBN-w3GVYC_kQoOf50VRIupvCWy8NV0-WcmhiRai2OExiOcKXQpLEtwJr";
+            Control.Map.Credentials = "AugsM2wpsu3p8J7azxN1cM0L79uRA6N9-Dy8DW6uMStv0tcz1CA-vVsAVRozJxDG";
             Control.MapItems.ItemsSource = Element.Pins;
             Control.Map.ViewChanged += Map_ViewChanged;
 

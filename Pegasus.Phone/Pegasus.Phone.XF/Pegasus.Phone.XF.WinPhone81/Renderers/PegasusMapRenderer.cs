@@ -24,7 +24,7 @@ namespace Pegasus.Phone.XF.WinPhone81.Renderers
             }
 
             SetNativeControl(new MapRenderControl());
-            Control.Map.MapServiceToken = "AtxO1mWPBN-w3GVYC_kQoOf50VRIupvCWy8NV0-WcmhiRai2OExiOcKXQpLEtwJr";
+            Control.Map.MapServiceToken = "AugsM2wpsu3p8J7azxN1cM0L79uRA6N9-Dy8DW6uMStv0tcz1CA-vVsAVRozJxDG";
             Control.MapItems.ItemsSource = Element.Pins;
             Control.Map.CenterChanged += (s, e2) => SetVisibleRegion();
             Control.Map.ZoomLevelChanged += (s, e2) => SetVisibleRegion();
