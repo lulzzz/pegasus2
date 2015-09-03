@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="6e89dc84-6db5-4102-85ed-a6ec30a89b36" Publisher="CN=randyc" Version="1.1.0.0" />
+  <Identity Name="49333PegasusMission.PegasusMission" Publisher="CN=FF6B7C7A-625E-41BE-8EC7-E9D1B3B1CC27" Version="1.1.0.0" />
   <Properties>
-    <DisplayName>Pegasus.Phone.XF.Windows</DisplayName>
-    <PublisherDisplayName>randyc</PublisherDisplayName>
+    <DisplayName>Pegasus Mission</DisplayName>
+    <PublisherDisplayName>Pegasus Mission</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
