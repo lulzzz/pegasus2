@@ -141,6 +141,11 @@ namespace Piraeus.Web.WebSockets.Net45
                 }
             }
 
+            if (exception == null && client.State == WebSocketState.CloseReceived && OnClose != null)
+            {
+                OnClose(this, "Web socket closed by remote.");
+            }
+
             if (exception != null)
             {
                 if (OnError != null)

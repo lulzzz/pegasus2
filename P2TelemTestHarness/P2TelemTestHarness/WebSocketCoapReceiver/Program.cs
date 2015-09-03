@@ -17,7 +17,7 @@ namespace WebSocketCoapReceiver
     class Program
     {
         //private static string host = "ws://localhost:11748/api/connect";
-        private static string host = "wss://broker.pegasusmission.io/api/connect";
+        private static string host = "ws://broker.pegasusmission.io/api/connect";
         private static string subprotocol = "coap.v1";
         private static string securityTokenString;
         private static string issuer = "urn:pegasusmission.io";
@@ -48,17 +48,7 @@ namespace WebSocketCoapReceiver
             client.OnOpen += client_OnOpen;
             client.OnMessage += client_OnMessage;
 
-            Task task = Task.Factory.StartNew(async () =>
-            {
-                await client.ConnectAsync(host, subprotocol, securityTokenString);
-            });
-
-            Task.WhenAll(task);
-
-            while (!opened)
-            {
-                Thread.Sleep(100);
-            }
+            client.ConnectAsync(host, subprotocol, securityTokenString).Wait();
 
             Console.WriteLine("Subscribing to topics");
             Subscribe(client);
