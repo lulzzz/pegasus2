@@ -21,6 +21,8 @@
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkVersion />
     <PackageCertificateThumbprint>629C0EB710CBF69780F244DD6CEA587BEC348ECF</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
