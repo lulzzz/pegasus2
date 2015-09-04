@@ -11,7 +11,7 @@ namespace Pegasus.Phone.XF.Utilities
     public static class Settings
     {
         private const string HomePageViewKey = "HomePageView";
-        private const string HomePageViewDefault = null;
+        private const string SavedSecurityTokenKey = "SavedSecurityToken";
 
         private static ISettings AppSettings
         {
@@ -21,9 +21,15 @@ namespace Pegasus.Phone.XF.Utilities
             }
         }
 
+        public static string SavedSecurityToken
+        {
+            get { return AppSettings.GetValueOrDefault<string>(SavedSecurityTokenKey, null); }
+            set { AppSettings.AddOrUpdateValue<string>(SavedSecurityTokenKey, value); }
+        }
+
         public static string HomePageView
         {
-            get { return AppSettings.GetValueOrDefault<string>(HomePageViewKey, HomePageViewDefault); }
+            get { return AppSettings.GetValueOrDefault<string>(HomePageViewKey, null); }
             set { AppSettings.AddOrUpdateValue<string>(HomePageViewKey, value); }
         }
     }
