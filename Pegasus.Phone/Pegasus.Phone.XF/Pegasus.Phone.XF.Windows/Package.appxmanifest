@@ -15,8 +15,14 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Pegasus.Phone.XF.Windows.App">
-      <m2:VisualElements DisplayName="Pegasus Mission" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="The Pegasus Mission companion" ForegroundText="light" BackgroundColor="#464646">
-        <m2:SplashScreen Image="Assets\SplashScreen.png" />
+      <m2:VisualElements DisplayName="Pegasus Mission" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="The Pegasus Mission companion" ForegroundText="light" BackgroundColor="darkGray">
+        <m2:DefaultTile ShortName="Pegasus Mission" DefaultSize="square150x150Logo">
+          <m2:ShowNameOnTiles>
+            <m2:ShowOn Tile="wide310x150Logo" />
+            <m2:ShowOn Tile="square310x310Logo" />
+          </m2:ShowNameOnTiles>
+        </m2:DefaultTile>
+        <m2:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="darkGray" />
       </m2:VisualElements>
     </Application>
   </Applications>
