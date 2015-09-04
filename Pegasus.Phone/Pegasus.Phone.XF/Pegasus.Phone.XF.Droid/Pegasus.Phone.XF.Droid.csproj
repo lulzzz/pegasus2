@@ -156,7 +156,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
-    <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />
@@ -169,7 +168,6 @@
     <AndroidResource Include="Resources\drawable\appbar_link.png" />
     <AndroidResource Include="Resources\drawable\appbar_map_gps.png" />
     <AndroidResource Include="Resources\drawable\appbar_message_send.png" />
-    <Content Include="PluginsHelp\SettingsReadme.txt" />
     <Content Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\drawable\appbar_home_empty.png" />
   </ItemGroup>
@@ -205,6 +203,10 @@
       <Project>{f4297d99-d786-4f0d-944b-77ea9e4b13a9}</Project>
       <Name>Piraeus.ServiceModel.Protocols.Coap.Phone</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\" />
+    <Folder Include="PluginsHelp\" />
   </ItemGroup>
   <Import Project="..\Pegasus.Phone.XF.Shared\Pegasus.Phone.XF.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
