@@ -12,6 +12,9 @@ using Piraeus.Web.WebSockets;
 using Pegasus2.Data;
 using Piraeus.ServiceModel.Protocols.Coap;
 using Pegasus.Phone.XF.ViewModels.Views;
+using System.Net;
+using System.IO;
+using Pegasus.Phone.XF.Utilities;
 
 namespace Pegasus.Phone.XF
 {
@@ -23,8 +26,10 @@ namespace Pegasus.Phone.XF
         private const string GroundTopicSubscribeUri = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/ground";
         private const string TelemetryTopicPublishUri = "coaps://pegasusmission.io/publish?topic=http://pegasus2.org/telemetry";
         private const string TelemetryTopicSubscribeUri = "coaps://pegasusmission.io/subscribe?topic=http://pegasus2.org/telemetry";
-        private const string userMessageTopicUriString = "coaps://pegasusmission.io/publish?topic=http://pegasus2.org/usermessage";
-        private const string JwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL25hbWUiOiJhYmMyIiwiaHR0cDovL3BlZ2FzdXNtaXNzaW9uLmlvL2NsYWltcy9yb2xlIjoidXNlciIsImlzcyI6InVybjpwZWdhc3VzbWlzc2lvbi5pbyIsImF1ZCI6Imh0dHA6Ly9icm9rZXIucGVnYXN1c21pc3Npb24uaW8vYXBpL2Nvbm5lY3QiLCJleHAiOjE0NjUyMDg5MDQsIm5iZiI6MTQzMzY3MjkwNH0.p856DcRRnGAwZJyPCbBSfrBY5Uwp21_4oNQcxNQamFI";
+        private const string UserMessageTopicUri = "coaps://pegasusmission.io/publish?topic=http://pegasus2.org/usermessage";
+        private const string TokenSecret = "851o2LqnMUod9lp7DvVxSrH+KQAkydBF9MDREicDus4=";
+        private const string TokenWebApiUri = "https://authz.pegasusmission.io/api/phone";
+        private const string SavedSecurityTokenPrefix = "001;";
 
         private const string FakeCraftTelemetryLine = "$:2015-01-28T21:49:18Z,989.6,198.8,13.0,77.6,13.0,2.2,7.5,7.4,0,0,1,0,-3200,-384,17408,-3200,-384,17408,-3200,-384,17408,1.0,46.8301,-119.1643,198.8,6.4,169.5,1,6,0,-0.7,0,0,1,0,0,1000,02:30,*CA";
         private const double FakeLaunchLatitude = 46.8422;
@@ -32,6 +37,8 @@ namespace Pegasus.Phone.XF
         private const double FakeLaunchAltitude = 198.8;
 
         private const double SecondsBetweenConnects = 20;
+
+        private string jwtToken;
 
         private DateTime lastConnectAttemptTime;
         private IWebSocketClient client;
@@ -132,6 +139,40 @@ namespace Pegasus.Phone.XF
             return gt;
         }
 
+        private async Task LoadSecurityToken()
+        {
+            if (jwtToken != null)
+            {
+                return;
+            }
+
+            string savedToken = Settings.SavedSecurityToken;
+            if (savedToken != null)
+            {
+                if (savedToken.StartsWith(SavedSecurityTokenPrefix))
+                {
+                    jwtToken = savedToken.Substring(SavedSecurityTokenPrefix.Length);
+                    return;
+                }
+            }
+
+            //remember this is going to be a JSON string for the security token
+            //so be sure to decode to a proper string; 
+            string requestUriString = String.Format("{0}?key={1}", TokenWebApiUri, TokenSecret);
+
+            var request = WebRequest.CreateHttp(requestUriString);
+            WebResponse responseObject = await Task<WebResponse>.Factory.FromAsync(request.BeginGetResponse, request.EndGetResponse, request);
+            using (var responseStream = responseObject.GetResponseStream())
+            {
+                using (var sr = new StreamReader(responseStream))
+                {
+                    string jsonString = await sr.ReadToEndAsync();
+                    jwtToken = JsonConvert.DeserializeObject<string>(jsonString);
+                    Settings.SavedSecurityToken = SavedSecurityTokenPrefix + jwtToken;
+                }
+            }
+        }
+
         public async Task ConnectWebSocketAsync()
         {
             if (this.client != null)
@@ -140,6 +181,11 @@ namespace Pegasus.Phone.XF
             }
 
             this.AppData.BusyCount++;
+
+            if (jwtToken == null)
+            {
+                await LoadSecurityToken();
+            }
 
             DateTime connectTime = lastConnectAttemptTime.AddSeconds(SecondsBetweenConnects);
             while (connectTime > DateTime.Now)
@@ -157,7 +203,7 @@ namespace Pegasus.Phone.XF
             this.client.OnMessage += client_OnMessage;
             try
             {
-                await this.client.ConnectAsync(Host, SubProtocol, JwtToken);
+                await this.client.ConnectAsync(Host, SubProtocol, jwtToken);
                 await this.SubscribeTopicAsync(TelemetryTopicSubscribeUri);
                 await this.SubscribeTopicAsync(GroundTopicSubscribeUri);
             }
@@ -202,7 +248,7 @@ namespace Pegasus.Phone.XF
             CoapRequest request = new CoapRequest(messageId++,
                                                     RequestMessageType.NonConfirmable,
                                                     MethodType.POST,
-                                                    new Uri(userMessageTopicUriString),
+                                                    new Uri(UserMessageTopicUri),
                                                     MediaType.Json,
                                                     payload);
 
