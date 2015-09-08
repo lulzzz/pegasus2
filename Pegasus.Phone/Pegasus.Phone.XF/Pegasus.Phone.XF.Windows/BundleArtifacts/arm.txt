@@ -1,0 +1,4 @@
+MainPackage=C:\Source\PegasusMission\Pegasus.Phone\Pegasus.Phone.XF\Pegasus.Phone.XF.Windows\bin\ARM\Release\Pegasus.Phone.XF.Windows_1.1.0.0_ARM.appx
+SymbolPackage=C:\Source\PegasusMission\Pegasus.Phone\Pegasus.Phone.XF\Pegasus.Phone.XF.Windows\AppPackages\Pegasus.Phone.XF.Windows_1.1.0.0_Test\Pegasus.Phone.XF.Windows_1.1.0.0_ARM.appxsym
+ResourcePack=C:\Source\PegasusMission\Pegasus.Phone\Pegasus.Phone.XF\Pegasus.Phone.XF.Windows\bin\ARM\Release\Pegasus.Phone.XF.Windows_1.1.0.0_scale-140.appx
+ResourcePack=C:\Source\PegasusMission\Pegasus.Phone\Pegasus.Phone.XF\Pegasus.Phone.XF.Windows\bin\ARM\Release\Pegasus.Phone.XF.Windows_1.1.0.0_scale-180.appx
