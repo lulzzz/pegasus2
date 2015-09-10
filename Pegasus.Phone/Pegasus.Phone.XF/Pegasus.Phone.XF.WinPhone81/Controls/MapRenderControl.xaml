@@ -21,12 +21,21 @@
         <maps:MapItemsControl x:Name="MapItems" x:FieldModifier="public">
             <maps:MapItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Ellipse
-                        Height="20" Width="20"
-                        Fill="{Binding Color, Converter={StaticResource ColorConverter}}"
-                        Stroke="White" StrokeThickness="2"
-                        maps:MapControl.Location="{Binding Position, Converter={StaticResource PositionToGeopointConverter}}"
-                        />
+                    <Canvas>
+                        <Ellipse
+                            Height="20" Width="20"
+                            Fill="{Binding Color, Converter={StaticResource ColorConverter}}"
+                            Stroke="White" StrokeThickness="2"
+                            maps:MapControl.Location="{Binding Position, Converter={StaticResource PositionToGeopointConverter}}"
+                            />
+                        <TextBlock
+                            Height="20"
+                            Padding="23,4,0,0"
+                            Text="{Binding Label}"
+                            Foreground="Black"
+                            VerticalAlignment="Center" TextAlignment="Center"
+                            />
+                    </Canvas>
                 </DataTemplate>
             </maps:MapItemsControl.ItemTemplate>
         </maps:MapItemsControl>
