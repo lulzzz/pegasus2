@@ -7,10 +7,11 @@ $(function () {
     });
 
     $('.widget-header').on('click', function () {
-        $(this).parent('.widget').find('.widget-content').toggle("slow");
+        $(this).parent('.widget').find('.widget-content').toggle();
         $(this).find('.minimizeWidget').toggleClass('fa-minus-square-o').toggleClass('fa-plus-square-o');
     });
-
+  
+    $('nav a[href="' + location.pathname + '"]').parent().addClass('active');
 });
 var locationNameArray = ["Launch", "Mobile", "Balloon"];
 var map = new google.maps.Map(document.getElementById('map-canvas'));
@@ -244,3 +245,4 @@ function htmlEncode(value) {
     var encodedValue = $('<div />').text(value).html();
     return encodedValue;
 }
+

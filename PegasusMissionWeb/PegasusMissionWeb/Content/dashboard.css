@@ -200,6 +200,7 @@ Bootstrap Admin Template by EGrappler.com
 	width: 100%; 
 	display: table;
 	margin-top: 15px;
+    overflow: hidden;
 }
 
 .twitter-timeline {

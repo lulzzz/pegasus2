@@ -6,12 +6,12 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>The Pegasus Mission | IOT from the Edge of Space | Flight Notifications</title>
+    <title>The Pegasus Mission | IOT from the Edge of Space</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link href="~/Content/External/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/External/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
+    <link href="~/Content/External/bootstrap.css" rel="stylesheet">
+    @*<link href="~/Content/External/bootstrap-responsive.min.css" rel="stylesheet">*@
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="~/Content/Site.css" rel="stylesheet">
     <link href="~/Content/dashboard.css" rel="stylesheet">
@@ -21,14 +21,15 @@
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
 </head>
-<body ng-app="pegasus" style="background-image:url('/img/sky.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+<body style="background-image:url('/img/sky.jpg'); background-repeat: no-repeat; background-size: cover;">
     
   @{
       Html.RenderPartial("Header");
     }
 
    
-     <div class="main-inner" style="margin-top: 100px;">
+     <div class="main-inner" style="">
          @*<div class="container">
              <div class="alert alert-success fade in">
                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -39,23 +40,21 @@
 
         <div class="container" style="margin-bottom: 100px;">
                  <div class="row">
-                     <div class="span6">
+                     <div class="col-sm-12">
                          <div class="widget widget-nopad">
                              <div class="widget-header">
                                  <div>
                                      <h3>
-                                         <span class="fa fa-rocket">&nbsp;</span> Sign up now for Pegasus II Text Notifications.
+                                         <span class="fa fa-rocket">&nbsp;</span> Sign up now for Pegasus II text notifications
                                      </h3>
-                                     <span class="fa fa-minus-square-o minimizeWidget"></span>
-
                                  </div>
-                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
                              </div>
                              <!-- /widget-header -->
                              <div class="widget-content">
                                  <div id='videoControl'>
                                      <div>
-                                         <div style="padding-left:5em;font-family:Verdana;">
+                                         <br />
+                                         <div style="padding:2em;font-family:Verdana;">
                                              Pegasus II can send you text notifications to your phone directly from the craft during flight.
                                              Don't miss a moment of this historic flight to near space and sign up for notifications.<br /><br />
                                              <p style="font-size:small;color:blue">Responding to Pegasus II text messages with "STOP" will cancel notifications.  Responding with "START" will restart the notifications.</p><p />
@@ -66,6 +65,7 @@
                                              {
                                                  <p style="color:red;">@ViewBag.PhoneError</p>
                                              }
+                                             <br />
 
                                              @using (Html.BeginForm("AddPhone", "Home", FormMethod.Post))
                                              {
@@ -76,17 +76,20 @@
                                                      <div style="width:250px">
                                                          @Html.TextBox("countryCode") @*<input type="text" id="countryCode" style="width:50px;" />*@
                                                      </div>
+                                                     <br />
                                                      <div style="width:200px">
                                                          <b style="width:500px;">Phone Number</b>
                                                      </div>
                                                      <div style="width:250px">
                                                          @Html.TextBox("number") @*<input type="text" id="number" style="width:120px" />*@
                                                      </div>
+                                                     <br />
                                                      <div style="width:200px">
                                                      </div>
                                                      <div style="width:250px">
                                                          <input type="submit" value="Sign Up" />
                                                      </div>
+                                                     <br />
 
                                                  </p>
                                              }
@@ -111,7 +114,5 @@
        Html.RenderPartial("Footer");
     }
 
-
-
-
 </body>
+</html>

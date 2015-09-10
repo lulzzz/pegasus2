@@ -2,22 +2,16 @@
     Layout = null;
 }
 
-
-
-@{
-    Layout = null;
-}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>The Pegasus Mission | IOT from the Edge of Space | Flight Notifications</title>
+    <title>The Pegasus Mission | IOT from the Edge of Space</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link href="~/Content/External/bootstrap.min.css" rel="stylesheet">
-    <link href="~/Content/External/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
+    <link href="~/Content/External/bootstrap.css" rel="stylesheet">
+    @*<link href="~/Content/External/bootstrap-responsive.min.css" rel="stylesheet">*@
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link href="~/Content/Site.css" rel="stylesheet">
     <link href="~/Content/dashboard.css" rel="stylesheet">
@@ -26,8 +20,6 @@
     <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-
-
 </head>
 <body ng-app="pegasus" style="background-image: url('/img/sky.jpg'); background-repeat: no-repeat; background-size: cover;">
 
@@ -35,43 +27,36 @@
         Html.RenderPartial("Header");
     }
 
-    <div class="main-inner" style="margin-top: 100px;">
-        <div class="container"><br /></div>
-
+    <div class="main-inner">
         <div class="container">
             <div class="row">
-                <div class="span6">
+                <div class="col-sm-6">
                     <div class="widget widget-nopad">
-                     
+
                         <!-- /widget-header -->
                         <div class="widget-content">
-                            <div class="widget-header" style="width:600px;">
+                            <div class="widget-header">
                                 <h3>
                                     <span class="fa fa-rocket">&nbsp;</span> Pegasus Mission Contact Info
                                 </h3>
-                                <span class="fa fa-minus-square-o minimizeWidget"></span>
-                                
                             </div>
-                            <div >
-
-                                <br />
-                              
-                                <h3>                                 
-                                    <a style="padding-left:5em" href="mailto:pegasusmission@outlook.com">
+                            <div style="padding: 2em;">
+                                <h3>
+                                    <a href="mailto:pegasusmission@outlook.com">
                                         <span class="glyphicon glyphicon-envelope"></span>
                                         Email
                                     </a>
                                 </h3>
-                               
+
                                 <h3>
-                                    <a style="padding-left:5em" href="http://pegasusmission.com">
+                                    <a href="http://pegasusmission.com">
                                         <span class="glyphicon glyphicon-duplicate"></span>
                                         Blog
                                     </a>
                                 </h3>
 
                                 <h3>
-                                    <a style="padding-left:5em" href="http://www.facebook.com/pegasusmission">
+                                    <a href="http://www.facebook.com/pegasusmission">
                                         <span class="glyphicon glyphicon-share"></span>
 
                                         Facebook
@@ -80,7 +65,7 @@
 
 
                                 <h3>
-                                    <a style="padding-left:5em" href="http://www.twitter.com/&commat;pegasusmission">
+                                    <a href="http://www.twitter.com/&commat;pegasusmission">
                                         <span class="glyphicon glyphicon-globe"></span>
 
                                         Twitter
