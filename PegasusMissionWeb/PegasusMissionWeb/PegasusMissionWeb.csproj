@@ -190,6 +190,7 @@
     <Content Include="Content\External\font-awesome-ie7.min.css" />
     <Content Include="Content\External\font-awesome.css" />
     <Content Include="Content\External\font-awesome.min.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="dist\css\sb-admin-2.css" />
     <Content Include="dist\css\timeline.css" />
     <Content Include="dist\js\sb-admin-2.js" />
@@ -234,6 +235,10 @@
     <Content Include="Scripts\External\angular.min.js" />
     <Content Include="Scripts\External\bootstrap.js" />
     <Content Include="Scripts\External\bootstrap.min.js" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\pegasusmission2.pubxml" />
     <None Include="Scripts\External\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\External\jquery-1.7.2.min.js" />
