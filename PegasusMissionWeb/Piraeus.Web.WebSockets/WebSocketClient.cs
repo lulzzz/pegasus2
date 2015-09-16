@@ -265,5 +265,56 @@ namespace Piraeus.Web.WebSockets
             }
 
         }
+
+        public async void Send(byte[] message)
+        {
+            Exception exception = null;
+            try
+            {
+                byte[] prefix = BitConverter.IsLittleEndian ? BitConverter.GetBytes(message.Length).Reverse().ToArray() : BitConverter.GetBytes(message.Length);
+                byte[] messageBuffer = new byte[message.Length + prefix.Length];
+                Buffer.BlockCopy(prefix, 0, messageBuffer, 0, prefix.Length);
+                Buffer.BlockCopy(message, 0, messageBuffer, prefix.Length, message.Length);
+
+                int remainingLength = messageBuffer.Length;
+                int index = 0;
+                do
+                {
+                    int bufferSize = remainingLength > receiveChunkSize ? receiveChunkSize : remainingLength;
+                    byte[] buffer = new byte[bufferSize];
+                    Buffer.BlockCopy(messageBuffer, index, buffer, 0, bufferSize);
+                    index += bufferSize;
+                    remainingLength = messageBuffer.Length - index;
+                    try
+                    {
+                        client.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Binary, remainingLength == 0, CancellationToken.None).Wait();
+                    }
+                    catch (Exception ex)
+                    {
+                        Trace.TraceWarning("Web Socket send fault.");
+                        Trace.TraceError(ex.Message);
+                        throw ex;
+
+                    }
+                } while (remainingLength > 0);
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+                Trace.TraceWarning("Web Socket exception during send.");
+                Trace.TraceError(ex.Message);
+            }
+
+            if (exception != null)
+            {
+                CloseAsync().Wait();
+
+                if (OnClose != null)
+                {
+                    OnClose(this, "Client forced to close.");
+                }
+            }
+
+        }
     }
 }
