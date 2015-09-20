@@ -43,6 +43,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LaunchInfo.cs" />
     <Compile Include="Accelerometer.cs" />
     <Compile Include="CameraCommand.cs" />
     <Compile Include="Constants.cs" />

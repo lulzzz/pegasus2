@@ -368,6 +368,7 @@
         </StackLayout>
       </Grid>
 
+      <!--
       <Label
           Grid.Row="1"
           Text="{Binding CraftTelemetry.Data.MainDeployStatus, StringFormat='Parachute - {0}'}"
@@ -375,6 +376,15 @@
           BackgroundColor="Accent"
           XAlign="Center"
           />
+          -->
+
+    <BoxView
+        Grid.Row="1"
+        Color="#FF333333"
+        HeightRequest="2"
+        VerticalOptions="Center"
+        />
+
     </Grid>
   </ContentView.Content>
 </ContentView>
