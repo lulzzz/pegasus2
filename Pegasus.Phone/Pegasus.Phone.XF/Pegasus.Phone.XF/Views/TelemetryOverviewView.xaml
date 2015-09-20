@@ -267,7 +267,7 @@
           </StackLayout>
 
           <Label
-              Text="ft"
+              Text="meters"
               LineBreakMode="NoWrap"
               FontSize="Small"
               TextColor="Gray"
@@ -308,7 +308,7 @@
                 />
 
           <Label
-              Text="FPS"
+              Text="meters/sec"
               LineBreakMode="NoWrap"
               FontSize="Small"
               TextColor="Gray"
@@ -358,7 +358,7 @@
           </StackLayout>
 
           <Label
-              Text="mph"
+              Text="knots"
               LineBreakMode="NoWrap"
               FontSize="Small"
               TextColor="Gray"

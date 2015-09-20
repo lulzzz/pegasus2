@@ -50,7 +50,7 @@
         </Grid>
 
         <Label Text="Altitude" FontSize="Medium" Grid.Row="1" Grid.Column="0"/>
-        <Label Text="{Binding CraftTelemetry.Data.GpsAltitude, StringFormat='{0:0,0} ft'}" FontSize="Medium" Grid.Row="1" Grid.Column="1" XAlign="End" TextColor="White" LineBreakMode="NoWrap" />
+        <Label Text="{Binding CraftTelemetry.Data.GpsAltitude, StringFormat='{0:0,0} meters'}" FontSize="Medium" Grid.Row="1" Grid.Column="1" XAlign="End" TextColor="White" LineBreakMode="NoWrap" />
         <StackLayout Grid.Row="2" Grid.ColumnSpan="2" Padding="10,2,10,2"><BoxView Color="#FF333333" HeightRequest="1"></BoxView></StackLayout>
 
         <Label Text="Air Pressure" FontSize="Medium" Grid.Row="3" Grid.Column="0"/>

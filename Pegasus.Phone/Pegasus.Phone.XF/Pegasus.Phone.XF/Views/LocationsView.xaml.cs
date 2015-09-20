@@ -110,7 +110,7 @@ namespace Pegasus.Phone.XF
                 pin.Type = PinType.Place;
                 pin.Position = chasePosition.Value;
                 pin.Color = Color.Red;
-                pin.Label = "Chase Location";
+                pin.Label = "Chase vehicle";
 
                 if (Map.Pins.Count <= pinIndex)
                 {
@@ -129,7 +129,7 @@ namespace Pegasus.Phone.XF
                 pin.Type = PinType.Place;
                 pin.Position = launchPosition.Value;
                 pin.Color = Color.Purple;
-                pin.Label = "Launch Location";
+                pin.Label = "Launch site";
 
                 if (Map.Pins.Count <= pinIndex)
                 {
@@ -145,7 +145,7 @@ namespace Pegasus.Phone.XF
             pin.Type = PinType.Place;
             pin.Position = craftPosition;
             pin.Color = Color.Green;
-            pin.Label = "Current Location";
+            pin.Label = "Craft";
 
             if (Map.Pins.Count <= pinIndex)
             {
