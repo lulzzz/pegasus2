@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pegasus.Phone.XF.Droid", "Pegasus.Phone.XF\Pegasus.Phone.XF.Droid\Pegasus.Phone.XF.Droid.csproj", "{1BCD305A-1CFC-4A8A-BBF9-922418B6B10B}"
 EndProject
@@ -408,9 +408,9 @@ Global
 		{1E9127A6-A3CF-4F94-92FE-13FB4252DA0E}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{1E9127A6-A3CF-4F94-92FE-13FB4252DA0E}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{1E9127A6-A3CF-4F94-92FE-13FB4252DA0E}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
-		{1E9127A6-A3CF-4F94-92FE-13FB4252DA0E}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{1E9127A6-A3CF-4F94-92FE-13FB4252DA0E}.Release|Mixed Platforms.Build.0 = Release|x86
-		{1E9127A6-A3CF-4F94-92FE-13FB4252DA0E}.Release|Mixed Platforms.Deploy.0 = Release|x86
+		{1E9127A6-A3CF-4F94-92FE-13FB4252DA0E}.Release|Mixed Platforms.ActiveCfg = Release|ARM
+		{1E9127A6-A3CF-4F94-92FE-13FB4252DA0E}.Release|Mixed Platforms.Build.0 = Release|ARM
+		{1E9127A6-A3CF-4F94-92FE-13FB4252DA0E}.Release|Mixed Platforms.Deploy.0 = Release|ARM
 		{1E9127A6-A3CF-4F94-92FE-13FB4252DA0E}.Release|x64.ActiveCfg = Release|Any CPU
 		{1E9127A6-A3CF-4F94-92FE-13FB4252DA0E}.Release|x64.Build.0 = Release|Any CPU
 		{1E9127A6-A3CF-4F94-92FE-13FB4252DA0E}.Release|x64.Deploy.0 = Release|Any CPU
