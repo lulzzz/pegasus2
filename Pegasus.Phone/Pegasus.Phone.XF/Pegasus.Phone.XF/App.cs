@@ -30,6 +30,7 @@ namespace Pegasus.Phone.XF
         private const string TokenSecret = "851o2LqnMUod9lp7DvVxSrH+KQAkydBF9MDREicDus4=";
         private const string TokenWebApiUri = "https://authz.pegasusmission.io/api/phone";
         private const string SavedSecurityTokenPrefix = "001;";
+        private const string LaunchInfoUri = "http://pegasus2.blob.core.windows.net/info/launchinfo.json";
 
         private const string FakeCraftTelemetryLine = "$:2015-01-28T21:49:18Z,989.6,198.8,13.0,77.6,13.0,2.2,7.5,7.4,0,0,1,0,-3200,-384,17408,-3200,-384,17408,-3200,-384,17408,1.0,46.8301,-119.1643,198.8,6.4,169.5,1,6,0,-0.7,0,0,1,0,0,1000,02:30,*CA";
         private const double FakeLaunchLatitude = 46.8422;
@@ -169,6 +170,25 @@ namespace Pegasus.Phone.XF
                     string jsonString = await sr.ReadToEndAsync();
                     jwtToken = JsonConvert.DeserializeObject<string>(jsonString);
                     Settings.SavedSecurityToken = SavedSecurityTokenPrefix + jwtToken;
+                }
+            }
+        }
+
+        public async Task<LaunchInfo> GetLaunchInfoAsync()
+        {
+            var request = WebRequest.CreateHttp(LaunchInfoUri);
+            WebResponse responseObject = await Task<WebResponse>.Factory.FromAsync(request.BeginGetResponse, request.EndGetResponse, request);
+            using (var responseStream = responseObject.GetResponseStream())
+            {
+                using (var sr = new StreamReader(responseStream))
+                {
+                    string jsonString = await sr.ReadToEndAsync();
+                    if (jsonString.StartsWith("\""))
+                    {
+                        jsonString = JsonConvert.DeserializeObject<String>(jsonString);
+                    }
+                    this.AppData.LaunchInfo = JsonConvert.DeserializeObject<LaunchInfo>(jsonString);
+                    return this.AppData.LaunchInfo;
                 }
             }
         }

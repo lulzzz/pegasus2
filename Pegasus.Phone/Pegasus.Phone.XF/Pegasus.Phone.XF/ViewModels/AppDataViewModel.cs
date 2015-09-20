@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pegasus2.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,6 +43,13 @@ namespace Pegasus.Phone.XF.ViewModels
         {
             get { return busyCount != 0; }
             private set { OnPropertyChanged(); }
+        }
+
+        internal LaunchInfo launchInfo;
+        public LaunchInfo LaunchInfo
+        {
+            get { return launchInfo; }
+            set { SetProperty(ref launchInfo, value); }
         }
     }
 }
