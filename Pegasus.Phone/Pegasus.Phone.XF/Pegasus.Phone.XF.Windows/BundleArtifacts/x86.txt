@@ -1,2 +1,2 @@
-MainPackage=C:\Source\PegasusMission\Pegasus.Phone\Pegasus.Phone.XF\Pegasus.Phone.XF.Windows\bin\x86\Release\Pegasus.Phone.XF.Windows_1.1.0.0_x86.appx
-SymbolPackage=C:\Source\PegasusMission\Pegasus.Phone\Pegasus.Phone.XF\Pegasus.Phone.XF.Windows\AppPackages\Pegasus.Phone.XF.Windows_1.1.0.0_Test\Pegasus.Phone.XF.Windows_1.1.0.0_x86.appxsym
+MainPackage=C:\Source\PegasusMission\Pegasus.Phone\Pegasus.Phone.XF\Pegasus.Phone.XF.Windows\bin\x86\Release\Pegasus.Phone.XF.Windows_1.1.0.1_x86.appx
+SymbolPackage=C:\Source\PegasusMission\Pegasus.Phone\Pegasus.Phone.XF\Pegasus.Phone.XF.Windows\AppPackages\Pegasus.Phone.XF.Windows_1.1.0.1_Test\Pegasus.Phone.XF.Windows_1.1.0.1_x86.appxsym
