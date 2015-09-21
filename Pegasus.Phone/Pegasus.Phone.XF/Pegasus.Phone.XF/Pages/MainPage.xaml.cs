@@ -66,11 +66,19 @@ namespace Pegasus.Phone.XF
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            var launchInfo = await App.Instance.GetLaunchInfoAsync();
-            if (launchInfo != null && !launchInfo.IsLiveTelemetry && !String.IsNullOrEmpty(launchInfo.Message))
+
+            try
             {
-                await this.DisplayAlert(String.Empty, launchInfo.Message, "Dismiss");
+                var launchInfo = await App.Instance.GetLaunchInfoAsync();
+                if (launchInfo != null && !launchInfo.IsLiveTelemetry && !String.IsNullOrEmpty(launchInfo.Message))
+                {
+                    await this.DisplayAlert(String.Empty, launchInfo.Message, "Dismiss");
+                }
             }
+            catch
+            {
+            }
+
             await App.Instance.ConnectWebSocketAsync();
         }
 
