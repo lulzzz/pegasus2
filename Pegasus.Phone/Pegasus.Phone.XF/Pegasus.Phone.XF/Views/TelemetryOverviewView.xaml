@@ -358,7 +358,7 @@
           </StackLayout>
 
           <Label
-              Text="knots"
+              Text="kph"
               LineBreakMode="NoWrap"
               FontSize="Small"
               TextColor="Gray"
