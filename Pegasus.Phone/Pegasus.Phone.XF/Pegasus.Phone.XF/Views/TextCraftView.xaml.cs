@@ -24,10 +24,16 @@ namespace Pegasus.Phone.XF
                 try
                 {
                     string message = model.Message;
-                    model.Message = String.Empty; // This doesn't actually show on Windows.  Buggy Xamarin.
+
+                    // This doesn't actually show on Windows.  Buggy Xamarin (last tested on 1.5.0.6446).
+                    if (Device.OS == TargetPlatform.Android || Device.OS == TargetPlatform.iOS)
+                    {
+                        model.Message = String.Empty; 
+                    }
+
                     await App.Instance.SendUserMessageAsync(message);
-                    // Make the user wait a bit more...
-                    await Task.Delay(500);
+
+                    await App.Instance.MainPage.DisplayAlert(String.Empty, "Message sent", "Dismiss");
                 }
                 finally
                 {
