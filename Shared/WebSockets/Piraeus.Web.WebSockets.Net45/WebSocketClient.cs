@@ -8,6 +8,7 @@ using Piraeus.Web.WebSockets.Net45;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Diagnostics;
 
 [assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_Net45))]
 namespace Piraeus.Web.WebSockets.Net45
@@ -16,7 +17,7 @@ namespace Piraeus.Web.WebSockets.Net45
     //[assembly: Xamarin.Forms.Dependency(typeof(WebSocketClient_Net45))]
     public class WebSocketClient_Net45 : IWebSocketClient
     {
-        private const int receiveChunkSize = 1024;
+        private const int receiveChunkSize = 256;
         private ClientWebSocket client;
 
         public event WebSocketEventHandler OnOpen;
@@ -90,70 +91,98 @@ namespace Piraeus.Web.WebSockets.Net45
         private async void ReceiveLoopAsync()
         {
             Exception exception = null;
-            byte[] prefix = null;
             WebSocketReceiveResult result = null;
-            int remainingLength = 0;
 
             while (client.State == WebSocketState.Open && exception == null)
             {
+                int remainingLength = 0;
+
                 try
                 {
-                    if (prefix == null)
+                    byte[] prefix = new byte[4];
+                    //result = await client.ReceiveAsync(new ArraySegment<byte>(prefix), CancellationToken.None);                                                
+                    //prefix = BitConverter.IsLittleEndian ? prefix.Reverse().ToArray() : prefix;
+                    //remainingLength = BitConverter.ToInt32(prefix, 0);  
+                    int prefixSize = 4;
+                    int offset = 0;
+                    while (offset < prefix.Length)
                     {
-                        prefix = new byte[4];
-                        result = await client.ReceiveAsync(new ArraySegment<byte>(prefix), CancellationToken.None);
-                        prefix = BitConverter.IsLittleEndian ? prefix.Reverse().ToArray() : prefix;
-                        remainingLength = BitConverter.ToInt32(prefix, 0);
-                    }
-                    else
-                    {
-                        int index = 0;
-                        byte[] message = new byte[remainingLength];
-                        do
+                        byte[] array = new byte[prefixSize - offset];
+                        result = await client.ReceiveAsync(new ArraySegment<byte>(array), CancellationToken.None);
+                        Buffer.BlockCopy(array, 0, prefix, offset, result.Count);
+                        offset += result.Count;
+                        if (prefix.Length < 4)
                         {
-                            int bufferSize = remainingLength > receiveChunkSize ? receiveChunkSize : remainingLength;
-                            byte[] buffer = new byte[bufferSize];
-                            result = await client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-                            
-                            Buffer.BlockCopy(buffer, 0, message, index, buffer.Length);
-                            index += bufferSize;
-                            remainingLength = buffer.Length - index;
-                        } while (remainingLength > 0);
+                            Trace.TraceInformation("Prefix too short.");
+                        }
+                    }
 
-                        prefix = null;
+                    prefix = BitConverter.IsLittleEndian ? prefix.Reverse().ToArray() : prefix;
+                    remainingLength = BitConverter.ToInt32(prefix, 0);
 
-                        if (!result.EndOfMessage)
+                    int index = 0;
+                    byte[] message = new byte[remainingLength];
+//                    do
+//                    {
+                        int bufferSize = remainingLength > receiveChunkSize ? receiveChunkSize : remainingLength;
+                        byte[] buffer = new byte[bufferSize];
+
+                        Label_1E9:
+                        result = await client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                        Trace.WriteLine("Received " + result.Count + " bytes, remainingLength: " + remainingLength);
+                        if (result.Count < remainingLength)
+                        {
+                            Buffer.BlockCopy(buffer, 0, message, index, result.Count);
+                            remainingLength = remainingLength - result.Count;
+                            index += result.Count;
+                            goto Label_1E9;
+                        }
+                        else
+                        {
+                            Buffer.BlockCopy(buffer, 0, message, index, result.Count);
+                            //Buffer.BlockCopy(buffer, 0, message, index, buffer.Length);
+                            //index += bufferSize;
+                            //remainingLength = buffer.Length - index;
+                            remainingLength = remainingLength - result.Count;
+                        }
+
+//                    } while (remainingLength > 0);
+
+                    if (!result.EndOfMessage)
+                    {
+                        if (OnError != null)
+                        {
+                            OnError(this, new WebSocketException("Expected EOF for Web Socket message received."));
+                        }
+                        else
                         {
                             throw new WebSocketException("Expected EOF for Web Socket message received.");
                         }
+                    }
 
-                        if (OnMessage != null)
-                        {
-                            OnMessage(this, message);
-                        }
+                    if (OnMessage != null)
+                    {
+                        OnMessage(this, message);
                     }
                 }
                 catch (Exception ex)
                 {
                     exception = ex;
-                    //Trace.TraceWarning("Web socket receive faulted.");
-                    //Trace.TraceError(ex.Message);
+                    Trace.TraceWarning("Web socket receive faulted.");
+                    Trace.TraceError(ex.Message);
+                    break;
                 }
-            }
-
-            if (exception == null && client.State == WebSocketState.CloseReceived && OnClose != null)
-            {
-                OnClose(this, "Web socket closed by remote.");
             }
 
             if (exception != null)
             {
                 if (OnError != null)
                 {
-                    OnError(this, exception);
+                    OnError(this, new WebSocketException(exception.Message));
                 }
-            }
+           }
         }
+
 
         public async Task SendAsync(byte[] message)
         {
