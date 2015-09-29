@@ -293,6 +293,7 @@ namespace Pegasus.Phone.XF
 
         private void client_OnMessage(object sender, byte[] message)
         {
+            lastConnectAttemptTime = DateTime.MinValue;
             CoapMessage coapMessage = CoapMessage.DecodeMessage(message);
             string jsonString = Encoding.UTF8.GetString(coapMessage.Payload, 0, coapMessage.Payload.Length);
 
