@@ -14,6 +14,9 @@
     <pegasus:TelemetryDetailsView x:Name="TelemetryDetailsView" BindingContext="{Binding TelemetryDetailsViewModel}" IsVisible="False" />
     <pegasus:TextCraftView x:Name="TextCraftView" BindingContext="{Binding TextCraftViewModel}" IsVisible="False" />
     <pegasus:LinksView x:Name="LinksView" BindingContext="{Binding LocationsViewModel}" IsVisible="False" />
+
+    <Label Text="Testing" IsVisible="True" XAlign="End" HorizontalOptions="Fill" FontAttributes="Bold,Italic"  FontSize="Large" TextColor="Red" Opacity="0.5" TranslateX="-20" TranslateY="20" />
+
     <Frame x:Name="ActivityIndicatorBackground" IsVisible="False" Padding="0">
       <Grid>
         <Grid.RowDefinitions>
