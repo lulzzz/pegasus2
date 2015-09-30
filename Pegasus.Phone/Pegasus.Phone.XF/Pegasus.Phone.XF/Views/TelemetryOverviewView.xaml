@@ -354,6 +354,7 @@
                 FontSize="Small"
                 TextColor="Gray"
                 YAlign="End"
+                TranslationY="-3"
                   />
           </StackLayout>
 
