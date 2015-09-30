@@ -49,7 +49,7 @@ namespace P2TelemetryGenerator
 
         private static string role = "gateway";
 
-        private static IWebSocketClient client;
+        private static WebSocketClient_Net45 client;
 
         static void Main(string[] args)
         {
