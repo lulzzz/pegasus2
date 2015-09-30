@@ -67,18 +67,7 @@ namespace Pegasus.Phone.XF
         {
             base.OnAppearing();
 
-            try
-            {
-                var launchInfo = await App.Instance.GetLaunchInfoAsync();
-                if (launchInfo != null && !launchInfo.IsLiveTelemetry && !String.IsNullOrEmpty(launchInfo.Message))
-                {
-                    await this.DisplayAlert(String.Empty, launchInfo.Message, "Dismiss");
-                }
-            }
-            catch
-            {
-            }
-
+            await App.Instance.CheckLaunchInfoAsync();
             await App.Instance.ConnectWebSocketAsync();
         }
 

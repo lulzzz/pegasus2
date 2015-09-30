@@ -193,6 +193,30 @@ namespace Pegasus.Phone.XF
             }
         }
 
+        public async Task CheckLaunchInfoAsync()
+        {
+            try
+            {
+                var oldLaunchInfo = this.AppData.LaunchInfo;
+                var launchInfo = await GetLaunchInfoAsync();
+
+                if ((oldLaunchInfo == null || oldLaunchInfo.Message != launchInfo.Message)
+                    && !launchInfo.IsLiveTelemetry && !String.IsNullOrEmpty(launchInfo.Message))
+                {
+                    await this.MainPage.DisplayAlert(String.Empty, launchInfo.Message, "Dismiss");
+                }
+            }
+            catch
+            {
+            }
+
+            Device.StartTimer(TimeSpan.FromMinutes(5), () =>
+                {
+                    Device.BeginInvokeOnMainThread(async () => await CheckLaunchInfoAsync());
+                    return false;
+                });
+       }
+
         public async Task ConnectWebSocketAsync()
         {
             if (this.client != null)

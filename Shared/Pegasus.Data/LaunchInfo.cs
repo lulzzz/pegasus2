@@ -22,5 +22,10 @@
 
         [JsonProperty("message")]
         public string Message { get; set; }
+
+        public bool IsTestTelemetry
+        {
+            get { return !IsLiveTelemetry; }
+        }
     }
 }
