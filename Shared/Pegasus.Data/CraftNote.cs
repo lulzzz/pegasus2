@@ -16,6 +16,8 @@ namespace Pegasus2.Data
 
         private const string prefix = "N:";
 
+        [JsonProperty("id")]
+        public string Id { get; set; }
 
         [JsonProperty("note")]
         public string Note { get; set; }

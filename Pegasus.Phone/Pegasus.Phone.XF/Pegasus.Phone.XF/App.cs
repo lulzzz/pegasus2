@@ -299,7 +299,7 @@ namespace Pegasus.Phone.XF
             //adding ticks to the user message for testing latency (not used in production)
             umessage.Message += "_" + DateTime.UtcNow.Ticks.ToString();
 #endif
-            umessage.id = Guid.NewGuid().ToString();
+            umessage.Id = Guid.NewGuid().ToString();
             string jsonString = umessage.ToJson();
             byte[] payload = Encoding.UTF8.GetBytes(jsonString);
             CoapRequest request = new CoapRequest(messageId++,

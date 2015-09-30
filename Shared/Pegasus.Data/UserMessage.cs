@@ -22,7 +22,7 @@ namespace Pegasus2.Data
 
         #region JSON Properties
         [JsonProperty("id")]
-        public string id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("message")]
         public string Message { get; set; }
