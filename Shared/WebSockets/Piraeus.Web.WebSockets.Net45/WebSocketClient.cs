@@ -183,16 +183,16 @@ namespace Piraeus.Web.WebSockets.Net45
            }
         }
 
-
-        public async Task SendAsync(byte[] message)
+        public async Task SendAsync(byte[] messageBytes)
         {
+            this.messageQueue.Enqueue(messageBytes);
             Exception exception = null;
             try
             {
-                this.messageQueue.Enqueue(message);
-
                 while (this.messageQueue.Count > 0)
                 {
+                    byte[] message = this.messageQueue.Dequeue();
+
                     byte[] prefix = BitConverter.IsLittleEndian ? BitConverter.GetBytes(message.Length).Reverse().ToArray() : BitConverter.GetBytes(message.Length);
                     byte[] messageBuffer = new byte[message.Length + prefix.Length];
                     Buffer.BlockCopy(prefix, 0, messageBuffer, 0, prefix.Length);
@@ -207,25 +207,37 @@ namespace Piraeus.Web.WebSockets.Net45
                         Buffer.BlockCopy(messageBuffer, index, buffer, 0, bufferSize);
                         index += bufferSize;
                         remainingLength = messageBuffer.Length - index;
-                        await client.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Binary, remainingLength == 0, CancellationToken.None);
-                        this.messageQueue.Dequeue();
+                        try
+                        {
+                            await client.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Binary, remainingLength == 0, CancellationToken.None);
+                        }
+                        catch (Exception ex)
+                        {
+                            Trace.TraceWarning("Web Socket send fault.");
+                            Trace.TraceError(ex.Message);
+                            throw;
+
+                        }
                     } while (remainingLength > 0);
                 }
             }
             catch (Exception ex)
             {
                 exception = ex;
-                //Trace.TraceWarning("Web Socket exception during send.");
-                //Trace.TraceError(ex.Message);                
+                Trace.TraceWarning("Web Socket exception during send.");
+                Trace.TraceError(ex.Message);
             }
 
             if (exception != null)
             {
-                if (OnError != null)
+                await CloseAsync();
+
+                if (OnClose != null)
                 {
-                    OnError(this, exception);
+                    OnClose(this, "Client forced to close.");
                 }
             }
+
         }
     }
 }
