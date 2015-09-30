@@ -45,6 +45,11 @@ namespace Pegasus.Phone.XF
         private IWebSocketClient client;
         private ushort messageId;
 
+        public new MainPage MainPage
+        {
+            get { return (MainPage)base.MainPage; }
+        }
+
         public AppDataViewModel AppData
         {
             get;
@@ -83,7 +88,7 @@ namespace Pegasus.Phone.XF
             CurrentCraftTelemetry = new CraftTelemetryViewModel();
             CurrentChaseTelemetry = new GroundTelemetryViewModel();
             CurrentLaunchTelemetry = new GroundTelemetryViewModel();
-            MainPage = new MainPage();
+            base.MainPage = new MainPage();
         }
 
         private static GroundTelemetry CreateGroundTelemetry(CraftTelemetry craftTelemetry, bool mobile)
@@ -203,18 +208,26 @@ namespace Pegasus.Phone.XF
                 if ((oldLaunchInfo == null || oldLaunchInfo.Message != launchInfo.Message)
                     && !launchInfo.IsLiveTelemetry && !String.IsNullOrEmpty(launchInfo.Message))
                 {
-                    await this.MainPage.DisplayAlert(String.Empty, launchInfo.Message, "Dismiss");
+                    await this.MainPage.ShowTestAlert();
+                }
+
+                if (launchInfo.IsLiveTelemetry)
+                {
+                    await this.MainPage.DismissTestAlert();
                 }
             }
             catch
             {
             }
 
-            Device.StartTimer(TimeSpan.FromMinutes(5), () =>
-                {
-                    Device.BeginInvokeOnMainThread(async () => await CheckLaunchInfoAsync());
-                    return false;
-                });
+            if (this.AppData.LaunchInfo != null && this.AppData.LaunchInfo.IsTestTelemetry)
+            {
+                Device.StartTimer(TimeSpan.FromMinutes(5), () =>
+                    {
+                        Device.BeginInvokeOnMainThread(async () => await CheckLaunchInfoAsync());
+                        return false;
+                    });
+            }
        }
 
         public async Task ConnectWebSocketAsync()

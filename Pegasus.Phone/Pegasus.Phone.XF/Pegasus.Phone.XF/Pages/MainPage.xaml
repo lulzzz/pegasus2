@@ -24,6 +24,23 @@
         TranslationX="-20" TranslationY="20"
         />
 
+    <Frame x:Name="TestAlertBackground" IsVisible="False" Padding="0">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="1*" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <BoxView Grid.RowSpan="4" Color="Black" HorizontalOptions="Fill" VerticalOptions="Fill" Opacity="0.75" />
+        <Frame Grid.Row="1">
+          <Label Text="{Binding AppData.LaunchInfo.Message}" FontSize="Medium" XAlign="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+        </Frame>
+        <Button Text="Dismiss" Clicked="DismissTestAlertClicked" Grid.Row="2" HorizontalOptions="End" TranslationX="-20" />
+      </Grid>
+    </Frame>
+
+
     <Frame x:Name="ActivityIndicatorBackground" IsVisible="False" Padding="0">
       <Grid>
         <Grid.RowDefinitions>

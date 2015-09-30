@@ -30,6 +30,30 @@ namespace Pegasus.Phone.XF
             }
         }
 
+        public async Task ShowTestAlert()
+        {
+            if (!this.TestAlertBackground.IsVisible)
+            {
+                this.TestAlertBackground.Opacity = 0;
+                this.TestAlertBackground.IsVisible = true;
+                await this.TestAlertBackground.FadeTo(1);
+            }
+        }
+
+        public async Task DismissTestAlert()
+        {
+            if (this.TestAlertBackground.IsVisible)
+            {
+                await this.TestAlertBackground.FadeTo(0);
+                this.TestAlertBackground.IsVisible = false;
+            }
+        }
+
+        private async void DismissTestAlertClicked(object sender, EventArgs e)
+        {
+            await DismissTestAlert();
+        }
+
         private async void DoTest(object sender = null, EventArgs e = null)
         {
             await App.Instance.FakeLocationAsync();
