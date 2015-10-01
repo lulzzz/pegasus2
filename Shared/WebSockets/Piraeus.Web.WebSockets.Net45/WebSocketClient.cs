@@ -55,6 +55,7 @@ namespace Piraeus.Web.WebSockets.Net45
         public async Task ConnectAsync(string host, string subprotocol, string securityToken)
         {
             client.Options.SetBuffer(1024, 1024);
+            client.Options.KeepAliveInterval = TimeSpan.FromMilliseconds(5000);
             
             if (!string.IsNullOrEmpty(subprotocol))
             {
