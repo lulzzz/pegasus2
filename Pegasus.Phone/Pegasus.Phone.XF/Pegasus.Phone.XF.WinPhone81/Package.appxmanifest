@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="49333PegasusMission.PegasusMission" Publisher="CN=FF6B7C7A-625E-41BE-8EC7-E9D1B3B1CC27" Version="1.1.0.1" />
+  <Identity Name="49333PegasusMission.PegasusMission" Publisher="CN=FF6B7C7A-625E-41BE-8EC7-E9D1B3B1CC27" Version="1.1.1.0" />
   <mp:PhoneIdentity PhoneProductId="fc28a327-b630-466b-b677-1ad9f19cf369" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Pegasus Mission</DisplayName>
