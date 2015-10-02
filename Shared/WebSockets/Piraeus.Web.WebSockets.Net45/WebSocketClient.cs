@@ -184,7 +184,7 @@ namespace Piraeus.Web.WebSockets.Net45
            }
         }
 
-        public async Task SendAsync(byte[] messageBytes)
+        public void Send(byte[] messageBytes)
         {
             this.messageQueue.Enqueue(messageBytes);
             Exception exception = null;
@@ -210,7 +210,7 @@ namespace Piraeus.Web.WebSockets.Net45
                         remainingLength = messageBuffer.Length - index;
                         try
                         {
-                            await client.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Binary, remainingLength == 0, CancellationToken.None);
+                            client.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Binary, remainingLength == 0, CancellationToken.None).Wait();
                         }
                         catch (Exception ex)
                         {
@@ -231,14 +231,39 @@ namespace Piraeus.Web.WebSockets.Net45
 
             if (exception != null)
             {
-                await CloseAsync();
+                CloseAsync().Wait();
 
                 if (OnClose != null)
                 {
                     OnClose(this, "Client forced to close.");
                 }
-            }
 
+                throw exception;
+            }
         }
+
+        public static Task<bool> FromWaitHandle(WaitHandle handle, TimeSpan timeout)
+        {
+            // Handle synchronous cases.
+            var alreadySignalled = handle.WaitOne(0);
+            if (alreadySignalled)
+                return Task.FromResult(true);
+            if (timeout == TimeSpan.Zero)
+                return Task.FromResult(false);
+
+            // Register all asynchronous cases.
+            var tcs = new TaskCompletionSource<bool>();
+            var threadPoolRegistration = ThreadPool.RegisterWaitForSingleObject(handle,
+                (state, timedOut) => ((TaskCompletionSource<bool>)state).TrySetResult(!timedOut),
+                tcs, timeout, true);
+            return tcs.Task;
+        }
+
+        public async Task SendAsync(byte[] messageBytes)
+        {
+            var ev = new EventWaitHandle(false, EventResetMode.AutoReset);
+            ThreadPool.QueueUserWorkItem(unused => { Send(messageBytes); ev.Set(); });
+            await FromWaitHandle(ev, new TimeSpan(-1));
+       }
     }
 }
