@@ -16,6 +16,10 @@
     <link href="~/Content/Site.css" rel="stylesheet">
     <link href="~/Content/dashboard.css" rel="stylesheet">
 
+    <link href="//amp.azure.net/libs/amp/1.4.0/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet">
+    <script src="//amp.azure.net/libs/amp/1.4.0/azuremediaplayer.min.js"></script>
+
+
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -34,7 +38,7 @@
             <div class="container">
                 <div class="alert alert-info fade in">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Pegasus mission will launch on the week of <b style="color: black; font-size: 1.1em;">Sept. 29, 2015!</b></strong>
+                    <strong>Pegasus II GO for Launch from Cheyenne, WY at ~9AM Mountain Time <b style="color: black; font-size: 1.1em;">Oct. 6, 2015!</b></strong>
                     <br /><strong><a href="/Home/Notifications">Sign up</a> for <b style="color: black; font-size: 1.1em;">SMS</b> notifications now. Don't miss the action.</strong>
                 </div>
             </div>
@@ -47,14 +51,34 @@
                         <div class="widget widget-nopad">
                             <div class="widget-header" id="inflightVideoContainer">
                                 <h3>
-                                    <span class="fa fa-video-camera">&nbsp;</span> Live Inflight Video Feed (Sept 29)
+                                    <span class="fa fa-video-camera">&nbsp;</span> Live Inflight Video Feed (Oct 6)
                                 </h3>
                                 <span class="fa fa-plus-square-o minimizeWidget"></span>
                             </div>
                             <!-- /widget-header -->
                             <div class="widget-content" style="display: none;">
                                 <div id='videoControl'>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/rNhmYaWiPEk" frameborder="0" allowfullscreen></iframe>
+                                    @if (!ViewBag.LiveVideo)
+                                    {
+                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/rNhmYaWiPEk" frameborder="0" allowfullscreen></iframe>
+                                        <!-- <video width="320" height="240" srv=>
+                                        <source src="assets/dizzy.mp4" type="video/mp4"/>
+                                        <source src="assets/dizzy.webm" type="video/webm"/>
+                                        <source src="assets/dizzy.ogv" type="video/ogg"/>
+                                        Your browser does not support the video tag.
+                                    </video>-->
+                                    }
+                                    else
+                                    {
+                                        <video id="payloadVideo" class="azuremediaplayer amp-default-skin" autoplay controls width="560" height="315" data-setup='{}'>
+                                            <source src="//pegasusmission.streaming.mediaservices.windows.net/d93b81a8-7513-49f2-8f58-7527aa8f6262/c452c7fd-e9ae-4c0e-b80a-b6b6178ab2de.ism/manifest" type="application/vnd.ms-sstr+xml" />
+                                            <p class="amp-no-js">
+                                                To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+                                            </p>
+                                        </video>
+                                    }
+
+                                    <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/rNhmYaWiPEk" frameborder="0" allowfullscreen></iframe> -->
                                     <!-- <video width="320" height="240" srv=>
                                         <source src="assets/dizzy.mp4" type="video/mp4"/>
                                         <source src="assets/dizzy.webm" type="video/webm"/>
@@ -68,14 +92,34 @@
                         <div class="widget widget-nopad">
                             <div class="widget-header">
                                 <h3>
-                                    <span class="fa fa-video-camera">&nbsp;</span> Live Launch Video Feed (Sept 29)
+                                    <span class="fa fa-video-camera">&nbsp;</span> Live Launch Video Feed (Oct 6)
                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
                             </div>
                             <!-- /widget-header -->
                             <div class="widget-content">
                                 <div id='videoControl'>
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/wGyi0hAshVw" frameborder="0" allowfullscreen></iframe>
+                                    @if (!ViewBag.LiveVideo)
+                                    {
+                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/wGyi0hAshVw" frameborder="0" allowfullscreen></iframe>
+                                        <!-- <video width="320" height="240" srv=>
+                                        <source src="assets/dizzy.mp4" type="video/mp4"/>
+                                        <source src="assets/dizzy.webm" type="video/webm"/>
+                                        <source src="assets/dizzy.ogv" type="video/ogg"/>
+                                        Your browser does not support the video tag.
+                                    </video>-->
+                                    }
+                                    else
+                                    {
+                                        <video id="stationVideo" class="azuremediaplayer amp-default-skin" autoplay controls width="560" height="315" data-setup='{}'>
+                                            <source src="//pegasusmission.streaming.mediaservices.windows.net/86791286-eaae-4f17-b023-e673543e88ff/e07e392c-b996-4184-ab5e-55d6de2ea49e.ism/manifest" />
+                                            <p class="amp-no-js">
+                                                To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+                                            </p>
+                                        </video>
+                                    }
+
+                                    <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/wGyi0hAshVw" frameborder="0" allowfullscreen></iframe> -->
                                     <!-- <video width="320" height="240" srv=>
                                         <source src="assets/dizzy.mp4" type="video/mp4"/>
                                         <source src="assets/dizzy.webm" type="video/webm"/>
@@ -252,7 +296,7 @@
                         <div class="widget">
                             <div class="widget-header">
                                 <h3>
-                                    <span class="fa fa-map-marker ">&nbsp;</span> Live Flight & Chase Mapping (Sept 29)
+                                    <span class="fa fa-map-marker ">&nbsp;</span> Live Flight & Chase Mapping (Oct 5)
                                 </h3>
                                 <span class="fa fa-minus-square-o minimizeWidget"></span>
 

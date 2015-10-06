@@ -12,8 +12,17 @@ namespace PegasusMissionWeb.Controllers
     public class HomeController : Controller
     {
         private static string error;
+        private static readonly bool _liveVideo;
+
+        static HomeController()
+        {
+            bool.TryParse(System.Configuration.ConfigurationManager.AppSettings["enableLiveVideo"], out _liveVideo);
+        }
+
+
         public ActionResult Index()
         {
+            ViewBag.LiveVideo = _liveVideo;
             return View();
         }
 
