@@ -13,16 +13,30 @@ namespace PegasusMissionWeb.Controllers
     {
         private static string error;
         private static readonly bool _liveVideo;
+        private static readonly string _poster;
+        private static readonly string _station;
+        private static readonly string _payload;
 
         static HomeController()
         {
-            bool.TryParse(System.Configuration.ConfigurationManager.AppSettings["enableLiveVideo"], out _liveVideo);
+            _payload=System.Configuration.ConfigurationManager.AppSettings["payloadUrl"];
+            _station=System.Configuration.ConfigurationManager.AppSettings["stationUrl"];
+            _poster=System.Configuration.ConfigurationManager.AppSettings["posterUrl"];
+            if (string.IsNullOrEmpty(_poster))
+            {
+                _poster = "/img/Pegasus2Announce.png";
+            }
+            _liveVideo = !string.IsNullOrEmpty(_payload) && !string.IsNullOrEmpty(_station);
         }
 
 
         public ActionResult Index()
         {
             ViewBag.LiveVideo = _liveVideo;
+            ViewBag.Poster = _poster;
+            ViewBag.PayloadUrl = _payload;
+            ViewBag.StationUrl = _station;
+            
             return View();
         }
 

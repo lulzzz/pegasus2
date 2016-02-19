@@ -60,31 +60,21 @@
                                 <div id='videoControl'>
                                     @if (!ViewBag.LiveVideo)
                                     {
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/rNhmYaWiPEk" frameborder="0" allowfullscreen></iframe>
-                                        <!-- <video width="320" height="240" srv=>
-                                        <source src="assets/dizzy.mp4" type="video/mp4"/>
-                                        <source src="assets/dizzy.webm" type="video/webm"/>
-                                        <source src="assets/dizzy.ogv" type="video/ogg"/>
-                                        Your browser does not support the video tag.
-                                    </video>-->
-                                    }
-                                    else
-                                    {
-                                        <video id="payloadVideo" class="azuremediaplayer amp-default-skin" autoplay controls width="560" height="315" data-setup='{}'>
-                                            <source src="//pegasusmission.streaming.mediaservices.windows.net/d93b81a8-7513-49f2-8f58-7527aa8f6262/c452c7fd-e9ae-4c0e-b80a-b6b6178ab2de.ism/manifest" type="application/vnd.ms-sstr+xml" />
+                                        <video id="payloadVideo" class="azuremediaplayer amp-default-skin" poster="@ViewBag.Poster" width="560" height="315">
                                             <p class="amp-no-js">
                                                 To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
                                             </p>
                                         </video>
                                     }
-
-                                    <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/rNhmYaWiPEk" frameborder="0" allowfullscreen></iframe> -->
-                                    <!-- <video width="320" height="240" srv=>
-                                        <source src="assets/dizzy.mp4" type="video/mp4"/>
-                                        <source src="assets/dizzy.webm" type="video/webm"/>
-                                        <source src="assets/dizzy.ogv" type="video/ogg"/>
-                                        Your browser does not support the video tag.
-                                    </video>-->
+                                    else
+                                    {
+                                        <video id="payloadVideo" class="azuremediaplayer amp-default-skin" autoplay controls poster="@ViewBag.Poster" width="560" height="315" data-setup='{}'>
+                                            <source src="@ViewBag.PayloadUrl" type="application/vnd.ms-sstr+xml" />
+                                            <p class="amp-no-js">
+                                                To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+                                            </p>
+                                        </video>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -101,31 +91,21 @@
                                 <div id='videoControl'>
                                     @if (!ViewBag.LiveVideo)
                                     {
-                                        <iframe width="560" height="315" src="https://www.youtube.com/embed/wGyi0hAshVw" frameborder="0" allowfullscreen></iframe>
-                                        <!-- <video width="320" height="240" srv=>
-                                        <source src="assets/dizzy.mp4" type="video/mp4"/>
-                                        <source src="assets/dizzy.webm" type="video/webm"/>
-                                        <source src="assets/dizzy.ogv" type="video/ogg"/>
-                                        Your browser does not support the video tag.
-                                    </video>-->
-                                    }
-                                    else
-                                    {
-                                        <video id="stationVideo" class="azuremediaplayer amp-default-skin" autoplay controls width="560" height="315" data-setup='{}'>
-                                            <source src="//pegasusmission.streaming.mediaservices.windows.net/86791286-eaae-4f17-b023-e673543e88ff/e07e392c-b996-4184-ab5e-55d6de2ea49e.ism/manifest" />
+                                        <video id="payloadVideo" class="azuremediaplayer amp-default-skin" poster="@ViewBag.Poster" width="560" height="315" >
                                             <p class="amp-no-js">
                                                 To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
                                             </p>
                                         </video>
                                     }
-
-                                    <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/wGyi0hAshVw" frameborder="0" allowfullscreen></iframe> -->
-                                    <!-- <video width="320" height="240" srv=>
-                                        <source src="assets/dizzy.mp4" type="video/mp4"/>
-                                        <source src="assets/dizzy.webm" type="video/webm"/>
-                                        <source src="assets/dizzy.ogv" type="video/ogg"/>
-                                        Your browser does not support the video tag.
-                                    </video>-->
+                                    else
+                                    {
+                                        <video id="stationVideo" class="azuremediaplayer amp-default-skin" autoplay controls poster="@ViewBag.Poster" width="560" height="315" data-setup='{}'>
+                                            <source src="@ViewBag.StationUrl" type="application/vnd.ms-sstr+xml" />
+                                            <p class="amp-no-js">
+                                                To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+                                            </p>
+                                        </video>
+                                    }
                                 </div>
                             </div>
                         </div>
