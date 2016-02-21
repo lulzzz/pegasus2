@@ -12,16 +12,18 @@ namespace PegasusMissionWeb.Hubs
    public class SMSManager
     {
         
-            //private static string issuer = "urn:pegasusmission.io";
-            //private static string audience = "https://tools.pegasusmission.io/api4/smsmanger";
-            //private static string url = "http://localhost:49374/api4/smsmanager";
-            private static string url = "https://tools.pegasusmission.io/api4/smsmanager";
-            //private static string signingKey = "cW0iA3P/mhFi0/O4EAja7UuJ16q6Aeg4cOzL7SIvLL8=";
+        //private static string issuer = "urn:pegasusmission.io";
+        //private static string audience = "https://tools.pegasusmission.io/api4/smsmanger";
+        //private static string url = "http://localhost:49374/api4/smsmanager";
+        private static string url = "https://tools.pegasusmission.io/api4/smsmanager";
+        //private static string signingKey = "cW0iA3P/mhFi0/O4EAja7UuJ16q6Aeg4cOzL7SIvLL8=";
             
-                private static string securityTokenString = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL25hbWUiOiJjZGIzZDE4ZS1jZDczLTRiNGItOTM5ZS0xZjJjODIzMTViZGQiLCJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL3JvbGUiOiJ3ZWIiLCJpc3MiOiJ1cm46cGVnYXN1c21pc3Npb24uaW8iLCJhdWQiOiJodHRwczovL3Rvb2xzLnBlZ2FzdXNtaXNzaW9uLmlvL2FwaTQvc21zbWFuZ2VyIiwiZXhwIjoxNDUyMDkzMjk0LCJuYmYiOjE0MzY1NDEyOTR9.Y6gVu-WMIcJYquJy94yM9AqAlBGzuANOE6YU2J7Dd2c";
-  
+        //private static string securityTokenString = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL25hbWUiOiJjZGIzZDE4ZS1jZDczLTRiNGItOTM5ZS0xZjJjODIzMTViZGQiLCJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL3JvbGUiOiJ3ZWIiLCJpc3MiOiJ1cm46cGVnYXN1c21pc3Npb24uaW8iLCJhdWQiOiJodHRwczovL3Rvb2xzLnBlZ2FzdXNtaXNzaW9uLmlvL2FwaTQvc21zbWFuZ2VyIiwiZXhwIjoxNDUyMDkzMjk0LCJuYmYiOjE0MzY1NDEyOTR9.Y6gVu-WMIcJYquJy94yM9AqAlBGzuANOE6YU2J7Dd2c";
+        private static string securityTokenString = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL25hbWUiOiJjZGIzZDE4ZS1jZDczLTRiNGItOTM5ZS0xZjJjODIzMTViZGQiLCJodHRwOi8vcGVnYXN1c21pc3Npb24uaW8vY2xhaW1zL3JvbGUiOlsid2ViIiwiaXNzIl0sImlzcyI6InVybjpwZWdhc3VzbWlzc2lvbi5pbyIsImF1ZCI6Imh0dHBzOi8vdG9vbHMucGVnYXN1c21pc3Npb24uaW8vYXBpNC9zbXNtYW5nZXIiLCJleHAiOjE0NzE1MjQwODQsIm5iZiI6MTQ1NTk3MjA4NH0.hbHi0UBRGRDbhnvqgo_XNTd6DYte5zKeHI4RpL8L3Q8";
 
-         public static void AddPhone(string jsonString)
+
+
+        public static void AddPhone(string jsonString)
             {
                 //Phone phone = new Phone() { Number = number };
                 try
