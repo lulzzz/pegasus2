@@ -273,7 +273,10 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\pegasusmission2 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\pegasusmission2-dev - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\pegasusmission2-stage - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\pegasusmission2-test - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\pegasusmission2.pubxml" />
     <None Include="Scripts\External\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\External\jquery-1.7.2.min.js" />
