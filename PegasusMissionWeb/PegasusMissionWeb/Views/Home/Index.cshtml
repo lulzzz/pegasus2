@@ -25,6 +25,7 @@
     <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
+    <script type="text/javascript">  var appInsights = window.appInsights || function (config) { function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f; for (s.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", u.getElementsByTagName(o)[0].parentNode.appendChild(s), t.cookie = u.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) r("track" + i.pop()); return r("setAuthenticatedUserContext"), r("clearAuthenticatedUserContext"), config.disableExceptionTracking || (i = "onerror", r("_" + i), f = e[i], e[i] = function (config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t["_" + i](config, r, u, e, o), s }), t }({ instrumentationKey: "4b6dd100-c2ca-430a-b6f2-1a01e67642ed" }); window.appInsights = appInsights; appInsights.trackPageView();</script>
 </head>
 
 <body ng-app="pegasus" style="background-image:url('/img/sky.jpg'); background-repeat: no-repeat; background-size: cover;">
@@ -50,40 +51,40 @@
                         <div class="widget widget-nopad">
                             @if (!ViewBag.LiveVideo)
                             {
-                            <div class="widget-header" id="inflightVideoContainer">
-                                <h3>
-                                    <span class="fa fa-video-camera">&nbsp;</span> Live Inflight Video Feed
-                                </h3>
-                                <span class="fa fa-plus-square-o minimizeWidget"></span>
-                            </div>
+                                <div class="widget-header" id="inflightVideoContainer">
+                                    <h3>
+                                        <span class="fa fa-video-camera">&nbsp;</span> Live Inflight Video Feed
+                                    </h3>
+                                    <span class="fa fa-plus-square-o minimizeWidget"></span>
+                                </div>
                             <!-- /widget-header -->
-                            <div class="widget-content" style="display: none;" >
-                                <div id='videoControl'>
-                                    <video id="payloadVideo" class="azuremediaplayer amp-default-skin" poster="@ViewBag.Poster" width="560" height="315">
+                                <div class="widget-content" style="display: none;">
+                                    <div id='videoControl'>
+                                        <video id="payloadVideo" class="azuremediaplayer amp-default-skin" poster="@ViewBag.Poster" width="560" height="315">
+                                            <p class="amp-no-js">
+                                                To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+                                            </p>
+                                        </video>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="widget-header" id="inflightVideoContainer">
+                                    <h3>
+                                        <span class="fa fa-video-camera">&nbsp;</span> Live Inflight Video Feed
+                                    </h3>
+                                    <span class="fa fa-minus-square-o minimizeWidget"></span>
+                                </div>
+                            <!-- /widget-header -->
+                                <div class="widget-content">
+                                    <video id="payloadVideo" class="azuremediaplayer amp-default-skin" autoplay controls poster="@ViewBag.Poster" width="560" height="315" data-setup='{}'>
+                                        <source src="@ViewBag.PayloadUrl" type="application/vnd.ms-sstr+xml" />
                                         <p class="amp-no-js">
                                             To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
                                         </p>
                                     </video>
                                 </div>
-                            </div>
-                            }
-                            else
-                            {
-                            <div class="widget-header" id="inflightVideoContainer">
-                                <h3>
-                                    <span class="fa fa-video-camera">&nbsp;</span> Live Inflight Video Feed
-                                </h3>
-                                <span class="fa fa-minus-square-o minimizeWidget"></span>
-                            </div>
-                            <!-- /widget-header -->
-                            <div class="widget-content">
-                                <video id="payloadVideo" class="azuremediaplayer amp-default-skin" autoplay controls poster="@ViewBag.Poster" width="560" height="315" data-setup='{}'>
-                                    <source src="@ViewBag.PayloadUrl" type="application/vnd.ms-sstr+xml" />
-                                    <p class="amp-no-js">
-                                        To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
-                                    </p>
-                                </video>
-                            </div>
                             }
                         </div>
 
@@ -99,22 +100,22 @@
                             <div class="widget-content">
                                 <div id='videoControl'>
                                     @if (!ViewBag.LiveVideo)
-                            {
-                            <video id="payloadVideo" class="azuremediaplayer amp-default-skin" poster="@ViewBag.Poster" width="560" height="315">
-                                <p class="amp-no-js">
-                                    To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
-                                </p>
-                            </video>
-                            }
-                            else
-                            {
-                            <video id="stationVideo" class="azuremediaplayer amp-default-skin" autoplay controls poster="@ViewBag.Poster" width="560" height="315" data-setup='{}'>
-                                <source src="@ViewBag.StationUrl" type="application/vnd.ms-sstr+xml" />
-                                <p class="amp-no-js">
-                                    To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
-                                </p>
-                            </video>
-                            }
+                                    {
+                                        <video id="payloadVideo" class="azuremediaplayer amp-default-skin" poster="@ViewBag.Poster" width="560" height="315">
+                                            <p class="amp-no-js">
+                                                To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+                                            </p>
+                                        </video>
+                                    }
+                                    else
+                                    {
+                                        <video id="stationVideo" class="azuremediaplayer amp-default-skin" autoplay controls poster="@ViewBag.Poster" width="560" height="315" data-setup='{}'>
+                                            <source src="@ViewBag.StationUrl" type="application/vnd.ms-sstr+xml" />
+                                            <p class="amp-no-js">
+                                                To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
+                                            </p>
+                                        </video>
+                                    }
                                 </div>
                             </div>
                         </div>
