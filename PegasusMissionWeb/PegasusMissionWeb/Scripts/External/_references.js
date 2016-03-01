@@ -2,6 +2,7 @@
 /// <reference path="../../dist/js/sb-admin-2.js" />
 /// <reference path="../ai.0.15.0-build58334.min.js" />
 /// <reference path="../base.js" />
+/// <reference path="../countdown.js" />
 /// <reference path="angular.min.js" />
 /// <reference path="bootstrap.js" />
 /// <reference path="jquery.validate.js" />

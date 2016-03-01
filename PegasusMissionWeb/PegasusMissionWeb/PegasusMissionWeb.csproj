@@ -263,6 +263,7 @@
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\base.js" />
+    <Content Include="Scripts\Countdown.js" />
     <Content Include="Scripts\External\angular.min.js" />
     <Content Include="Scripts\External\bootstrap.js" />
     <Content Include="Scripts\External\bootstrap.min.js" />
