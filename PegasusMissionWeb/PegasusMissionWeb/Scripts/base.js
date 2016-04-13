@@ -30,7 +30,8 @@ var imageBalloon = 'images/balloon232.gif';
 
 var markerLaunch = new google.maps.Marker({
     //position: new google.maps.LatLng(46.8301, -119.1643),
-    position: new google.maps.LatLng(41.0972, -87.895172),
+    //position: new google.maps.LatLng(41.0972, -87.895172),
+    position: new google.maps.LatLng(41.0968, -87.9093),
     map: map,
     title: locationNameArray[0],
     icon: imageAntenna

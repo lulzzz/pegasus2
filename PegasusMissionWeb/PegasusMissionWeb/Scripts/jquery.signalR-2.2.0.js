@@ -1,3 +1,4 @@
+
 /* jquery.signalR.core.js */
 /*global window:false */
 /*!
@@ -7,8 +8,7 @@
  * Copyright (C) Microsoft Corporation. All rights reserved.
  *
  */
-
-/// <reference path="Scripts/jquery-1.6.4.js" />
+/// <reference path="jquery-1.9.0.min.js" />
 /// <reference path="jquery.signalR.version.js" />
 (function ($, window, undefined) {
 
