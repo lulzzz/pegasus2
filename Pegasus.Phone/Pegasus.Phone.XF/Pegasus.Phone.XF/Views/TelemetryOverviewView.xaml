@@ -241,8 +241,8 @@
 
           <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Orientation="Horizontal">
             <Label
-                x:Name="GpsAltitude"
-                Text="{Binding CraftTelemetry.Data.GpsAltitude, StringFormat='{0:0,0}'}"
+                x:Name="PressureAltitude"
+                Text="{Binding CraftTelemetry.Data.PressureAltitude, StringFormat='{0:0,0}'}"
                 LineBreakMode="NoWrap"
                 FontSize="Large"
                 YAlign="Center"

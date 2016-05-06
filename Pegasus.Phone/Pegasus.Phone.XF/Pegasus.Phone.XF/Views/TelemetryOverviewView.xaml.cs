@@ -13,7 +13,7 @@ namespace Pegasus.Phone.XF
 		public TelemetryOverviewView ()
 		{
 			InitializeComponent ();
-            GpsAltitude.FontSize *= 2;
+            PressureAltitude.FontSize *= 2;
 		}
 
         protected override void OnSizeAllocated(double width, double height)
@@ -28,7 +28,7 @@ namespace Pegasus.Phone.XF
             lastWidth = width;
             lastHeight = height;
 
-            double h = this.GpsAltitude.Height;
+            double h = this.PressureAltitude.Height;
             double grid = this.DetailsGrid.Height;
             double ratio = grid / h;
             //Debug.WriteLine("    " + h + ", " + grid + ", r: " + ratio);

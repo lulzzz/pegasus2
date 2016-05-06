@@ -29,7 +29,7 @@ namespace Pegasus.Phone.XF
         private const string UserMessageTopicUri = "coaps://pegasusmission.io/publish?topic=http://pegasus2.org/usermessage";
         private const string TokenSecret = "851o2LqnMUod9lp7DvVxSrH+KQAkydBF9MDREicDus4=";
         private const string TokenWebApiUri = "https://authz.pegasusmission.io/api/phone";
-        private const string SavedSecurityTokenPrefix = "001;";
+        private const string SavedSecurityTokenPrefix = "002;";
         private const string LaunchInfoUri = "http://pegasus2.blob.core.windows.net/info/launchinfo.json";
 
         private const string FakeCraftTelemetryLine = "$:2015-01-28T21:49:18Z,989.6,198.8,13.0,77.6,13.0,2.2,7.5,7.4,0,0,1,0,-3200,-384,17408,-3200,-384,17408,-3200,-384,17408,1.0,46.8301,-119.1643,198.8,6.4,169.5,1,6,0,-0.7,0,0,1,0,0,1000,02:30,*CA";
@@ -129,7 +129,7 @@ namespace Pegasus.Phone.XF
             double distKM = TrackingHelper.CalculateDistance(groundLocation, craftLocation);
             double distMI = distKM * 0.621371;
             gt.GroundDistance = distMI;
-            gt.ActualDistance = (Math.Pow(Math.Pow(distKM, 2) + Math.Pow((craftTelemetry.GpsAltitude - gt.GpsAltitude) / 1000, 2), 0.5)) * 0.621371;
+            gt.ActualDistance = (Math.Pow(Math.Pow(distKM, 2) + Math.Pow((craftTelemetry.PressureAltitude - gt.GpsAltitude) / 1000, 2), 0.5)) * 0.621371;
 
             if (mobile)
             {
