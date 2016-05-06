@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Pegasus-II Tracking</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="dist/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS 
+    <link href="bower_components/morrisjs/morris.css" rel="stylesheet">
+-->
+    <!-- Custom Fonts -->
+    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        html, body, #map-canvas {
+            height: 500px;
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=false"></script>
+    <script>
+
+        var launch = new google.maps.LatLng(46.8301, -119.1645);
+        var mobile = new google.maps.LatLng(46.8292, -118.8703);
+        var balloon = new google.maps.LatLng(46.8682, -118.8697);
+
+        var locationArray = [launch, mobile, balloon];
+        var locationNameArray = ["Launch", "Mobile", "Balloon"];
+
+
+        function centerMapOnLocations(displayMap, launchLatLon, mobileLatLon, balloonLatLon) {
+            var bounds = new google.maps.LatLngBounds();
+
+            bounds.extend(new google.maps.LatLng(launchLatLon.A, launchLatLon.F));
+            bounds.extend(new google.maps.LatLng(mobileLatLon.A, mobileLatLon.F));
+            bounds.extend(new google.maps.LatLng(balloonLatLon.A, balloonLatLon.F));
+
+            displayMap.fitBounds(bounds);
+        }
+
+
+        function embedElevation(displayMap, marker, elevatorService, locationLatLon, content) {
+            var elevationData;
+
+            var locations = [];
+
+            // Push the location on the array
+            locations.push(locationLatLon);
+
+            // Create a LocationElevationRequest object using the array's one value
+            var positionalRequest = {
+                'locations': locations
+            }
+
+            // Initiate the location request
+            elevatorService.getElevationForLocations(positionalRequest, function (results, status) {
+                if (status === google.maps.ElevationStatus.OK) {
+
+                    // Retrieve the first result
+                    if (results[0]) {
+
+                        // Open an info window indicating the elevation at the clicked position
+                        elevationData = 'Ground Elevation: ' + results[0].elevation + ' meters.';
+
+                        content += elevationData;
+                    }
+
+                    content += '</p>' +
+                          '</div>' +
+                          '</div>';
+
+                    var infowindow = new google.maps.InfoWindow({
+                        content: content
+                    });
+
+
+                    google.maps.event.addListener(marker, 'click', function () {
+                        infowindow.open(displayMap, marker);
+                    });
+                } else {
+                    alert('Elevation service failed due to: ' + status);
+                }
+            });
+
+        }
+
+
+        function initialize() {
+
+            var map = new google.maps.Map(document.getElementById('map-canvas'));
+
+            centerMapOnLocations(map, launch, mobile, balloon);
+
+            var imageAntenna = 'images/antenna32.png';
+            var imageMobile = 'images/mobile32.png';
+            var imageBalloon = 'images/balloon32.png';
+
+            var markerLaunch = new google.maps.Marker({
+                position: locationArray[0],
+                map: map,
+                title: locationNameArray[0],
+                icon: imageAntenna
+            });
+
+            var markerMobile = new google.maps.Marker({
+                position: locationArray[1],
+                map: map,
+                title: locationNameArray[1],
+                icon: imageMobile
+            });
+
+            var markerBalloon = new google.maps.Marker({
+                position: locationArray[2],
+                map: map,
+                title: locationNameArray[2],
+                icon: imageBalloon
+            });
+
+            var elevator = new google.maps.ElevationService();
+
+            var contentStringBalloon = '<div id="content">' +
+              '<div id="siteNotice">' +
+              '</div>' +
+              '<h1 id="firstHeading" class="firstHeading">Balloon</h1>' +
+              '<div id="bodyContent">' +
+              'Altitude: 22,500 ft<br>' +
+              'Direction: SE<br>';
+
+            var contentStringLaunch = '<div id="content">' +
+              '<div id="siteNotice">' +
+              '</div>' +
+              '<h1 id="firstHeading" class="firstHeading">Launch</h1>' +
+              '<div id="bodyContent">' +
+              'Balloon: 10.5 miles downrange<br>' +
+              '- 22,500 ft altitude<br>' +
+              '- 12.75 miles actual distance<br>';
+
+            var contentStringMobile = '<div id="content">' +
+              '<div id="siteNotice">' +
+              '</div>' +
+              '<h1 id="firstHeading" class="firstHeading">Chase</h1>' +
+              '<div id="bodyContent">' +
+              'Balloon: 2.65 miles downrange<br>' +
+              '- 22,500 ft altitude<br>' +
+              '- 5.25 miles actual distance<br>';
+
+            embedElevation(map, markerBalloon, elevator, balloon, contentStringBalloon);
+            embedElevation(map, markerLaunch, elevator, launch, contentStringLaunch);
+            embedElevation(map, markerMobile, elevator, mobile, contentStringMobile);
+
+            var triangleCoords = [
+                new google.maps.LatLng(locationArray[0].A, locationArray[0].F),
+                new google.maps.LatLng(locationArray[1].A, locationArray[1].F),
+                new google.maps.LatLng(locationArray[2].A, locationArray[2].F),
+                new google.maps.LatLng(locationArray[0].A, locationArray[0].F)
+            ];
+
+            // Construct the polygon.
+            var balloonTriangle = new google.maps.Polygon({
+                paths: triangleCoords,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.05
+            });
+
+            balloonTriangle.setMap(map);
+
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+
+    </script>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button> -->
+                <a class="navbar-brand" href="index.html">Pegasus-II Flight Control - Global Positioning</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="aprs.html"><i class="fa fa-map-marker fa-fw"></i> APRS</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Dashboard</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <!-- /.panel-heading -->
+                        <div id="map-canvas"></div>
+                        <!-- /.panel-body -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-th-list  fa-fw"></i> Telemetry
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Source</th>
+                                                    <th>Altitude (M)</th>
+                                                    <th>Ground Level (M)</th>
+                                                    <th>Ground Distance (K)</th>
+                                                    <th>Actual Distance (K)</th>
+                                                    <th>Speed (MPH)</th>
+                                                    <th>Direction</th>
+                                                    <th>Outside Temp (C)</th>
+                                                    <th>Inside Temp (C)</th>
+                                                    <th>Battery (V)</th>
+                                                    <th>Radio Strength (%)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Balloon</td>
+                                                    <td>22,500</td>
+                                                    <td>345.9</td>
+                                                    <td>N/A</td>
+                                                    <td>N/A</td>
+                                                    <td>46.7</td>
+                                                    <td>East</td>
+                                                    <td>-58</td>
+                                                    <td>12</td>
+                                                    <td>7.3</td>
+                                                    <td>89.3</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Chase</td>
+                                                    <td>N/A</td>
+                                                    <td>235.6</td>
+                                                    <td>5.6</td>
+                                                    <td>8.3</td>
+                                                    <td>67.8</td>
+                                                    <td>NorthEast</td>
+                                                    <td>N/A</td>
+                                                    <td>N/A</td>
+                                                    <td>N/A</td>
+                                                    <td>78.9</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Launch</td>
+                                                    <td>N/A</td>
+                                                    <td>189.5</td>
+                                                    <td>25.6</td>
+                                                    <td>28.3</td>
+                                                    <td>N/A</td>
+                                                    <td>N/A</td>
+                                                    <td>N/A</td>
+                                                    <td>N/A</td>
+                                                    <td>N/A</td>
+                                                    <td>92.4</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                </div>
+                                <!-- /.col-lg-4 (nested) -->
+                                <div class="col-lg-8">
+                                    <div id="morris-bar-chart"></div>
+                                </div>
+                                <!-- /.col-lg-8 (nested) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-8 -->
+                <!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript 
+    <script src="bower_components/raphael/raphael-min.js"></script>
+    <script src="bower_components/morrisjs/morris.min.js"></script>
+    <script src="js/morris-data.js"></script>
+-->
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+
+
+
+</body>
+
+</html>

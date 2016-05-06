@@ -1,0 +1,21 @@
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Pegasus2.Data
+{
+    [Serializable]
+    [JsonObject]
+    public class Phone
+    {
+        public Phone()
+        {
+        }
+
+
+        public string Number { get; set; }
+    }
+}

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Pegasus-II APRS Tracking</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="dist/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS 
+    <link href="bower_components/morrisjs/morris.css" rel="stylesheet">
+-->
+    <!-- Custom Fonts -->
+    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        html, body, #aprs-map {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+    
+
+</head>
+
+<body onresize="resizeMap()">
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <!-- <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button> -->
+                <a class="navbar-brand" href="index.html">Pegasus-II APRS Tracking</a>
+
+
+            
+
+            </div>
+            <!-- /.navbar-header -->
+
+            
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="aprs.html"><i class="fa fa-map-marker fa-fw"></i> APRS</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper" >
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <h1 class="page-header">APRS Tracking</h1>
+                    Callsign: <input type="text" name="callsign" id="callsign">
+                    <button type="button" class="btn btn-primary btn-xs" id="saveButton">Save</button>
+
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="panel panel-default">
+                        <div id="aprs-map">
+                        <!-- /.panel-heading 
+                            <p>-->
+                            <script type="text/javascript">
+                                he_track = "KD9CVO-1"; // track this callsign
+                                he_zoom = 15; // zoom out a bit
+                                he_maptype = 'm'; // hybrid map
+                                // select what to show
+                                he_hide_tcp = 1; // do not show Internet stations
+                                he_show_aprs = 'w'; // show APRS stations with waypoints
+                                he_show_aprs_w = ''; // do not show APRS weather stations
+                                he_show_aprs_i = 'p'; // only show the current position of items without track
+                                he_show_ais = ''; // do not show AIS ships
+
+
+                                he_width = 1522;
+                                he_height = 800;
+
+                            </script>
+                            <script type="text/javascript" src="http://aprs.fi/js/embed.js">
+                            </script>
+                            <!-- </p> -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery 
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+-->
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript 
+    <script src="bower_components/raphael/raphael-min.js"></script>
+    <script src="bower_components/morrisjs/morris.min.js"></script>
+    <script src="js/morris-data.js"></script>
+-->
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+
+    <script type="text/javascript">
+        var callsign;
+
+        function createCookie(name,value,days) {
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime()+(days*24*60*60*1000));
+                var expires = "; expires="+date.toGMTString();
+            }
+            else var expires = "";
+            document.cookie = name+"="+value+expires+"; path=/";
+        }
+
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+
+        function resizeMap() {
+            var srcString = $('#aprshefi_map').attr('src');
+
+            var index = srcString.indexOf('key=');
+            var key = srcString.substring(index + 4);
+
+            var srcVal = 'http://aprs.fi/embedded?width='; 
+            //callsign = 'KD9CVO-1';
+            
+            var widthVal = $('#aaprs-map').width();
+            var heightVal = $('#aprs-map').height();
+            srcVal = srcVal + widthVal + '&height=' + heightVal + '&z=15&he_track=' + callsign + '&maptype=m&show_others=0&show_aprs=w&show_aprs_w=&show_aprs_i=p&show_ais=&hide_tcp=1&key=' + key;
+
+            $('#aprshefi_map').attr('src', srcVal);
+        }
+
+        $( document ).ready(function() {
+            $('#saveButton').click(function(){
+                createCookie('callsign',$('#callsign').val(),365)
+
+                //resizeMap();
+                document.location.reload(true);
+            });
+
+            callsign = readCookie('callsign');
+            
+            if (!callsign) {
+                createCookie('callsign', 'KD9CVO-1', 365);
+                callsign = readCookie('callsign');
+            } 
+
+            $('#callsign').val(callsign);
+
+            resizeMap();    
+        });
+    </script>
+
+
+
+</body>
+
+</html>

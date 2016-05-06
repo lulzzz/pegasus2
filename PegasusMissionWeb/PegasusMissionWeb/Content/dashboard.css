@@ -190,33 +190,37 @@ Bootstrap Admin Template by EGrappler.com
 	}
 	
 	.action-table .td-actions .btn:last-child { 
-		margin-rigth: 0; 		
+		margin-right: 0; 		
 	}
 	
 	
 	
-#big_stats 
+#big_stats, .telStats 
 { 
 	width: 100%; 
 	display: table;
-	margin-top: 1.5em;
-	
-	
+	margin-top: 15px;
+    overflow: hidden;
+}
+
+.twitter-timeline {
+    width: 100% !important;
+    height: 400px !important;
 }
 
 .big-stats-container .widget-content {
 	border:0;
 }
 
-#big_stats .stat
+#big_stats .stat, .telLabel
 {
+    color: black;
 	width: 25%;
-	height: 90px;
+    font-size: 12px;
 	text-align: center;
 	display: table-cell;
 	padding: 0;
 	position: relative;
-	
 	border-right: 1px solid #CCC;
 	border-left: 1px solid #FFF;
 }
@@ -246,12 +250,17 @@ margin-bottom: 26px;}
 
 #big_stats .stat .value
 {
-	font-size: 45px;
-	font-weight: bold;
+	font-size: 32px;
 	color: #545454;
-	line-height: 1em;
+	line-height: 1.5em;
 }
 
+.bigNumbers {
+    font-size: 24px;
+	color: #545454;
+	line-height: 1.5em;
+    text-align: center;
+}
 
 
 @media all and (max-width: 950px) and (min-width: 1px) {
@@ -280,7 +289,7 @@ margin-bottom: 26px;}
 
 @media (max-width: 767px) {
 	#big_stats .stat .value {
-		font-size: 40px;
+		font-size: 30px;
 	}
 }
 	
