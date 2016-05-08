@@ -233,10 +233,10 @@ namespace Xamarin.Forms.Maps.Android
         markerOptions.SetTitle(p.Label);
         markerOptions.SetSnippet(p.Address);
         // HACKHACK
-        if (p.Color == Color.Red) markerOptions.InvokeIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueRed));
-        else if (p.Color == Color.Green) markerOptions.InvokeIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueGreen));
-        else if (p.Color == Color.Blue) markerOptions.InvokeIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueBlue));
-        else if (p.Color == Color.Purple) markerOptions.InvokeIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueViolet));
+        if (p.Color == Color.Red) markerOptions.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueRed));
+        else if (p.Color == Color.Green) markerOptions.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueGreen));
+        else if (p.Color == Color.Blue) markerOptions.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueBlue));
+        else if (p.Color == Color.Purple) markerOptions.SetIcon(BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueViolet));
         // HACKHACK
         Marker marker = map.AddMarker(markerOptions);
         p.Id = (object) marker.Id;

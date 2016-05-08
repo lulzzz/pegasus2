@@ -1,5 +1,5 @@
-﻿using Refractored.Xam.Settings;
-using Refractored.Xam.Settings.Abstractions;
+﻿using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
