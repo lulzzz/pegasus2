@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NAE.FieldGateway", "NAE.FieldGateway\NAE.FieldGateway.csproj", "{4475CF61-93F4-4A8B-9F71-2439F6B3FA52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NAE.Data", "..\NAE.Data\NAE.Data.csproj", "{48D2DB65-4A0D-44A0-9423-C9E9EC5203BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piraeus.Protocols", "..\Piraeus.Protocols\Piraeus.Protocols.csproj", "{51658C77-2E00-4D4B-93BA-8A950FF281BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Piraeus.Web.WebSockets", "..\Piraeus.Web.WebSockets\Piraeus.Web.WebSockets.csproj", "{1CA2A8D6-2AF4-44AC-8552-4239703C2358}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FieldGateway.Telemetry.Generator", "..\FieldGateway.Telemetry.Generator\FieldGateway.Telemetry.Generator.csproj", "{5688991A-4BE5-43C3-9EE2-B92F6F351186}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4475CF61-93F4-4A8B-9F71-2439F6B3FA52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4475CF61-93F4-4A8B-9F71-2439F6B3FA52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4475CF61-93F4-4A8B-9F71-2439F6B3FA52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4475CF61-93F4-4A8B-9F71-2439F6B3FA52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48D2DB65-4A0D-44A0-9423-C9E9EC5203BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48D2DB65-4A0D-44A0-9423-C9E9EC5203BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48D2DB65-4A0D-44A0-9423-C9E9EC5203BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48D2DB65-4A0D-44A0-9423-C9E9EC5203BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51658C77-2E00-4D4B-93BA-8A950FF281BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51658C77-2E00-4D4B-93BA-8A950FF281BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51658C77-2E00-4D4B-93BA-8A950FF281BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51658C77-2E00-4D4B-93BA-8A950FF281BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CA2A8D6-2AF4-44AC-8552-4239703C2358}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CA2A8D6-2AF4-44AC-8552-4239703C2358}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CA2A8D6-2AF4-44AC-8552-4239703C2358}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CA2A8D6-2AF4-44AC-8552-4239703C2358}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5688991A-4BE5-43C3-9EE2-B92F6F351186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5688991A-4BE5-43C3-9EE2-B92F6F351186}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5688991A-4BE5-43C3-9EE2-B92F6F351186}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5688991A-4BE5-43C3-9EE2-B92F6F351186}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

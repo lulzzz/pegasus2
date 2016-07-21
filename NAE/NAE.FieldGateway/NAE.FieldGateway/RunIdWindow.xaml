@@ -1,0 +1,33 @@
+﻿<Window x:Class="NAE.FieldGateway.RunIdWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NAE.FieldGateway.ViewModels"
+        mc:Ignorable="d"
+        Title="RunIdWindow" Height="100" Width="230">
+    <Window.DataContext>
+        <local:RunIdViewModel />
+    </Window.DataContext>
+    <Grid Background="Black">
+        <Grid.Resources>
+            <!--<ResourceDictionary Source="P2Resources.xaml"/>-->
+            <ResourceDictionary Source="P2Resources.xaml" />
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="60"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center">Set Run ID</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="RunId" Text="{Binding RunId}"  Height="24" />
+        <Button Grid.Row="1" Grid.Column="0" Content="Cancel" Click="Cancel_Click"></Button>
+        <Button Grid.Row="1" Grid.Column="2" Content="OK" Click="Ok_Click" ></Button>
+
+    </Grid>
+</Window>
