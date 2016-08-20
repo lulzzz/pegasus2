@@ -22,8 +22,7 @@ namespace NAE.Data
         public string RunId { get; set; }
         
         [JsonProperty("pilot")]
-        public string Pilot { get; set; }
-                
+        public string Pilot { get; set; }                
 
         [JsonProperty("location")]
         public string Location { get; set; }
