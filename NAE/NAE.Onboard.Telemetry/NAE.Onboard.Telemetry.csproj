@@ -50,7 +50,6 @@
   <ItemGroup>
     <Compile Include="ChannelReader.cs" />
     <Compile Include="EagleRawTelemetry.cs" />
-    <Compile Include="EagleTelemetry.cs" />
     <Compile Include="RawTelemetryLoader.cs" />
     <Compile Include="TelemetryConverter.cs" />
     <Compile Include="TelemetryFileReader.cs" />
