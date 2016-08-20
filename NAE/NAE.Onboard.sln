@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25402.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NAE.Onboard.Telemetry", "NAE.Onboard.Telemetry\NAE.Onboard.Telemetry.csproj", "{95469ACD-C262-4FAB-AAB1-299E3A907ADA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{3A88A0EC-A38B-4F54-B806-2B6A327499C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NAE.Data", "NAE.Data\NAE.Data.csproj", "{48D2DB65-4A0D-44A0-9423-C9E9EC5203BF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95469ACD-C262-4FAB-AAB1-299E3A907ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95469ACD-C262-4FAB-AAB1-299E3A907ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95469ACD-C262-4FAB-AAB1-299E3A907ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95469ACD-C262-4FAB-AAB1-299E3A907ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A88A0EC-A38B-4F54-B806-2B6A327499C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A88A0EC-A38B-4F54-B806-2B6A327499C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A88A0EC-A38B-4F54-B806-2B6A327499C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A88A0EC-A38B-4F54-B806-2B6A327499C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48D2DB65-4A0D-44A0-9423-C9E9EC5203BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48D2DB65-4A0D-44A0-9423-C9E9EC5203BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48D2DB65-4A0D-44A0-9423-C9E9EC5203BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48D2DB65-4A0D-44A0-9423-C9E9EC5203BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
