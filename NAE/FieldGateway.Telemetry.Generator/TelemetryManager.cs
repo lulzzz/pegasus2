@@ -77,6 +77,7 @@ namespace FieldGateway.Telemetry.Generator
                 Thread.Sleep(5000);
             }
 
+            int index = 0;
             ushort id = 0;
             double gpsLatStart = 0;
             double gpsLonStart = 0;
@@ -108,6 +109,8 @@ namespace FieldGateway.Telemetry.Generator
 
                         byte[] message = request.Encode();
                         await ws.SendAsync(message);
+                        index++;
+                        Console.WriteLine("Sending message {0}  sleeping 500ms", index);
                         Thread.Sleep(500);
                         
                     }
