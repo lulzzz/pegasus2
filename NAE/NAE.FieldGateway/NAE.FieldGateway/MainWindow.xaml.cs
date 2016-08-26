@@ -17,6 +17,7 @@ using Microsoft.Maps.MapControl.WPF;
 using NAE.FieldGateway.ViewModels;
 using NAE.FieldGateway.Security;
 using System.Security.Claims;
+using System.Net.NetworkInformation;
 
 namespace NAE.FieldGateway
 {
@@ -105,6 +106,57 @@ namespace NAE.FieldGateway
                 viewModel.RunId = rw.RunIdText;
             }           
 
+        }
+
+        private void NetworkInfo_Click(object sender, RoutedEventArgs e)
+        {
+            var addrs = (from nic in NetworkInterface.GetAllNetworkInterfaces()
+                         where nic.OperationalStatus == OperationalStatus.Up
+                         where nic.NetworkInterfaceType != NetworkInterfaceType.Loopback
+                         where nic.NetworkInterfaceType != NetworkInterfaceType.Tunnel
+                         select nic);
+
+            StringBuilder builder = new StringBuilder();
+
+
+
+            foreach (NetworkInterface nic in addrs)
+            {
+
+                builder.Append("----------" + Environment.NewLine);
+                builder.Append(String.Format("Name {0}", nic.Name) + Environment.NewLine);
+                builder.Append(String.Format("Type {0}", nic.NetworkInterfaceType) + Environment.NewLine);
+                builder.Append(String.Format("Status {0}", nic.OperationalStatus) + Environment.NewLine);
+                builder.Append(String.Format("Speed {0}K", nic.Speed / 8000) + Environment.NewLine);
+                builder.Append(String.Format("Address {0}", nic.GetPhysicalAddress().ToString()) + Environment.NewLine);
+
+                foreach (UnicastIPAddressInformation ip in nic.GetIPProperties().UnicastAddresses)
+                {
+                    if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                    {
+                        builder.Append(String.Format("IP {0}", ip.Address.ToString()) + Environment.NewLine);
+                    }
+                }
+
+
+                //builder.Append(String.Format("IP {0}", nic.GetIPProperties().UnicastAddresses[0].Address.Address.ToString()) + Environment.NewLine);
+
+                builder.Append("----------" + Environment.NewLine);
+
+            }
+
+            MessageBox.Show(builder.ToString());
+        }
+
+        private void StartUdp_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.OpenUdpServer(11000);
+
+        }
+
+        private void SendReset_Click(object sender, RoutedEventArgs e)
+        {
+            viewModel.SendUpdReset();
         }
     }
 }

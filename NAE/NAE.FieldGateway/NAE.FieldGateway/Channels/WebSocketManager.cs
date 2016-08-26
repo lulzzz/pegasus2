@@ -252,7 +252,7 @@ namespace NAE.FieldGateway.Channels
                 task = writer.WriteAsync("User_Message", jsonString);
                 Task.WaitAny(task);
 
-                UserMessage userMessage = UserMessage.Load(jsonString);
+                UserMessage userMessage = UserMessage.FromJson(jsonString);
 
                 if (OnUserNote != null)
                 {

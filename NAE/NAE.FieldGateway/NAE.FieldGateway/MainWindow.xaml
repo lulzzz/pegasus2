@@ -51,6 +51,9 @@
                         <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="ResetSocket_Click" Background="Gray">Reset Socket</Button>
                         <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="StartPoint_Click" Background="Gray">Start Point</Button>
                         <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="SetRunId_Click" Background="Gray">Set Run ID</Button>
+                        <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="NetworkInfo_Click"    Background="Gray">Network Info</Button>
+                        <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="StartUdp_Click"    Background="Gray">Start UDP</Button>
+                        <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="SendReset_Click"    Background="Gray">GPS Reset</Button>
                         <!--<Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="GroundValues_Click">Ground Values</Button>-->
                         <!--<Button x:Name="UserMessages" Foreground="AliceBlue" HorizontalAlignment="Center" Background="Red" Margin="10,10,10,10" Width="100" Height="40" Click="UserMessages_Click">User Messages</Button>-->
                         <!--<Border BorderBrush="Blue"  BorderThickness="1" Margin="1,1,1,1" Height="240" Width="98" VerticalAlignment="Center" Background="Gray">
