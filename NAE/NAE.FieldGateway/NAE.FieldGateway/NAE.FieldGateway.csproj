@@ -80,6 +80,7 @@
     <Compile Include="Channels\FileSystemWriter.cs" />
     <Compile Include="Channels\SerialErrorType.cs" />
     <Compile Include="Channels\SerialPortManager.cs" />
+    <Compile Include="Channels\UdpServer.cs" />
     <Compile Include="Channels\WebSocketManager.cs" />
     <Compile Include="RunIdWindow.xaml.cs">
       <DependentUpon>RunIdWindow.xaml</DependentUpon>

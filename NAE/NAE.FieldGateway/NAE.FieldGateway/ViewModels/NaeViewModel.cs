@@ -99,6 +99,8 @@ namespace NAE.FieldGateway.ViewModels
         private Location vehicleLocation;
         private Location startPointLocation;
 
+        private UdpServer udp;
+
         private ObservableCollection<string> userMessages;
         
         #region Set GPS Start Point
@@ -137,6 +139,59 @@ namespace NAE.FieldGateway.ViewModels
                 }
             }
         }
+
+        #endregion
+
+        #region UDP
+        public void OpenUdpServer(int port)
+        {
+            udp = new UdpServer(port);
+            udp.OnReceive += Udp_OnReceive;
+            Task task = udp.RunAsync();
+            Task.WhenAll(task);
+        }
+
+
+        public void SendUpdReset()
+        {
+            string message = Reset.GetMessage();
+            udp.Send(Encoding.ASCII.GetBytes(message));
+        }
+
+        private void Udp_OnReceive(object sender, string message)
+        {
+            NAE.Data.Telemetry telemetry = null;
+            try
+            {
+                //read the UPD message as a CSV String
+                telemetry = NAE.Data.Telemetry.Load(message);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            if (telemetry != null)
+            {
+                try
+                {
+                    //forward to Web socket
+                    this.wsManager.SendMessage(telemetry);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+        }
+
+        public void SendReset()
+        {
+            udp.Send(Encoding.ASCII.GetBytes(Reset.GetMessage()));
+        }
+
+
 
         #endregion
 
@@ -599,6 +654,9 @@ namespace NAE.FieldGateway.ViewModels
 
         private void WsManager_OnUserNote(object sender, UserMessage message)
         {
+            byte[] byteArray = message.ToCraftMessage();
+            udp.Send(byteArray);
+
             this.UserMessages.Add(message.Message);
         }
 

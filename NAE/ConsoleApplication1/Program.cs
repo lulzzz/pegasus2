@@ -16,6 +16,26 @@ namespace ConsoleApplication1
         {
             //WriteJsonSample();
 
+
+            //Config config = new Config();
+            //config.AggregateTelemtryUrl = "http://www.foo.org/telemetry/aggregaterun1.json";
+            //config.Drone1VideoUrl = "http://www.foo.org/video/drone1run1.mp4";
+            //config.Drone2VideoUrl = "http://www.foo.org/video/drone2run1.mp4";
+            //config.Location = "Alvord Desert, OR";
+            //config.OnboardTelemetryUrl = "http://www.foo.org/telemetry/run1.json";
+            //config.OnboardVideoUrl = "http://www.foo.org/video/cockpitrun1.mp4";
+            //config.Pilot = "Jessi Combs";
+            //config.RunId = "Run1";
+            //config.Timestamp = new DateTime(2016, 9, 30, 14, 23, 12);
+            
+            //string json = JsonConvert.SerializeObject(config, Formatting.Indented);
+            //using (StreamWriter writer = new StreamWriter("D:\\config.txt"))
+            //{
+            //    writer.Write(json);
+            //    writer.Flush();
+            //    writer.Close();
+            //}
+
             string tdmsFile = "D:\\NAE\\Files\\160423_180017.tdms";
             TelemetryFileReader reader = TelemetryFileReader.Load(tdmsFile, 500);
             List<EagleRawTelemetry> ertList= reader.Read();
