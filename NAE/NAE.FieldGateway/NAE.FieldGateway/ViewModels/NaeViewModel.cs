@@ -153,7 +153,7 @@ namespace NAE.FieldGateway.ViewModels
 
 
         public void SendUpdReset()
-        {
+        {            
             string message = Reset.GetMessage();
             udp.Send(Encoding.ASCII.GetBytes(message));
         }

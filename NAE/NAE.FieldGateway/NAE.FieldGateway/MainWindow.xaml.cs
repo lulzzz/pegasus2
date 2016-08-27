@@ -150,7 +150,7 @@ namespace NAE.FieldGateway
 
         private void StartUdp_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.OpenUdpServer(11000);
+            viewModel.OpenUdpServer(Convert.ToInt32(ConfigurationManager.AppSettings["port"]));
 
         }
 
