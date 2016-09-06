@@ -42,11 +42,30 @@ namespace ConsoleApplication1
             List<double> offsets = ComputeDCOffsets(ertList, 5);
             List<EagleTelemetry> telemetryList = new List<EagleTelemetry>();
 
+            int index = 0;
             foreach(EagleRawTelemetry ert in ertList)
             {
-                EagleTelemetry telemetry = TelemetryConverter.Convert(ert, offsets);
-                telemetryList.Add(telemetry);
+                if (index < 2)
+                {
+                    EagleTelemetry telemetry = TelemetryConverter.Convert(ert, offsets);
+                    telemetryList.Add(telemetry);
+                }
+                else
+                {
+                    break;
+                }
+
+                index++;
             }
+
+            EagleTelemetry[] et = telemetryList.ToArray();
+
+            string jsonString1 = JsonConvert.SerializeObject(et, Formatting.Indented);
+
+            StreamWriter writer = new StreamWriter("d:\\eagletelemetry.txt");
+            writer.Write(jsonString1);
+            writer.Flush();
+            writer.Close();
 
             Console.ReadKey();
         }

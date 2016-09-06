@@ -37,10 +37,10 @@ namespace NAE.Data
         public string OnboardVideoUrl { get; set; }
 
         [JsonProperty("onboardTelemetryUrl")]
-        public string OnboardTelemetryUrl { get; set; }
+        public string OnboardTelemetryUrl { get; set; }        
 
-        [JsonProperty("AggregateTelemetryUrl")]
-        public string AggregateTelemtryUrl { get; set; }
+        [JsonProperty("aggregateTelemetry")]
+        public AggregateValues Aggregates { get; set; }
 
     }
 }
