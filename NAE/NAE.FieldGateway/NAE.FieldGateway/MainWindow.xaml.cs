@@ -52,8 +52,11 @@ namespace NAE.FieldGateway
 
             List<Claim> claims = new List<Claim>();
             claims.Add(new Claim("http://pegasusmission.io/claims/name", Guid.NewGuid().ToString()));
+            //claims.Add(new Claim("http://pegasusmission.io/claims/role", "gateway"));
             claims.Add(new Claim("http://pegasusmission.io/claims/role", "gateway"));
-            return JwtSecurityTokenBuilder.Create(issuer, audience, claims, 2000, signingKey);
+
+            return JwtSecurityTokenBuilder.Create(issuer, audience, claims, 60 * 24 * 365, signingKey);
+            //return JwtSecurityTokenBuilder.Create(issuer, audience, claims, 2000, signingKey);
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)

@@ -45,6 +45,8 @@ namespace Piraeus.Web.WebSockets
         public event WebSocketErrorHandler OnError;
         public event WebSocketMessageHandler OnMessage;
         private Queue<byte[]> messageQueue;
+        
+
         public async Task ConnectAsync(string host)
         {
             await ConnectAsync(host, null, null);

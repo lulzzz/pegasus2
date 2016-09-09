@@ -152,6 +152,11 @@ namespace NAE.FieldGateway.Channels
             });
 
             Task.WhenAll(task);
+
+            while(!client.IsConnected)
+            {
+                Thread.Sleep(100);
+            }
             
 
             if(OnStatusChange != null)
@@ -162,8 +167,9 @@ namespace NAE.FieldGateway.Channels
             foreach(Uri uri in subscriptions)
             {
                 CoapRequest request = new CoapRequest(messageId++, RequestMessageType.NonConfirmable, MethodType.POST, uri, MediaType.Json);
-                Task subTask = client.SendAsync(request.Encode());
-                Task.WaitAny(subTask);
+                client.Send(request.Encode());
+                //Task subTask = client.SendAsync(request.Encode());
+                //Task.WaitAll(subTask);
             }
             
         }

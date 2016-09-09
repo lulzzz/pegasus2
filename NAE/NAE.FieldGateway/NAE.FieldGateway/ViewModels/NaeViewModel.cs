@@ -12,17 +12,24 @@ using System.IO.Ports;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Data;
 
 namespace NAE.FieldGateway.ViewModels
 {
     public class NaeViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private SynchronizationContext uiContext;
+
 
         public NaeViewModel()
         {
+            uiContext = SynchronizationContext.Current; 
+
             this.userMessages = new ObservableCollection<string>();
+            
             this.host = ConfigurationManager.AppSettings["websocketHost"];
             this.subprotocol = ConfigurationManager.AppSettings["subprotocol"];
         }
@@ -204,6 +211,8 @@ namespace NAE.FieldGateway.ViewModels
                 RaisePropertyChanged("UserMessages");
             }
         }
+
+        
 
         public string RunId
         {
@@ -644,20 +653,27 @@ namespace NAE.FieldGateway.ViewModels
             string token = GetSecurityToken();
             string[] subscriptions = new string[1];
             subscriptions[0] = "http://pegasus2.org/usernote";
-
+            
             wsManager = new WebSocketManager(this.host, this.subprotocol, token, true, subscriptions);
 
             wsManager.OnStatusChange += wsManager_OnStatusChange;
             wsManager.OnUserNote += WsManager_OnUserNote;          
-            wsManager.Connect();
+            wsManager.Connect();           
         }
 
         private void WsManager_OnUserNote(object sender, UserMessage message)
         {
             byte[] byteArray = message.ToCraftMessage();
-            udp.Send(byteArray);
 
-            this.UserMessages.Add(message.Message);
+            if (udp != null)
+            {
+                udp.Send(byteArray);
+            }
+
+            uiContext.Send(x => this.userMessages.Add(message.Message), null);
+            //this.userMessages.Add(message.Message);
+
+            this.UserMessages = this.userMessages;
         }
 
         void wsManager_OnStatusChange(object sender, string message)
