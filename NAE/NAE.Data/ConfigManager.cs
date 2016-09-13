@@ -44,11 +44,11 @@ namespace NAE.Data
 
         public void Write(List<Config> configList)
         {
-            string jsonString = JsonConvert.SerializeObject(configList);
+            string jsonString = JsonConvert.SerializeObject(configList, Formatting.Indented);
             Uri uri = new Uri(blobUriString);
             ICloudBlob blob = client.GetBlobReferenceFromServer(new StorageUri(uri));
             byte[] byteArray = Encoding.UTF8.GetBytes(jsonString);
-
+            blob.Properties.ContentType = "application/json";
             blob.UploadFromByteArray(byteArray, 0, byteArray.Length);
         }
 
