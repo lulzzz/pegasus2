@@ -130,7 +130,7 @@ namespace NAE.Data
                 return null;
             }
 
-            int index = 0;HebrewCalendar 
+            int index = 0; 
             Telemetry instance = new Telemetry();
             instance.Timestamp = Convert.ToDateTime(parts[index++]);
             instance.GpsLatitude = Convert.ToDouble(parts[index++]);
