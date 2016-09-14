@@ -82,7 +82,7 @@ namespace FieldGateway.Telemetry.Generator
             double gpsLatStart = 0;
             double gpsLonStart = 0;
 
-            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.RT_Telemetry_Test)))
+            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.RT_Telemetry_Test2)))
             {
                 using (StreamReader reader = new StreamReader(stream))
                 {
@@ -110,7 +110,7 @@ namespace FieldGateway.Telemetry.Generator
                         byte[] message = request.Encode();
                         await ws.SendAsync(message);
                         index++;
-                        Console.WriteLine("Sending message {0}  sleeping 500ms", index);
+                        Console.WriteLine("Sending message {0}  sleeping 500ms AirSpeed {1}", index,t.GpsSpeedMph);
                         Thread.Sleep(500);
                         
                     }

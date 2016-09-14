@@ -19,6 +19,9 @@ namespace FieldGateway.Telemetry.Generator
         private static string runId;
         static void Main(string[] args)
         {
+            //Rewrite();
+
+
             string[] switches = GetSwitches(args);
             if(switches == null)
             {
@@ -99,6 +102,33 @@ namespace FieldGateway.Telemetry.Generator
         }
 
 
+        private static void Rewrite()
+        {
+            string prefix = "$:";
+
+            StreamWriter writer = new StreamWriter("D:\\tstream.txt");
+
+            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(Properties.Resources.RT_Telemetry_Test)))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    while(!reader.EndOfStream)
+                    {
+                        string line = reader.ReadLine();
+                        int v = (byte)Encoding.ASCII.GetBytes(prefix + line).Sum(x => (int)x);
+                        string suffix = v.ToString("X2");
+                        string message = String.Format("{0}{1},*{2}", prefix, line, suffix);
+                        writer.WriteLine(message);
+                        
+                    }
+
+                    writer.Flush();
+                    writer.Close();
+                }
+            }
+
+            
+        }
 
         
 

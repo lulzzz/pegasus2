@@ -71,5 +71,16 @@ namespace FieldGateway.Telemetry.Generator.Properties {
                 return ResourceManager.GetString("RT_Telemetry_Test", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to $:2016-07-19T22:07:24.859Z,40.276905,118.969146,1999.99,644.138486312399,400.01,179.99,1,5,20.01,50.02,990.31,2012.99,1.11,0.21,0.31,180.33,0.86,90.77,12.11,7.39,1233,*C8
+        ///$:2016-07-19T22:07:25.359Z,40.276905,118.969156,1999.98,644.154589371981,400.02,179.98,1,6,20.02,50.04,990.28,2012.98,1.12,0.22,0.32,180.32,0.87,90.78,12.12,7.38,1232,*D4
+        ///$:2016-07-19T22:07:25.859Z,40.276905,118.969166,1999.97,644.170692431562,400.03,179.97,1,7,20.03,50.06,990.25,2012.97,1.13,0.23,0.33,180.31,0.88,90.79,12.13,7.37,1231,* [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string RT_Telemetry_Test2 {
+            get {
+                return ResourceManager.GetString("RT_Telemetry_Test2", resourceCulture);
+            }
+        }
     }
 }
