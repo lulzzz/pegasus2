@@ -172,6 +172,7 @@ namespace NAE.FieldGateway.ViewModels
             {
                 //read the UPD message as a CSV String
                 telemetry = NAE.Data.Telemetry.Load(message);
+                TelemetryUpdate(telemetry);
             }
             catch (Exception ex)
             {
