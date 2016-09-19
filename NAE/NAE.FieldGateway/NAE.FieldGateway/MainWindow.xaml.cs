@@ -163,5 +163,19 @@ namespace NAE.FieldGateway
         {
             viewModel.SendUpdReset();
         }
+
+        private void Shutdown_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                viewModel.ShutdownDevice();
+                MessageBox.Show("Device is shutdown.", "Device Shutdown");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Device Shutdown");
+            }
+
+        }
     }
 }

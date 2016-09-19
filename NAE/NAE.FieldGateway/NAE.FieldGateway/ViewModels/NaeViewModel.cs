@@ -152,10 +152,13 @@ namespace NAE.FieldGateway.ViewModels
         #region UDP
         public void OpenUdpServer(int port)
         {
-            udp = new UdpServer(port);
-            udp.OnReceive += Udp_OnReceive;
-            Task task = udp.RunAsync();
-            Task.WhenAll(task);
+            if (udp == null)
+            {
+                udp = new UdpServer(port);
+                udp.OnReceive += Udp_OnReceive;
+                Task task = udp.RunAsync();
+                Task.WhenAll(task);
+            }
         }
 
 
@@ -614,6 +617,19 @@ namespace NAE.FieldGateway.ViewModels
         }
 
         #endregion
+
+
+        public void ShutdownDevice()
+        {
+            if (udp != null)
+            {
+                udp.Send(Encoding.UTF8.GetBytes("{X:!,*2E"));
+            }
+            else
+            {
+                throw new InvalidOperationException("UDP is not operational.");
+            }
+        }
 
         #region Web Socket
 
