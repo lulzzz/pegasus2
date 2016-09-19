@@ -1,370 +1,270 @@
-﻿@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>   <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>      <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>      <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
 <head>
+
     <meta charset="utf-8">
-    <title>The Pegasus Mission | IOT from the Edge of Space</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pegasus Mission 2</title>
+    <meta name="description" content="">
+
+    <!-- Mobile Devices Viewport Resset-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link href="~/Content/External/bootstrap.css" rel="stylesheet">
-    @*
-        <link href="~/Content/External/bootstrap-responsive.min.css" rel="stylesheet">*@
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link href="~/Content/Site.css" rel="stylesheet">
-    <link href="~/Content/dashboard.css" rel="stylesheet">
 
-    <link href="//amp.azure.net/libs/amp/1.4.0/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet">
-    <script src="//amp.azure.net/libs/amp/1.4.0/azuremediaplayer.min.js"></script>
+    <link rel="stylesheet" href="../Content/vendor/bootstrap/css/bootstrap.min.css">
 
+    <link rel="stylesheet" href="../Content/vendor/font-awesome/css/font-awesome.min.css">
+    <!--[if IE 8]>
+        <link rel="stylesheet" href="../Content/vendor/font-awesome/css/font-awesome-ie7.min.css">
+    <![endif]-->
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+    <link rel="stylesheet" href="../Content/vendor/prettyPhoto/css/prettyPhoto.css">
+
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Lato:300,400,700,400italic,700italic|Droid+Serif' rel='stylesheet' type='text/css'>
+
+    <!-- base layout styling -->
+    <link rel="stylesheet" href="../Content/css/base.css">
+
+    <!-- components styling -->
+    <link rel="stylesheet" href="../Content/css/components.css">
+
+    <!-- template colorschemes -->
+    <link rel="stylesheet" href="../Content/colorschemes/light.css">
+
+    <script src="../Content/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
 </head>
+<body style="background-color:#f2f2f2" class="font-awesome ">
+    <span id="currenttime" class=""></span>
+    <div id="main">
+        @Html.Partial("HeroImage")
+               
+        <div class="section row entries bg-primary section-no-margin-bottom margin-left-main-shift">
 
-<body ng-app="pegasus" style="background-image:url('/img/sky.jpg'); background-repeat: no-repeat; background-size: cover;">
 
-    @{
-        Html.RenderPartial("Header");
-    }
+            <div>
+           
+                <div>
+                    <div class="block-title well-lg font-awesome margin-left-main-shift-smaller">Live Telemetry</div>
+                    <div class="row" style="margin-left:40px">
 
-    <div class="main" ng-controller="telemetry" style="margin-bottom: 52px;">
-        <div class="main-inner">
+                        <article class="well square-article entry col-md-4 col-lg-6">
 
-            <div class="container">
-                <div class="alert alert-info fade in">
-                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    <strong>Pegasus II Launch Date Feb 23 2016 from Kankakee, IL. <b style="color: black; font-size: 1.1em;"></b></strong>
-                    <br /><strong><a href="/Home/Notifications">Sign up</a> for <b style="color: black; font-size: 1.1em;">SMS</b> notifications now. Don't miss the action.</strong>
-                </div>
-            </div>
+                            <header class="entry-header">
+                                <h3 class="entry-title"><b>GPS Speed (Kph)</b></h3>
+                                <br />
 
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="widget widget-nopad">
-                            @if (!ViewBag.LiveVideo)
-                            {
-                            <div class="widget-header" id="inflightVideoContainer">
-                                <h3>
-                                    <span class="fa fa-video-camera">&nbsp;</span> Live Inflight Video Feed
-                                </h3>
-                                <span class="fa fa-plus-square-o minimizeWidget"></span>
-                            </div>
-                            <!-- /widget-header -->
-                            <div class="widget-content" style="display: none;">
-                                <div id='videoControl'>
-                                    <video id="payloadVideo" class="azuremediaplayer amp-default-skin" poster="@ViewBag.Poster" width="560" height="315">
-                                        <p class="amp-no-js">
-                                            To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
-                                        </p>
-                                    </video>
+                                <div class="red-label">Current</div>
+                                <div class="num-value"><span class="bigNumbers" id="gpsSpeedKph"></span> Kph</div>
+
+                            </header>
+
+                        </article>
+
+                        <article class="well square-article entry col-md-4 col-lg-6">
+
+                            <header class="entry-header">
+                                <h3 class="entry-title"><b>GPS Speed (Mph)</b></h3>
+                                <div class="string-value" style="margin-top:-5px">
+                                    <span id="currenttime"></span>
                                 </div>
-                            </div>
-                            }
-                            else
-                            {
-                            <div class="widget-header" id="inflightVideoContainer">
-                                <h3>
-                                    <span class="fa fa-video-camera">&nbsp;</span> Live Inflight Video Feed
-                                </h3>
-                                <span class="fa fa-minus-square-o minimizeWidget"></span>
-                            </div>
-                            <!-- /widget-header -->
-                            <div class="widget-content">
-                                <video id="payloadVideo" class="azuremediaplayer amp-default-skin" autoplay controls poster="@ViewBag.Poster" width="560" height="315" data-setup='{}'>
-                                    <source src="@ViewBag.PayloadUrl" type="application/vnd.ms-sstr+xml" />
-                                    <p class="amp-no-js">
-                                        To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
-                                    </p>
-                                </video>
-                            </div>
-                            }
-                        </div>
+                                <br />
+                                <div class="red-label">Current</div>
+                                <div class="num-value"><span class="bigNumbers" id="gpsSpeedMph"></span> Mph</div>
 
+                            </header>
 
-                        <div class="widget widget-nopad">
-                            <div class="widget-header">
-                                <h3>
-                                    <span class="fa fa-video-camera">&nbsp;</span> Live Launch Video Feed
-                                </h3>
-                                <span class="fa fa-minus-square-o minimizeWidget"></span>
-                            </div>
-                            <!-- /widget-header -->
-                            <div class="widget-content">
-                                <div id='videoControl'>
-                                    @if (!ViewBag.LiveVideo)
-                            {
-                            <video id="payloadVideo" class="azuremediaplayer amp-default-skin" poster="@ViewBag.Poster" width="560" height="315">
-                                <p class="amp-no-js">
-                                    To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
-                                </p>
-                            </video>
-                            }
-                            else
-                            {
-                            <video id="stationVideo" class="azuremediaplayer amp-default-skin" autoplay controls poster="@ViewBag.Poster" width="560" height="315" data-setup='{}'>
-                                <source src="@ViewBag.StationUrl" type="application/vnd.ms-sstr+xml" />
-                                <p class="amp-no-js">
-                                    To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video
-                                </p>
-                            </video>
-                            }
+                        </article>
+                        <article class="well square-article entry col-md-4 col-lg-6">
+
+                            <header class="entry-header">
+                                <h3 class="entry-title"><b>GPS Direction</b></h3>
+                                <div class="string-value" style="margin-top:-5px">
+                                    <span id="currenttime"></span>
                                 </div>
-                            </div>
-                        </div>
+                                <br />
+                                <div class="red-label">Current</div>
+                                <div class="num-value"><span class="bigNumbers" id="gpsDirection"></span></div>
 
-                        <div class="widget widget-nopad">
+                            </header>
 
-                            <div class="widget-header">
-                                <h3>
-                                    <span class="fa fa-rocket">&nbsp;</span> Live telemetry
-                                </h3>
-                                <span class="fa fa-minus-square-o minimizeWidget"></span>
+                        </article>
+                        <article class="well square-article entry col-md-4 col-lg-6">
 
-                            </div>
-
-                            <div class="widget-content">
-                                <div class="widget big-stats-container">
-                                    <div>
-                                        <div id="big_stats" class="cf">
-                                            <div class="stat">
-                                                <div>Atm Pressure (mB)</div> <span class="bigNumbers" ng-bind="atmosphericPressure"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Temp Inside (C)</div> <span class="bigNumbers" ng-bind="tempInside"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Pressure Altitude (m)</div> <span class="bigNumbers" ng-bind="pressureAltitude"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Humidity</div> <span class="bigNumbers" ng-bind="humidity"></span>
-                                            </div>
-                                        </div>
-                                        <hr />
-                                        <div id="big_stats" class="cf">
-                                            <div class="stat">
-                                                <div>Pressure Temp (C)</div> <span class="bigNumbers" ng-bind="pressureTemp"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Temp Outside (C)</div> <span class="bigNumbers" ng-bind="tempOutside"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Battery 1 Level</div> <span class="bigNumbers" ng-bind="battery1Level"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Battery 2 Level</div> <span class="bigNumbers" ng-bind="battery2Level"></span>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <header class="entry-header">
+                                <h3 class="entry-title"><b>Temperature</b></h3>
+                                <div class="string-value" style="margin-top:-5px">
+                                    <span id="currenttime"></span>
                                 </div>
-                            </div>
-                        </div>
+                                <br />
+                                <div class="red-label">Current</div>
+                                <div class="num-value"><span class="bigNumbers" id="atmTemp"></span></div>
 
-                        <div class="widget widget-nopad">
-                            <div class="widget-header">
-                                <h3>
-                                    <span class="fa fa-location-arrow">&nbsp;</span> GPS Info
-                                </h3>
-                                <span class="fa fa-minus-square-o minimizeWidget"></span>
+                            </header>
 
-                            </div>
+                        </article>
 
-                            <div class="widget-content">
-                                <div class="widget big-stats-container">
-                                    <div>
-                                        <div id="big_stats" class="cf">
-                                            <div class="stat">
-                                                <div>Altitude (m)</div> <span class="bigNumbers" id="gpsAltitude"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Latitude</div> <span class="bigNumbers" id="gpsLatitude"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Longitude</div> <span class="bigNumbers" id="gpsLongitude"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Satellites</div> <span class="bigNumbers" id="gpsSatellites"></span>
-                                            </div>
-                                        </div>
-                                        <hr />
-                                        <div id="big_stats" class="cf">
-                                            <div class="stat">
-                                                <div>Ground Speed (k)</div> <span class="bigNumbers" id="gpsSpeed"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Vertical Speed (m/s)</div> <span class="bigNumbers" id="verticalSpeed"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Direction</div> <span class="bigNumbers" id="gpsDirection"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Radio Strength</div> <span class="bigNumbers" id="radioStrength"></span>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <article class="well square-article entry col-md-4 col-lg-6">
+
+                            <header class="entry-header">
+                                <h3 class="entry-title"><b>Humidity</b></h3>
+                                <div class="string-value" style="margin-top:-5px">
+                                    <span id="currenttime"></span>
                                 </div>
-                            </div>
-                        </div>
+                                <br />
+                                <div class="red-label">Current</div>
+                                <div class="num-value"><span class="bigNumbers" id="atmHumidity"></span></div>
 
-                        <div class="widget widget-nopad">
-                            <div class="widget-header">
-                                <h3>
-                                    <span class="fa fa-tasks">&nbsp;</span> Miscellaneous
-                                </h3>
-                                <span class="fa fa-minus-square-o minimizeWidget"></span>
+                            </header>
 
-                            </div>
+                        </article>
+                        <article class="well square-article entry col-md-4 col-lg-6">
 
-                            <div class="widget-content">
-                                <div class="widget big-stats-container">
-                                    <div>
-                                        <div id="big_stats" class="cf">
-                                            <div class="stat">
-                                                <div>UV Rays (w/cm2)</div> <span class="bigNumbers" ng-bind="uvRays"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Radiation (#/min)</div> <span class="bigNumbers" ng-bind="radiationCps"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Reception Errors</div> <span class="bigNumbers" ng-bind="receptionErrors"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Picture Count</div> <span class="bigNumbers" ng-bind="pictureCount"></span>
-                                            </div>
-                                        </div>
-                                        <hr />
-                                        <div id="big_stats" class="cf">
-                                            <div class="stat">
-                                                <div>Source</div> <span class="bigNumbers" ng-bind="source"></span>
-                                            </div>
-                                            <div class="stat">
-                                                <div>Timestamp</div> <span class="bigNumbers" ng-bind="timestamp"></span>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <header class="entry-header">
+                                <h3 class="entry-title"><b>Pressure</b></h3>
+                                <div class="string-value" style="margin-top:-5px">
+                                    <span id="currenttime"></span>
                                 </div>
-                            </div>
-                        </div>
+                                <br />
+                                <div class="red-label">Current</div>
+                                <div class="num-value"><span class="bigNumbers" id="atmPressure"></span></div>
 
-                        <div class="widget widget-table action-table">
-                            <div class="widget-header">
-                                <h3>
-                                    <span class="fa fa-twitter">&nbsp;</span> Live twitter feed
-                                </h3>
-                                <span class="fa fa-minus-square-o minimizeWidget"></span>
+                            </header>
 
-                            </div>
-                            <div class="widget-content" style="align-content: center; align-content: stretch; padding-left: 3%;">
-                                <a class="twitter-timeline" href="https://twitter.com/PegasusMission" data-widget-id="605579741039427584">Tweets by @@PegasusMission</a>
+                        </article>
+                        <article class="well square-article entry col-md-4 col-lg-6">
 
-                                <script>
-                                    !function (d, s, id) {
-                                        var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                                        if (!d.getElementById(id)) {
-                                            js = d.createElement(s);
-                                            js.id = id;
-                                            js.src = p + "://platform.twitter.com/widgets.js";
-                                            fjs.parentNode.insertBefore(js, fjs);
-                                        }
-                                    }(document, "script", "twitter-wjs");
-
-                                </script>
-
-                            </div>
-                            <!-- /widget-content -->
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="widget">
-                            <div class="widget-header">
-                                <h3>
-                                    <span class="fa fa-map-marker ">&nbsp;</span> Live Flight & Chase Mapping (Oct 5)
-                                </h3>
-                                <span class="fa fa-minus-square-o minimizeWidget"></span>
-
-                            </div>
-
-                            <div class="widget-content">
-                                <div class="maps">
-                                    @*<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50690.26194980397!2d-122.12143953181338!3d37.43376494127794!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fa35b186a39fb%3A0x5984eee2a66a9cc2!2sMiddlefield+Rd%2C+Palo+Alto%2C+CA%2C+Stany+Zjednoczone!5e0!3m2!1spl!2spl!4v1407250117753" width="560" height="315" frameborder="0" style="border:0"></iframe>*@
-                                    <div id="map-canvas" style="width: 100%; height: 480px;">
-                                    </div>
+                            <header class="entry-header">
+                                <h3 class="entry-title"><b>Vehicle Acceleration, Direction of Travel</b></h3>
+                                <div class="string-value" style="margin-top:-5px">
+                                    <span id="currenttime"></span>
                                 </div>
-                            </div>
-                        </div>
+                                <br />
+                                <div class="red-label">Current</div>
+                                <div class="num-value"><span class="bigNumbers" id="imuLinAccelX"></span></div>
 
-                        <div class="widget">
-                            <div class="widget-header">
-                                <h3>
-                                    <span class="fa fa-toggle-on">&nbsp;</span> Important Metrics
-                                </h3>
-                                <span class="fa fa-minus-square-o minimizeWidget"></span>
+                            </header>
 
-                            </div>
+                        </article>
+                        <article class="well square-article entry col-md-4 col-lg-6">
 
-                            <div class="widget-content">
-                                <div id="big_stats" class="cf">
-                                    <div class="stat">
-                                        <div>Video Position Up</div> <span class="bigNumbers fa" ng-class="{'fa-check' : videoPositionUp.toLowerCase() == 'true', 'fa-times' : videoPositionUp.toLowerCase() == 'false' }"></span>
-                                    </div>
-                                    <div class="stat">
-                                        <div>LEDs Activated</div> <span class="bigNumbers fa" ng-class="{'fa-check' : ledsActivated.toLowerCase() == 'true', 'fa-times' : ledsActivated.toLowerCase() == 'false' }"></span>
-                                    </div>
-                                    <div class="stat">
-                                        <div>Main Parachute Deployed</div> <span class="bigNumbers fa" ng-class="{'fa-check' : mainDeployed.toLowerCase() == 'true', 'fa-times' : mainDeployed.toLowerCase() == 'false' }"></span>
-                                    </div>
-                                    <div class="stat">
-                                        <div>GPS Fix</div> <span class="bigNumbers fa" ng-class="{'fa-check' : gpsFix.toLowerCase() == 'true', 'fa-times' : gpsFix.toLowerCase() == 'false' }"></span>
-                                    </div>
+                            <header class="entry-header">
+                                <h3 class="entry-title"><b>Vehicle Acceleration, Side-to-Side</b></h3>
+                                <div class="string-value" style="margin-top:-5px">
+                                    <span id="currenttime"></span>
                                 </div>
-                                <hr />
-                                <div id="big_stats" class="cf">
-                                    <div class="stat">
-                                        <div>Video Servo On</div> <span class="bigNumbers fa" ng-class="{'fa-check' : videoServoOn.toLowerCase() == 'true', 'fa-times' : videoServoOn.toLowerCase() == 'false' }"></span>
-                                    </div>
-                                    <div class="stat">
-                                        <div>BP Servo On</div> <span class="bigNumbers fa" ng-class="{'fa-check' : bpServoOn.toLowerCase() == 'true', 'fa-times' : bpServoOn.toLowerCase() == 'false' }"></span>
-                                    </div>
-                                    <div class="stat">
-                                        <div>Balloon Released</div> <span class="bigNumbers fa" ng-class="{'fa-check' : balloonReleased.toLowerCase() == 'true', 'fa-times' : balloonReleased.toLowerCase() == 'false' }"></span>
-                                    </div>
+                                <br />
+                                <div class="red-label">Current</div>
+                                <div class="num-value"><span class="bigNumbers" id="imuLinAccelY"></span></div>
+
+                            </header>
+
+                        </article>
+                        <article class="well square-article entry col-md-4 col-lg-6">
+
+                            <header class="entry-header">
+                                <h3 class="entry-title"><b>Vehicle Acceleration, Up and down</b></h3>
+                                <div class="string-value" style="margin-top:-5px">
+                                    <span id="currenttime"></span>
                                 </div>
-                            </div>
-                            @*
-                                </div>*@
-                        </div>
+                                <br />
+                                <div class="red-label">Current</div>
+                                <div class="num-value"><span class="bigNumbers" id="imuLinAccelZ"></span></div>
 
-                        <!-- /widget -->
-                        <div class="widget">
-                            <div class="widget-header">
-                                <h3>
-                                    <span class="fa fa-facebook">&nbsp;</span> Live facebook feed
-                                </h3>
-                                <span class="fa fa-minus-square-o minimizeWidget"></span>
+                            </header>
 
-                            </div>
-                            <!-- /widget-header -->
-                            <div class="widget-content">
-                                <iframe src="https://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpegasusmission&amp;width=570&amp;height=500&amp;colorscheme=light&amp;show_faces=false&amp;stream=true&amp;show_border=true&amp;header=false&amp;force_wall=false" scrolling="no" frameborder="0" style="border: none; overflow: hidden; width: 100%; height: 500px; background: #fff; padding-left: 5%;"></iframe>
-                                <!-- /area-chart -->
-                            </div>
-                            <!-- /widget-content -->
-                        </div>
+                        </article>
+                        <article class="well square-article entry col-md-4 col-lg-6">
+
+                            <header class="entry-header">
+                                <h3 class="entry-title"><b>SoundAmp</b></h3>
+                                <div class="string-value" style="margin-top:-5px">
+                                    <span id="currenttime"></span>
+                                </div>
+                                <br />
+                                <div class="red-label">Current</div>
+                                <div class="num-value"><span class="bigNumbers" id="soundAmp"></span></div>
+
+                            </header>
+
+                        </article>
+                        <article class="well square-article entry col-md-4 col-lg-6">
+
+                            <header class="entry-header">
+                                <h3 class="entry-title"><b>ImuHeading</b></h3>
+                                <div class="string-value" style="margin-top:-5px">
+                                    <span id="currenttime"></span>
+                                </div>
+                                <br />
+                                <div class="red-label">Current</div>
+                                <div class="num-value"><span class="bigNumbers" id="imuHeading"></span></div>
+
+                            </header>
+
+                        </article>
                     </div>
                 </div>
+
+                
+
+
+
+        </div><!--/section.row.entries-->
+
+    </div><!--#main.container-->
+
+     <br /><br />
+    @*<footer id="footer" class="footer-area">
+
+
+        <div class="footer-bottom">
+
+            <div class="container aligncenter">
+
+                <p>&copy;2016 by Pegasus Team <p>
+
             </div>
+
         </div>
-    </div>
-    @{
-        Html.RenderPartial("Footer");
-    }
 
+    </footer>*@
+    <script>
+        //CURRENT TIME
+        var objToday = new Date(),
+weekday = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
+dayOfWeek = weekday[objToday.getDay()],
+domEnder = function () { var a = objToday; if (/1/.test(parseInt((a + "").charAt(0)))) return "th"; a = parseInt((a + "").charAt(1)); return 1 == a ? "st" : 2 == a ? "nd" : 3 == a ? "rd" : "th" }(),
+dayOfMonth = today + (objToday.getDate() < 10) ? '0' + objToday.getDate() + domEnder : objToday.getDate() + domEnder,
+months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
+curMonth = months[objToday.getMonth()],
+curYear = objToday.getFullYear(),
+curHour = objToday.getHours() > 12 ? objToday.getHours() - 12 : (objToday.getHours() < 10 ? "0" + objToday.getHours() : objToday.getHours()),
+curMinute = objToday.getMinutes() < 10 ? "0" + objToday.getMinutes() : objToday.getMinutes(),
+curSeconds = objToday.getSeconds() < 10 ? "0" + objToday.getSeconds() : objToday.getSeconds(),
+curMeridiem = objToday.getHours() > 12 ? "PM" : "AM";
+        var today = dayOfMonth + " of " + curMonth + ", " + curYear;
+       
+        var currenttime = document.getElementById("currenttime");
+        //currenttime.innerHTML = today;
+        //CURRENT TIME CODE ENDS
+    </script>
+    <script src="../Content/vendor/jquery-1.10.1.min.js"></script>
+    <!--
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="../Content/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+    -->
+
+    <script src="../Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../Content/vendor/prettyPhoto/jquery.prettyPhoto.js"></script>
+
+
+    <script src="../Content/vendor/jquery.unveil.min.js"></script>
+
+    <script src="../Content/js/main.js"></script>
 </body>
 </html>

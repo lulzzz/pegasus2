@@ -1,0 +1,357 @@
+﻿@using PegasusMissionWeb.Controllers
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>   <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>      <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>      <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+
+    <meta charset="utf-8">
+    <title>Pegasus Mission 2</title>
+    <meta name="description" content="">
+
+    <!-- Mobile Devices Viewport Resset-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="~/Content/vendor/bootstrap/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Content/vendor/font-awesome/css/font-awesome.min.css">
+    <!--[if IE 8]>
+        <link rel="stylesheet" href="~/Content/vendor/font-awesome/css/font-awesome-ie7.min.css">
+    <![endif]-->
+
+    <link rel="stylesheet" href="~/Content/vendor/prettyPhoto/css/prettyPhoto.css">
+
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Lato:300,400,700,400italic,700italic|Droid+Serif' rel='stylesheet' type='text/css'>
+
+    <!-- base layout styling -->
+    <link rel="stylesheet" href="~/Content/css/base.css">
+
+    <!-- components styling -->
+    <link rel="stylesheet" href="~/Content/css/components.css">
+
+    <!-- template colorschemes -->
+    <link rel="stylesheet" href="~/Content/colorschemes/light.css">
+
+    <script src="~/Content/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+</head>
+<body style="background-color:#f2f2f2" class="font-awesome ">
+    <span id="currenttime" class=""></span>
+    <div id="main">
+        @Html.Partial("HeroImage")     
+        
+        <div class="section row entries bg-primary section-no-margin-bottom margin-left-main-shift">
+            <div style="text-align:center" class="margin-left-main-shift-smaller">
+                Please select the Run to load the video and telemetry<br />
+                <form>
+                    <select id="runmenu" onchange="invokeCode();" class="well-sm">
+
+                        @Html.Raw(@ViewBag.runIds)
+                    </select>
+                </form>
+            </div>
+            
+                @*<div class="form-group">
+                    @Html.Label("Please select the Run you want to watch", new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @BootstrapHtml.Dropdown("dropdownMenu1", ViewBag.runIds, "Dropdown")
+                    </div>
+                </div>*@
+
+            <div id="video-block" class="margin-left-main-shift-smaller">
+                <div class="block-title well-lg font-awesome">Virtual Cockpit</div>
+                
+            </div>
+
+            <hr class="well-sm" />
+            <div class="row" style="margin-left:40px">
+                @*Onboard telemetry*@
+                <article class="well square-article entry col-md-4 col-lg-6">
+
+                    <header class="entry-header">
+                        <h3 class="entry-title"><b>Stick Position</b></h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">Steering Control Position</div>
+                        <div class="num-value"><span class="bigNumbers" id="stickPosition"></span></div>
+
+                    </header>
+
+                </article>
+
+                <article class="well square-article entry col-md-4 col-lg-6">
+                    <header class="entry-header">
+                        <h3 class="entry-title">
+                            <b>
+                                Steering Box Position
+                            </b>
+                        </h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">
+                            Front Wheel Angle
+                        </div>
+                        <div class="num-value"><span class="bigNumbers" id="steeringBoxPositionDegrees"></span></div>
+
+                    </header>
+
+                </article>
+
+                <article class="well square-article entry col-md-4 col-lg-6">
+                    <header class="entry-header">
+                        <h3 class="entry-title">
+                            <b>
+                                Weight Nose
+                            </b>
+                        </h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">
+                            Front Wheel Load
+                        </div>
+                        <div class="num-value"><span class="bigNumbers" id="noseWeightLbf"></span></div>
+
+                    </header>
+
+                </article>
+
+                <article class="well square-article entry col-md-4 col-lg-6">
+                    <header class="entry-header">
+                        <h3 class="entry-title">
+                            <b>
+                                Pitot
+                            </b>
+                        </h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">
+                            Air Speed
+                        </div>
+                        <div class="num-value"><span class="bigNumbers" id="airSpeedKph"></span></div>
+
+                    </header>
+
+                </article>
+
+                <article class="well square-article entry col-md-4 col-lg-6">
+                    <header class="entry-header">
+                        <h3 class="entry-title">
+                            <b>
+                                Throttle Position
+                            </b>
+                        </h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">
+                            Throttle Position
+                        </div>
+                        <div class="num-value"><span class="bigNumbers" id="throttlePosition"></span></div>
+
+                    </header>
+
+                </article>
+                <article class="well square-article entry col-md-4 col-lg-6">
+                    <header class="entry-header">
+                        <h3 class="entry-title">
+                            <b>
+                                Weight Rear Left
+                            </b>
+                        </h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">
+                            Left Rear Wheel Load
+                        </div>
+                        <div class="num-value"><span class="bigNumbers" id="leftRearWeightLbf"></span></div>
+
+                    </header>
+
+                </article>
+
+                <article class="well square-article entry col-md-4 col-lg-6">
+                    <header class="entry-header">
+                        <h3 class="entry-title">
+                            <b>
+                                Weight Rear Right
+                            </b>
+                        </h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">
+                            Right Rear Wheel Load
+                        </div>
+                        <div class="num-value"><span class="bigNumbers" id="rightRearWeightLbf"></span></div>
+
+                    </header>
+
+                </article>
+                <article class="well square-article entry col-md-4 col-lg-6">
+
+                    <header class="entry-header">
+                        <h3 class="entry-title"><b>Acceleration X</b></h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">Vehicle Acceleration, Direction of Travel</div>
+                        <div class="num-value"><span class="bigNumbers" id="accelXG"></span></div>
+
+                    </header>
+
+                </article>
+                <article class="well square-article entry col-md-4 col-lg-6">
+
+                    <header class="entry-header">
+                        <h3 class="entry-title"><b>Acceleration Y</b></h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">Vehicle Acceleration, Side-to-Side</div>
+                        <div class="num-value"><span class="bigNumbers" id="accelYG"></span></div>
+
+                    </header>
+
+                </article>
+                <article class="well square-article entry col-md-4 col-lg-6">
+
+                    <header class="entry-header">
+                        <h3 class="entry-title"><b>Acceleration Z</b></h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">Vehicle Acceleration, Up and down</div>
+                        <div class="num-value"><span class="bigNumbers" id="accelZG"></span></div>
+
+                    </header>
+
+                </article>
+
+                <article class="well square-article entry col-md-4 col-lg-6">
+
+                    <header class="entry-header">
+                        <h3 class="entry-title"><b>Steering Box Acceleration </b></h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">Vibration, Front Wheel Assembly</div>
+                        <div class="num-value"><span class="bigNumbers" id="steerBoxAccelXG"></span></div>
+
+                    </header>
+
+                </article>
+
+                <article class="well square-article entry col-md-4 col-lg-6">
+
+                    <header class="entry-header">
+                        <h3 class="entry-title"><b>Steering Box Acceleration </b></h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">Vibration, Front Wheel Assembly</div>
+                        <div class="num-value"><span class="bigNumbers" id="steerBoxAccelYG"></span></div>
+
+                    </header>
+
+                </article>
+
+                <article class="well square-article entry col-md-4 col-lg-6">
+
+                    <header class="entry-header">
+                        <h3 class="entry-title"><b>Steering Box Acceleration </b></h3>
+                        <div class="string-value" style="margin-top:-5px">
+                            <span id="currenttime"></span>
+                        </div>
+                        <br />
+                        <div class="red-label">Vibration, Front Wheel Assembly</div>
+                        <div class="num-value"><span class="bigNumbers" id="steerBoxAccelZG"></span></div>
+
+                    </header>
+
+                </article>
+
+
+            </div><!--/.row-->
+
+        </div>
+
+
+        </div>
+
+
+
+    </div><!--/section.row.entries-->
+    </div><!--#main.container-->
+
+    <footer id="footer" class="footer-area">
+
+
+        <div class="footer-bottom">
+
+            <div class="container aligncenter">
+
+                <p>&copy;2016 by Pegasus Team <p>
+
+            </div>
+
+        </div>
+
+    </footer>
+    <script>
+        //CURRENT TIME
+        var objToday = new Date(),
+weekday = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
+dayOfWeek = weekday[objToday.getDay()],
+domEnder = function () { var a = objToday; if (/1/.test(parseInt((a + "").charAt(0)))) return "th"; a = parseInt((a + "").charAt(1)); return 1 == a ? "st" : 2 == a ? "nd" : 3 == a ? "rd" : "th" }(),
+dayOfMonth = today + (objToday.getDate() < 10) ? '0' + objToday.getDate() + domEnder : objToday.getDate() + domEnder,
+months = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'),
+curMonth = months[objToday.getMonth()],
+curYear = objToday.getFullYear(),
+curHour = objToday.getHours() > 12 ? objToday.getHours() - 12 : (objToday.getHours() < 10 ? "0" + objToday.getHours() : objToday.getHours()),
+curMinute = objToday.getMinutes() < 10 ? "0" + objToday.getMinutes() : objToday.getMinutes(),
+curSeconds = objToday.getSeconds() < 10 ? "0" + objToday.getSeconds() : objToday.getSeconds(),
+curMeridiem = objToday.getHours() > 12 ? "PM" : "AM";
+        var today = dayOfMonth + " of " + curMonth + ", " + curYear;
+
+        var currenttime = document.getElementById("currenttime");
+        //currenttime.innerHTML = today;
+        //CURRENT TIME CODE ENDS
+    </script>
+    <script src="~/Content/vendor/jquery-1.10.1.min.js"></script>
+    <!--
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="~/Content/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+    -->
+
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="~/Content/vendor/prettyPhoto/jquery.prettyPhoto.js"></script>
+
+
+    <script src="~/Content/vendor/jquery.unveil.min.js"></script>
+
+    <script src="~/Content/js/main.js"></script>
+</body>
+</html>
