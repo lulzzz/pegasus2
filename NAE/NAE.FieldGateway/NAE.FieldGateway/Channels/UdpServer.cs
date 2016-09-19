@@ -37,12 +37,12 @@ namespace NAE.FieldGateway.Channels
                 UdpReceiveResult result = await server.ReceiveAsync();
                 string data = Encoding.UTF8.GetString(result.Buffer);
 
-                if (endpoint == null)
-                {
-                    endpoint = result.RemoteEndPoint;
-                    client = new UdpClient(endpoint);
-                    client.DontFragment = true;
-                }
+                //if (endpoint == null)
+                //{
+                //    endpoint = result.RemoteEndPoint;
+                //    client = new UdpClient(endpoint);
+                //    client.DontFragment = true;
+                //}
 
                 //process data
                 if (OnReceive != null)
@@ -55,26 +55,34 @@ namespace NAE.FieldGateway.Channels
 
         public async Task SendAsync(byte[] data)
         {
-            
-            if(client == null && deviceIPString == "NONE")
+            try
             {
-                MessageBox.Show("Cannot send UDP message as client is null, deviceIP is NONE, and no message was received to set endpoint.");
-                return;
-            }
+                if (client == null && deviceIPString == "NONE")
+                {
+                    MessageBox.Show("Cannot send UDP message as client is null, deviceIP is NONE, and no message was received to set endpoint.");
+                    return;
+                }
 
-            if (client == null && deviceIPString != "NONE")
+                if (client == null && deviceIPString != "NONE")
+                {
+                    endpoint = new IPEndPoint(IPAddress.Parse(deviceIPString), port);
+                    //client = new UdpClient(endpoint);
+                    client = new UdpClient();
+                    client.Connect(endpoint);
+                }
+
+                if (client == null)
+                {
+                    MessageBox.Show("UDP client is null and cannot send messages.");
+                    return;
+                }
+
+                await client.SendAsync(data, data.Length);
+            }
+            catch(Exception ex)
             {
-                endpoint = new IPEndPoint(IPAddress.Parse(deviceIPString), port);
-                client = new UdpClient(endpoint);
+                MessageBox.Show(ex.Message, "UDP");
             }
-
-            if(client == null)
-            {
-                MessageBox.Show("UDP client is null and cannot send messages.");
-                return;
-            }
-
-            await client.SendAsync(data, data.Length);
         }
 
         public void Send(byte[] data)
@@ -88,7 +96,12 @@ namespace NAE.FieldGateway.Channels
             if (client == null && deviceIPString != "NONE")
             {
                 endpoint = new IPEndPoint(IPAddress.Parse(deviceIPString), port);
-                client = new UdpClient(endpoint);
+                client = new UdpClient();
+                client.Connect(endpoint);
+                //client = new UdpClient(endpoint);
+                
+                //client = new UdpClient(new IPEndPoint(IPAddress.Parse(deviceIPString), port));
+                
             }
 
             if (client == null)

@@ -155,11 +155,27 @@ namespace NAE.FieldGateway
         {
             viewModel.OpenUdpServer(Convert.ToInt32(ConfigurationManager.AppSettings["port"]));
 
+            MessageBox.Show("UDP Working");
+
         }
 
         private void SendReset_Click(object sender, RoutedEventArgs e)
         {
             viewModel.SendUpdReset();
+        }
+
+        private void Shutdown_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                viewModel.ShutdownDevice();
+                MessageBox.Show("Device is shutdown.", "Device Shutdown");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Device Shutdown");
+            }
+
         }
     }
 }

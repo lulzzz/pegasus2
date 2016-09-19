@@ -41,33 +41,85 @@ namespace ConsoleApplication1
             List<EagleRawTelemetry> ertList= reader.Read();
             List<double> offsets = ComputeDCOffsets(ertList, 5);
             List<EagleTelemetry> telemetryList = new List<EagleTelemetry>();
+            DateTime nextTime = DateTime.MinValue;
 
             int index = 0;
+            double maxX = 0;
+            double maxY = 0;
+            double maxZ = 0;
+            double maxSpeed = 0;
+
             foreach(EagleRawTelemetry ert in ertList)
             {
-                if (index < 2)
+                EagleTelemetry telemetry = TelemetryConverter.Convert(ert, offsets);
+                
+                if(nextTime == DateTime.MinValue)
                 {
-                    EagleTelemetry telemetry = TelemetryConverter.Convert(ert, offsets);
-                    telemetryList.Add(telemetry);
-                }
-                else
-                {
-                    break;
+                    nextTime = telemetry.Timestamp.AddMilliseconds(500);
                 }
 
+                if(telemetry.Timestamp > nextTime)
+                {
+                    telemetryList.Add(telemetry);
+                    nextTime = telemetry.Timestamp.AddMilliseconds(500);
+                    maxX = telemetry.AccelXG > maxX ? telemetry.AccelXG : maxX;
+                    maxY = telemetry.AccelXG > maxY ? telemetry.AccelYG : maxY;
+                    maxZ = telemetry.AccelXG > maxZ ? telemetry.AccelZG : maxZ;
+                    maxSpeed = telemetry.AccelXG > maxX ? telemetry.AirSpeedKph : maxSpeed;
+
+                }
+
+                
                 index++;
+                Console.WriteLine(index);
             }
 
             EagleTelemetry[] et = telemetryList.ToArray();
 
             string jsonString1 = JsonConvert.SerializeObject(et, Formatting.Indented);
 
-            StreamWriter writer = new StreamWriter("d:\\eagletelemetry.txt");
+            StreamWriter writer = new StreamWriter("d:\\sample1.json");
             writer.Write(jsonString1);
             writer.Flush();
-            writer.Close();
+            writer.Close();            
 
             Console.ReadKey();
+
+            ConfigManager cm = new ConfigManager();
+            StreamReader sr = new StreamReader("d:\\sample1Config.json");
+            string c1string = sr.ReadToEnd();
+            sr.Close();
+
+            Config c1 = JsonConvert.DeserializeObject<Config>(c1string);
+
+            sr = new StreamReader("d:\\sample2Config.json");
+            string c2string = sr.ReadToEnd();
+            sr.Close();
+
+            Config c2 = JsonConvert.DeserializeObject<Config>(c2string);
+
+            List<Config> list = new List<Config>();
+            list.Add(c1);
+            list.Add(c2);
+            cm.Write(list);
+
+
+            //Config config = new Config();
+            //config.Aggregates = new AggregateValues() { MaxAccelX = maxX, MaxAccelY = maxY, MaxAccelZ = maxZ, MaxSpeed = maxSpeed };
+            //config.Drone1VideoUrl = "drone1URL";
+            //config.Drone2VideoUrl = "drone2URL";
+            //config.Location = "Alvord Desert, Oregon USA";
+            //config.OnboardTelemetryUrl = "onboardTelemetryURL";
+            //config.OnboardVideoUrl = "onboardVideoURL";
+            //config.Pilot = "SAMPLE PILOT";
+            //config.RunId = "SampleRunID2";
+            //config.Timestamp = DateTime.Now;
+
+            //string configString = JsonConvert.SerializeObject(config, Formatting.Indented);
+            //writer = new StreamWriter("d:\\sample2Config.json");
+            //writer.Write(configString);
+            //writer.Flush();
+            //writer.Close();
         }
 
         private static List<double> ComputeDCOffsets(List<EagleRawTelemetry> list, int seconds)

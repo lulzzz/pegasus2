@@ -200,12 +200,13 @@ namespace Piraeus.Web.WebSockets
                 catch (Exception ex)
                 {
                     exception = ex;
-                    Console.WriteLine("Web Socket Exception");
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.StackTrace);
+                    //Console.WriteLine("Web Socket Exception");
+                    //Console.WriteLine(ex.Message);
+                    //Console.WriteLine(ex.StackTrace);
 
                     Trace.TraceWarning("Web socket receive faulted.");
                     Trace.TraceError(ex.Message);
+                    
                     break;
                 }
             }
