@@ -1,0 +1,370 @@
+﻿<Window x:Class="NAE.FieldGateway.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="NAE Field Gateway" Height="350" Width="525"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+        xmlns:local="clr-namespace:NAE.FieldGateway.ViewModels">
+    <Window.DataContext>
+        <local:NaeViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <ControlTemplate TargetType="m:Pushpin" x:Key="CraftPushpinControlTemplate">
+            <Grid x:Name="ContentGrid"
+         Width="24"
+          Height="24">
+                <Image Source="Images\blueball2.gif" Stretch="Fill"/>
+                <TextBlock Text="E" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate TargetType="m:Pushpin" x:Key="LaunchPushpinControlTemplate">
+            <Grid x:Name="ContentGrid"
+            Width="32"
+            Height="32">
+                <Image Source="Images\greenball2.gif" Stretch="Fill"/>
+                <TextBlock Text="S" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+        </ControlTemplate>
+    </Window.Resources>
+    <ScrollViewer
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto">
+        <!-- The elements you want to be horizontally scrollable goes here -->
+        <Grid Background="Black">
+            <Grid.Resources>
+                <ResourceDictionary Source="P2Resources.xaml"/>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="720" />
+                <RowDefinition Height="720" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="780"/>
+                <ColumnDefinition Width="920"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Background="Black" Orientation="Vertical" VerticalAlignment="Top" Margin="10,10,1,10" Height="820" >
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
+                        <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="SerialPort_Click" Background="Gray">Serial Port</Button>
+                        <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="ResetSocket_Click" Background="Gray">Reset Socket</Button>
+                        <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="StartPoint_Click" Background="Gray">Start Point</Button>
+                        <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="SetRunId_Click" Background="Gray">Set Run ID</Button>
+                        <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="NetworkInfo_Click"    Background="Gray">Network Info</Button>
+                        <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="StartUdp_Click"    Background="Gray">Start UDP</Button>
+                        <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="SendReset_Click"    Background="Gray">GPS Reset</Button>
+                        <!--<Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="100" Height="40" Click="GroundValues_Click">Ground Values</Button>-->
+                        <!--<Button x:Name="UserMessages" Foreground="AliceBlue" HorizontalAlignment="Center" Background="Red" Margin="10,10,10,10" Width="100" Height="40" Click="UserMessages_Click">User Messages</Button>-->
+                        <!--<Border BorderBrush="Blue"  BorderThickness="1" Margin="1,1,1,1" Height="240" Width="98" VerticalAlignment="Center" Background="Gray">
+                            <StackPanel Orientation="Vertical" ScrollViewer.PanningMode="VerticalOnly" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Center">
+                                --><!--<TextBlock Text="Control" HorizontalAlignment="Center" Style="{StaticResource GatewayTitleStyle}" Margin="2,10,2,2" Foreground="White" FontSize="12"/>-->
+                                <!--<Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="60" Height="40" Background="DarkCyan" Click="Video_Click">Video</Button>
+                                <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="60" Height="40" Background="DarkCyan" Click="DSR_Click">DSR</Button>
+                                <Button Foreground="AliceBlue" HorizontalAlignment="Center" Margin="10,10,10,10" Width="60" Height="40" Background="DarkCyan" Click="MPD_Click">MPD</Button>--><!--
+                            </StackPanel>
+                        </Border>-->
+                    </StackPanel>
+                    <!--<TextBlock Text="Serial Port" Height="15" Margin="10,12,1,10"  Foreground="Red" x:Name="SerialPortText"  />-->
+                    <!-- Assets/Green-Ball-icon.png -->
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Image  Height="20" Width="20" Margin="1,10,1,10" x:Name="WebSocketImageIcon" />
+                    <TextBlock Text="Web Socket" Height="15" Margin="10,12,1,10"/>
+                </StackPanel>
+            </StackPanel>
+
+            <m:Map CredentialsProvider="Ar2dFucxjN-12nGIbKPwbfDJbSG7HxQregibq-m8udllAv07cCasDwG38AjYaj15" x:Name="map" Grid.Row="0" Grid.Column="1" Margin="10,10,1,10" ZoomLevel="12">
+                <m:MapLayer>
+                    <m:Pushpin Location="{Binding VehicleLocation}" Template="{StaticResource CraftPushpinControlTemplate}"  />
+                </m:MapLayer>
+                <m:MapLayer>
+                    <m:Pushpin Location="{Binding StartPointLocation}" Template="{StaticResource LaunchPushpinControlTemplate}" />
+                </m:MapLayer>
+            </m:Map>
+
+            <StackPanel Grid.Row="0" Grid.Column="2" Margin="10,10,100,10" Background="DarkBlue" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="NAE Telemetry" FontSize="16" Margin="10,10,10,10"  TextWrapping="NoWrap" Foreground="Cyan"/>
+                    <TextBlock Text="Timestamp" Style="{StaticResource GatewayFieldValue}" FontSize="16" Margin="10,10,10,10"/>
+                    <TextBlock Text="{Binding Timestamp}" Style="{StaticResource GatewayFieldValue}" FontSize="16" Margin="10,10,10,10"/>
+                    <TextBlock Text="RunID" Style="{StaticResource GatewayFieldValue}" FontSize="16" Margin="10,10,10,10"/>
+                    <TextBlock Text="{Binding RunId}" Style="{StaticResource GatewayFieldValue}" FontSize="16" Margin="10,10,10,10"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="5,5,5,5">
+                        <Border BorderBrush="White" BorderThickness="2" Margin="5,5,5,5">
+                            <StackPanel Style="{StaticResource ButtonFocusVisual}" Width="300">
+                                <TextBlock Text="Position" Style="{StaticResource GatewayTitleStyle}" TextWrapping="NoWrap" Margin="5,5,5,5" Foreground="AliceBlue" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Start Latitude" Style="{StaticResource GatewayFieldCaption}"/>
+                                    <TextBlock Text="{Binding GpsLatitudeStart}" Style="{StaticResource GatewayFieldValue}"></TextBlock>
+                                    <TextBlock Text="N" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Start Longitude" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GpsLongitudeStart}" Style="{StaticResource GatewayFieldValue}" ></TextBlock>
+                                    <TextBlock Text="W" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Latitude" Style="{StaticResource GatewayFieldCaption}"/>
+                                    <TextBlock Text="{Binding GpsLatitude}" Style="{StaticResource GatewayFieldValue}"></TextBlock>
+                                    <TextBlock Text="N" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Longitude" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GpsLongitude}" Style="{StaticResource GatewayFieldValue}" ></TextBlock>
+                                    <TextBlock Text="W" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="GPS Altitude" Style="{StaticResource GatewayFieldCaption}"/>
+                                    <TextBlock Text="{Binding GpsAltitude}" Style="{StaticResource GatewayFieldValue}"></TextBlock>
+                                    <TextBlock Text="m" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Direction" Style="{StaticResource GatewayFieldCaption}"/>
+                                    <TextBlock Text="{Binding GpsDirection}" Style="{StaticResource GatewayFieldValue}"></TextBlock>
+                                    <TextBlock Text="degrees" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>                                
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Speed" Style="{StaticResource GatewayFieldCaption}"/>
+                                    <TextBlock Text="{Binding GpsSpeedMph}" Style="{StaticResource GatewayFieldValue}"></TextBlock>
+                                    <TextBlock Text="mph" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                    <TextBlock Text="{Binding GpsSpeedKph}" Style="{StaticResource GatewayFieldValue}"></TextBlock>
+                                    <TextBlock Text="kph" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <Border BorderBrush="White" BorderThickness="2" Margin="5,5,5,5">
+                            <StackPanel Style="{StaticResource ButtonFocusVisual}" Width="300">
+                                <TextBlock Text="Cockpit Conditions" Style="{StaticResource GatewayTitleStyle}" TextWrapping="NoWrap" Foreground="AliceBlue" />
+                                
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Temperature" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding Temperature}" Style="{StaticResource GatewayFieldValue}" ></TextBlock>
+                                    <TextBlock Text="C" Style="{StaticResource GatewayFieldUnits}" ></TextBlock>                                    
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Humidity" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding Humidity}" Style="{StaticResource GatewayFieldValue}" ></TextBlock>
+                                    <TextBlock Text="%" Style="{StaticResource GatewayFieldUnits}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Sound Level" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding Sound}" Style="{StaticResource GatewayFieldValue}" ></TextBlock>
+                                    <TextBlock Text="Db" Style="{StaticResource GatewayFieldUnits}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Pressure" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding Pressure}" Style="{StaticResource GatewayFieldValue}" ></TextBlock>
+                                    <TextBlock Text="mB" Style="{StaticResource GatewayFieldUnits}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Altitude" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding Altitude}" Style="{StaticResource GatewayFieldValue}" ></TextBlock>
+                                    <TextBlock Text="m" Style="{StaticResource GatewayFieldUnits}" ></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <Border BorderBrush="White" BorderThickness="2" Margin="5,5,5,5">
+                            <StackPanel Style="{StaticResource ButtonFocusVisual}" Width="300">
+                                <TextBlock Text="Health" Style="{StaticResource GatewayTitleStyle}" TextWrapping="NoWrap" Foreground="AliceBlue" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Web Socket" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding WebSocketStatus}" Style="{StaticResource GatewayFieldValue}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Current" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding Current}" Style="{StaticResource GatewayFieldValue}" ></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Voltage" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding Voltage}" Style="{StaticResource GatewayFieldValue}" ></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,5,5">
+                        <Border BorderBrush="White" BorderThickness="2" Margin="5,5,5,5">
+                            <StackPanel Style="{StaticResource ButtonFocusVisual}" Width="300">
+                                <TextBlock Text="User Messages" Style="{StaticResource GatewayTitleStyle}" Foreground="AliceBlue"  />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <ListBox Background="AliceBlue" ItemsSource="{Binding UserMessages}" Width="290" Height="560" Margin="2,2,2,2" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    <!--<StackPanel Margin="5,5,5,5">
+                        <Border BorderBrush="White" BorderThickness="2" Margin="5,5,5,5">
+                            <StackPanel Style="{StaticResource ButtonFocusVisual}" Width="250">
+                                <TextBlock Text="Payload Health" Style="{StaticResource GatewayTitleStyle}" Foreground="AliceBlue"  />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Temperature" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding TempInside}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Radio Strength" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding RadioStrength}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Battery Level 1" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding Battery1Level}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Battery Level 2" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding Battery2Level}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="GPS Fix" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GpsFix}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="GPS Sats" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GpsSatellites}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Reception Errors" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding ReceptionErrors}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Picture Count" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding PictureCount}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="White" BorderThickness="2" Margin="5,5,5,5">
+                            <StackPanel Style="{StaticResource ButtonFocusVisual}" Width="250">
+                                <TextBlock Text="Flight Operations" Style="{StaticResource GatewayTitleStyle}" Foreground="AliceBlue"  />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="DSR" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding BalloonReleased}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="MPD" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding MainDeployed}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="MPD Armed" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding Armed}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Armed Pressure" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding ArmedPressure}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="MPD Timer" Style="{StaticResource GatewayFieldCaption}"  Foreground="Yellow"/>
+                                    <TextBlock Text="{Binding TimeToMpd}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Deploy Pressure" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding MpdPressure}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Video Up" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding VideoPositionUp}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="LEDs" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding LedsActivated}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="BPServo" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding BPServoOn}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="VideoServo" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding VideoServoOn}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,5,5">
+                        <Border BorderBrush="White" BorderThickness="2" Margin="5,5,5,5">
+                            <StackPanel Style="{StaticResource ButtonFocusVisual}" Width="250">
+                                <TextBlock Text="Ground Station" Style="{StaticResource GatewayTitleStyle}" Foreground="AliceBlue"  />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Timestamp" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSTimestamp}" Style="{StaticResource GatewayFieldValueSmall}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Temperature" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSTemp}" Style="{StaticResource GatewayFieldValue}" />
+                                    <TextBlock Text="C" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Latitude" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSLatitude}" Style="{StaticResource GatewayFieldValue}" />
+                                    <TextBlock Text="N" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Longitude" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSLongitude}" Style="{StaticResource GatewayFieldValue}" />
+                                    <TextBlock Text="W" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Altitude" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSAltitude}" Style="{StaticResource GatewayFieldValue}" />
+                                    <TextBlock Text="m" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                    <TextBlock Text="{Binding GSAltitudeFeet}" Style="{StaticResource GatewayFieldValue}" />
+                                    <TextBlock Text="ft" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Speed" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSSpeed}" Style="{StaticResource GatewayFieldValue}" />
+                                    <TextBlock Text="mph" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Direction" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSDirection, StringFormat=N2}" Style="{StaticResource GatewayFieldValue}" />
+                                    <TextBlock Text="degrees" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="GPS Fix" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSFix}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="GPS Sats" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSSats}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Azimuth" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSAzimuth, StringFormat=N2}" Style="{StaticResource GatewayFieldValue}" />
+                                    <TextBlock Text="degrees" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Radio Strength" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSRadioStrength}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Reception Errors" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSReceptionErrors}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Battery Level" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSBatteryLevel}" Style="{StaticResource GatewayFieldValue}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Ground Distance" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSGroundDistance, StringFormat=N2}" Style="{StaticResource GatewayFieldValue}" />
+                                    <TextBlock Text="km" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Actual Distance" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSActualDistance, StringFormat=N2}" Style="{StaticResource GatewayFieldValue}" />
+                                    <TextBlock Text="km" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Peer Distance" Style="{StaticResource GatewayFieldCaption}" />
+                                    <TextBlock Text="{Binding GSPeerDistance, StringFormat=N2}" Style="{StaticResource GatewayFieldValue}" />
+                                    <TextBlock Text="km" Style="{StaticResource GatewayFieldUnits}"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>-->
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Window>

@@ -1,0 +1,118 @@
+﻿@using PegasusMissionWeb.Controllers
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>   <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>      <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>      <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+<head>
+
+    <meta charset="utf-8">
+    <title>Pegasus Mission 2</title>
+    <meta name="description" content="">
+
+    <!-- Mobile Devices Viewport Resset-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="~/Content/vendor/bootstrap/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Content/vendor/font-awesome/css/font-awesome.min.css">
+    <!--[if IE 8]>
+        <link rel="stylesheet" href="~/Content/vendor/font-awesome/css/font-awesome-ie7.min.css">
+    <![endif]-->
+
+    <link rel="stylesheet" href="~/Content/vendor/prettyPhoto/css/prettyPhoto.css">
+
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Lato:300,400,700,400italic,700italic|Droid+Serif' rel='stylesheet' type='text/css'>
+
+    <!-- base layout styling -->
+    <link rel="stylesheet" href="~/Content/css/base.css">
+
+    <!-- components styling -->
+    <link rel="stylesheet" href="~/Content/css/components.css">
+
+    <!-- template colorschemes -->
+    <link rel="stylesheet" href="~/Content/colorschemes/light.css">
+
+    <script src="~/Content/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+</head>
+<body style="background-color:#f2f2f2" class="font-awesome ">
+    <span id="currenttime" class=""></span>
+    <div id="main">
+        @Html.Partial("HeroImage")
+
+        <div class="section row entries bg-primary section-no-margin-bottom margin-left-main-shift">
+            <div style="text-align:center" class="margin-left-main-shift-smaller">
+                @TempData["SendMessageResult"]
+               @using (Html.BeginForm("SendMessageToBackend", "Home", FormMethod.Post, new { @class = "well-sm" }))
+                   {
+                <p>
+                    <div class="well-sm"> 
+                        <b class="message-to-nae-title">Country</b>
+                    </div>
+                    <div><br />
+                        @Html.TextBox("country", null, new { style = "width:150px", maxsize = 15 }) @*<input type="text" id="countryCode" style="width:50px;" />*@
+                    </div>
+                    <br />
+                    <div>
+                        <b class="message-to-nae-title">Your Message to Northern American Eagle</b>
+                    </div>
+                    <div><br />
+                        @Html.TextBox("message", null, new { style = "width:350px", maxsize = 40 }) @*<input type="text" id="number" style="width:120px" />*@
+                    </div>
+                    <br />
+                    <div>
+                        <input type="submit" value="Send!" />
+                    </div>
+                    <br />
+
+                </p>
+               }
+                
+            </div>
+
+           
+
+        </div>
+
+
+    </div>
+
+    <footer id="footer" class="footer-area">
+
+
+        <div class="footer-bottom">
+
+            <div class="container aligncenter">
+
+                <p>&copy;2016 by Pegasus Team <p>
+
+            </div>
+
+        </div>
+
+    </footer>
+   
+    <script src="~/Content/vendor/jquery-1.10.1.min.js"></script>
+    <!--
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="~/Content/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+    -->
+
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="~/Content/vendor/prettyPhoto/jquery.prettyPhoto.js"></script>
+
+
+    <script src="~/Content/vendor/jquery.unveil.min.js"></script>
+
+    <script src="~/Content/js/main.js"></script>
+    <script>
+                invokeHub();
+    </script>
+</body>
+</html>

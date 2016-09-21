@@ -86,12 +86,12 @@ textarea {
 }
 
 .twitterFooterContent {
-    background-image: url('../../img/twitter-667462_640.png'); 
+    background-image: url('http://www.pegasusmission.io/img/twitter-667462_640.png'); 
     background-size:35px 32px;
 }
 
 .fbFooterContent {
-    background-image: url('../../img/facebook_logo_detail-550x588.jpg');
+    background-image: url('http://www.pegasusmission.io/img/facebook_logo_detail-550x588.jpg');
 }
 
 @media (max-width: 992px) {

@@ -1,0 +1,41 @@
+﻿<div id="container">
+    <div style="background-color:white" id="image"> <img src="~/Content/img/pegasus_heroBackground.png" class="well-sm hero-image margin-left-main-shift-bigger" /><div class="text-over-heroimage-info">Pegasus<br /><br />Mission Goes <br /><br />Supersonic <br /><br />with NAE</div></div>
+</div>
+
+@*<div class="text-over-heroimage-to-live">TO LIVE EVENT</div>
+    <div class="text-over-heroimage-counter"><div id="clockdiv"></div></div>
+    <div class="text-over-heroimage-register-button well-sm">REGISTER FOR EVENT NOTIFICATIONS</div>*@
+
+@*<script>
+
+            //COUNTER
+            function getTimeRemaining(endtime) {
+                var t = Date.parse(endtime) - Date.parse(new Date());
+                var seconds = Math.floor((t / 1000) % 60);
+                var minutes = Math.floor((t / 1000 / 60) % 60);
+                var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+                var days = Math.floor(t / (1000 * 60 * 60 * 24));
+                return {
+                    'total': t,
+                    'days': days,
+                    'hours': hours,
+                    'minutes': minutes,
+                    'seconds': seconds
+                };
+            }
+            function initializeClock(id, endtime) {
+                var clock = document.getElementById(id);
+                var timeinterval = setInterval(function () {
+                    var t = getTimeRemaining(endtime);
+                    clock.innerHTML = ((t.days * 24) + t.hours) + ":" + t.minutes + ":" + t.seconds;
+                    if (t.total <= 0) {
+                        clearInterval(timeinterval);
+                    }
+                }, 1000);
+            }
+            var deadline = 'September 26 2016 23:59:59 GMT+0200';
+            initializeClock('clockdiv', deadline);
+            //COUNTER CODE ENDS
+
+
+</script>*@

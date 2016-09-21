@@ -127,6 +127,7 @@ margin-left:20px;
 }
 .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
 	width: 940px;
+    background-color:black;
 }
 .span12 {
 	width: 940px;
@@ -2668,6 +2669,7 @@ color:#cccccc;
 }
 .navbar-fixed-bottom {
 	bottom: 0;
+    background-color:black;
 }
 .navbar .nav {
 	position: relative;
