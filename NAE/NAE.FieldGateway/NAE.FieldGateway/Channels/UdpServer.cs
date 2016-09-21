@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -14,108 +15,132 @@ namespace NAE.FieldGateway.Channels
 
     public class UdpServer
     {
-        public UdpServer(int listenPort, int sendPort)
+        public UdpServer(int port)
         {
-
-            deviceIPString = ConfigurationManager.AppSettings["deviceIP"];
-            this.listenPort = listenPort;
-            this.sendPort = sendPort;
-            server = new UdpClient(listenPort);
-            server.DontFragment = true;            
+            this.port = port;
+            Setup();        
 
         }
 
         public event UpdMessageEventHandler OnReceive;
 
         private UdpClient server;
-        private UdpClient client;
         private IPEndPoint endpoint;
-        private int listenPort;
-        private int sendPort;
+        private int port;
         private string deviceIPString;
 
         public async Task RunAsync()
         {
             while (true)
-            {                
-                UdpReceiveResult result = await server.ReceiveAsync();
-                string data = Encoding.UTF8.GetString(result.Buffer);
+            {
+                byte[] dataArray = null;
+                Exception fault = null;
 
-                //if (endpoint == null)
-                //{
-                //    endpoint = result.RemoteEndPoint;
-                //    client = new UdpClient(endpoint);
-                //    client.DontFragment = true;
-                //}
-
-                //process data
-                if (OnReceive != null)
+                Task task = Task.Factory.StartNew(() =>
                 {
-                    OnReceive(this, data);
+                    try
+                    {
+                        dataArray = server.Receive(ref endpoint);
+                    }
+                    catch(Exception ex)
+                    {
+                        fault = ex;
+                    }
+                });
+
+                await Task.WhenAll(task);
+
+                if (fault != null)
+                {
+                    Trace.TraceWarning("Fault in UDP Receive");
+                    Trace.TraceError(fault.Message);
+                    break;
+                }
+                else
+                {
+                    if (OnReceive != null)
+                    {
+                        OnReceive(this, Encoding.UTF8.GetString(dataArray));
+                    }
                 }
             }
+
+
+            MessageBox.Show("UDP Stopped", "UDP");
 
         }
 
         public async Task SendAsync(byte[] data)
         {
+            Exception fault = null;
+
             try
             {
-                if (client == null && deviceIPString == "NONE")
+                Task sendTask = Task.Factory.StartNew(() =>
                 {
-                    MessageBox.Show("Cannot send UDP message as client is null, deviceIP is NONE, and no message was received to set endpoint.");
-                    return;
-                }
+                    server.Send(data, data.Length, endpoint);
+                });
 
-                if (client == null && deviceIPString != "NONE")
-                {
-                    endpoint = new IPEndPoint(IPAddress.Parse(deviceIPString), sendPort);
-                    //client = new UdpClient(endpoint);
-                    client = new UdpClient();
-                    client.Connect(endpoint);
-                }
-
-                if (client == null)
-                {
-                    MessageBox.Show("UDP client is null and cannot send messages.");
-                    return;
-                }
-
-                await client.SendAsync(data, data.Length);
+                await Task.WhenAll(sendTask);
             }
+            
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message, "UDP");
+                Trace.TraceWarning("Fault in UDP SendAsync");
+                Trace.TraceError(ex.Message);
             }
+
+            if (fault != null)
+            {
+                Setup();
+                await RunAsync();
+            }
+
+
         }
 
         public void Send(byte[] data)
         {
-            if (client == null && deviceIPString == "NONE")
-            {
-                MessageBox.Show("Cannot send UDP message as client is null, deviceIP is NONE, and no message was received to set endpoint.");
-                return;
-            }           
+            Exception fault = null;
 
-            if (client == null && deviceIPString != "NONE")
+            try
             {
-                endpoint = new IPEndPoint(IPAddress.Parse(deviceIPString), sendPort);
-                client = new UdpClient();
-                client.Connect(endpoint);
-                //client = new UdpClient(endpoint);
-                
-                //client = new UdpClient(new IPEndPoint(IPAddress.Parse(deviceIPString), port));
-                
+                server.Send(data, data.Length, endpoint);
+            }
+            catch(Exception ex)
+            {
+                Trace.TraceWarning("Fault in UDP Send");
+                Trace.TraceError(ex.Message);               
+                fault = ex;    
             }
 
-            if (client == null)
+            if(fault != null)
             {
-                MessageBox.Show("UDP client is null and cannot send messages.");
-                return;
+                Setup();
+                Task task = Task.Factory.StartNew(async () =>
+                {
+                    await RunAsync();
+                });
+
+                Task.WhenAll(task);
             }
-            client.Send(data, data.Length);
+            
+            
         }
 
+
+        private void Setup()
+        {
+            if(server != null)
+            {
+                server.Close();
+                server = null;
+            }
+
+            deviceIPString = ConfigurationManager.AppSettings["deviceIP"];
+            server = new UdpClient(this.port);
+            endpoint = new IPEndPoint(IPAddress.Parse(deviceIPString), this.port);
+        }
 
     }
 }

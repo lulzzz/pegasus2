@@ -153,7 +153,7 @@ namespace NAE.FieldGateway
 
         private void StartUdp_Click(object sender, RoutedEventArgs e)
         {
-            viewModel.OpenUdpServer(Convert.ToInt32(ConfigurationManager.AppSettings["listenPort"]), Convert.ToInt32(ConfigurationManager.AppSettings["sendPort"]));
+            viewModel.OpenUdpServer(Convert.ToInt32(ConfigurationManager.AppSettings["port"]));
 
             MessageBox.Show("UDP Working");
 
