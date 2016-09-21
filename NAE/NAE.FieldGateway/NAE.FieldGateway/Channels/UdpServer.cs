@@ -91,8 +91,6 @@ namespace NAE.FieldGateway.Channels
 
         public void Send(byte[] data)
         {
-            server.Send(data, data.Length);
-
             if (client == null && deviceIPString == "NONE")
             {
                 MessageBox.Show("Cannot send UDP message as client is null, deviceIP is NONE, and no message was received to set endpoint.");
