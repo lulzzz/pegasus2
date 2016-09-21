@@ -150,11 +150,11 @@ namespace NAE.FieldGateway.ViewModels
         #endregion
 
         #region UDP
-        public void OpenUdpServer(int port)
+        public void OpenUdpServer(int listenPort, int sendPort)
         {
             if (udp == null)
             {
-                udp = new UdpServer(port);
+                udp = new UdpServer(listenPort, sendPort);
                 udp.OnReceive += Udp_OnReceive;
                 Task task = udp.RunAsync();
                 Task.WhenAll(task);

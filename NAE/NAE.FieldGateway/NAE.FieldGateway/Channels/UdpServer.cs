@@ -14,12 +14,14 @@ namespace NAE.FieldGateway.Channels
 
     public class UdpServer
     {
-        public UdpServer(int port)
+        public UdpServer(int listenPort, int sendPort)
         {
             deviceIPString = ConfigurationManager.AppSettings["deviceIP"];
-            this.port = port;
-            server = new UdpClient(port);
-            server.DontFragment = true;
+            this.listenPort = listenPort;
+            this.sendPort = sendPort;
+            server = new UdpClient(listenPort);
+            server.DontFragment = true;            
+
         }
 
         public event UpdMessageEventHandler OnReceive;
@@ -27,13 +29,14 @@ namespace NAE.FieldGateway.Channels
         private UdpClient server;
         private UdpClient client;
         private IPEndPoint endpoint;
-        private int port;
+        private int listenPort;
+        private int sendPort;
         private string deviceIPString;
 
         public async Task RunAsync()
         {
             while (true)
-            {
+            {                
                 UdpReceiveResult result = await server.ReceiveAsync();
                 string data = Encoding.UTF8.GetString(result.Buffer);
 
@@ -65,7 +68,7 @@ namespace NAE.FieldGateway.Channels
 
                 if (client == null && deviceIPString != "NONE")
                 {
-                    endpoint = new IPEndPoint(IPAddress.Parse(deviceIPString), port);
+                    endpoint = new IPEndPoint(IPAddress.Parse(deviceIPString), sendPort);
                     //client = new UdpClient(endpoint);
                     client = new UdpClient();
                     client.Connect(endpoint);
@@ -87,15 +90,17 @@ namespace NAE.FieldGateway.Channels
 
         public void Send(byte[] data)
         {
+            server.Send(data, data.Length);
+
             if (client == null && deviceIPString == "NONE")
             {
                 MessageBox.Show("Cannot send UDP message as client is null, deviceIP is NONE, and no message was received to set endpoint.");
                 return;
-            }
+            }           
 
             if (client == null && deviceIPString != "NONE")
             {
-                endpoint = new IPEndPoint(IPAddress.Parse(deviceIPString), port);
+                endpoint = new IPEndPoint(IPAddress.Parse(deviceIPString), sendPort);
                 client = new UdpClient();
                 client.Connect(endpoint);
                 //client = new UdpClient(endpoint);
