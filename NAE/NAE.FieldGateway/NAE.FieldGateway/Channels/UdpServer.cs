@@ -16,6 +16,7 @@ namespace NAE.FieldGateway.Channels
     {
         public UdpServer(int listenPort, int sendPort)
         {
+
             deviceIPString = ConfigurationManager.AppSettings["deviceIP"];
             this.listenPort = listenPort;
             this.sendPort = sendPort;
