@@ -168,8 +168,13 @@ namespace NAE.FieldGateway
         {
             try
             {
-                viewModel.ShutdownDevice();
-                MessageBox.Show("Device is shutdown.", "Device Shutdown");
+                var result = MessageBox.Show("Are you sure you want to shut down the telemetry device?", "Device Shutdown", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    viewModel.ShutdownDevice();
+                    MessageBox.Show("Device shutdown command sent.", "Device Shutdown");
+                }
             }
             catch (Exception ex)
             {
