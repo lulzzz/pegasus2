@@ -631,6 +631,18 @@ namespace NAE.FieldGateway.ViewModels
             }
         }
 
+        public void RebootDevice()
+        {
+            if (udp != null)
+            {
+                udp.Send(Encoding.UTF8.GetBytes("{R:!,*28"));
+            }
+            else
+            {
+                throw new InvalidOperationException("UDP is not operational.");
+            }
+        }
+
         #region Web Socket
 
 
