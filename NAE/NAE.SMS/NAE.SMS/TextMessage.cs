@@ -24,10 +24,12 @@ namespace NAE.SMS
         {
             try
             {
-                await Retry.ExecuteAsync(() =>
-                {
-                    this.twilio.SendMessage(twilioPhoneNumber, phone, message);
-                }, TimeSpan.FromSeconds(2), 3);
+                this.twilio.SendMessage(twilioPhoneNumber, phone, message);
+                                
+                //await Retry.ExecuteAsync(() =>
+                //{
+                    
+                //}, TimeSpan.FromSeconds(2), 3);
             }
             catch (Exception ex)
             {

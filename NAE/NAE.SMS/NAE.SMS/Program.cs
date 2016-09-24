@@ -170,10 +170,23 @@ namespace NAE.SMS
                         {
                             TextMessage tmessage = new TextMessage();
                             Task task = tmessage.NotifyAsync(message, phone.Phone);
-                            Task.WaitAll(task);
-                            Console.WriteLine("Sent message {0} of {1}", index, phones.Count);
+                            taskList.Add(tmessage.NotifyAsync(message, phone.Phone));
+                            //Task.WaitAll(task);
+                            //Console.WriteLine("Sent message {0} of {1}", index, phones.Count);
                             index++;
+
+                            if(index%5 == 0)
+                            {
+                                Task.WhenAll(taskList.ToArray());
+                                taskList = new List<Task>();
+                                Console.WriteLine("Sent messages {0} - {1} of {2}", index - 5, index, phones.Count);
+                            }
                         }
+                    }
+
+                    if(taskList.Count > 0)
+                    {
+                        Task.WhenAll(taskList.ToArray());                       
                     }
                 }
             }
