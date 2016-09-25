@@ -168,7 +168,7 @@ namespace NAE.FieldGateway
         {
             try
             {
-                var result = MessageBox.Show("Are you sure you want to shut down the telemetry device?", "Device Shutdown", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var result = MessageBox.Show("Are you sure you want to SHUT DOWN the telemetry device?", "Device Shutdown", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (result == MessageBoxResult.Yes)
                 {
@@ -182,5 +182,25 @@ namespace NAE.FieldGateway
             }
 
         }
+
+        private void Reboot_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var result = MessageBox.Show("Are you sure you want to REBOOT the telemetry device?", "Device Reboot", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    viewModel.RebootDevice();
+                    MessageBox.Show("Device reboot command sent.", "Device Reboot");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Device Shutdown");
+            }
+
+        }
+        
     }
 }
