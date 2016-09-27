@@ -178,6 +178,8 @@ namespace NAE.FieldGateway.ViewModels
                 //read the UPD message as a CSV String
                 telemetry = NAE.Data.Telemetry.Load(message);
 
+                telemetry.RunId = this.runId;
+
                 if (startPoint)
                 {
                     this.GpsLatitudeStart = telemetry.GpsLatitude;
