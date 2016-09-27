@@ -24,8 +24,13 @@ namespace NAE.SMS
         {
             try
             {
-                this.twilio.SendMessage(twilioPhoneNumber, phone, message);
-                                
+                Task task = Task.Factory.StartNew(() =>
+                {
+                    this.twilio.SendMessage(twilioPhoneNumber, phone, message);
+                });
+
+                Task.WaitAll(task);
+                                                
                 //await Retry.ExecuteAsync(() =>
                 //{
                     

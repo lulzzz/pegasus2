@@ -173,13 +173,27 @@ namespace NAE.FieldGateway.ViewModels
             NAE.Data.Telemetry telemetry = null;
             try
             {
+                
+
                 //read the UPD message as a CSV String
                 telemetry = NAE.Data.Telemetry.Load(message);
+
+                if (startPoint)
+                {
+                    this.GpsLatitudeStart = telemetry.GpsLatitude;
+                    this.GpsLongitudeStart = telemetry.GpsLongitude;
+                    startPoint = false;
+                }
+
+                telemetry.GpsLatitudeStart = this.GpsLatitudeStart;
+                telemetry.GpsLongitudeStart = this.GpsLongitudeStart;
+
                 TelemetryUpdate(telemetry);
             }
             catch (Exception ex)
             {
-
+                Trace.TraceWarning("Fault in UPD Telemetry receive.");
+                Trace.TraceError(ex.Message);
             }
 
             if (telemetry != null)
