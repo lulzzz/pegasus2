@@ -192,7 +192,9 @@ namespace Pegasus.Phone.XF
                     {
                         jsonString = JsonConvert.DeserializeObject<String>(jsonString);
                     }
-                    this.AppData.LaunchInfo = JsonConvert.DeserializeObject<LaunchInfo>(jsonString);
+					var launchInfo = JsonConvert.DeserializeObject<LaunchInfo>(jsonString);
+					launchInfo.IsLiveTelemetry = false;
+                    this.AppData.LaunchInfo = launchInfo;
                     return this.AppData.LaunchInfo;
                 }
             }
@@ -232,6 +234,7 @@ namespace Pegasus.Phone.XF
 
         public async Task ConnectWebSocketAsync()
         {
+			return;
             if (this.client != null)
             {
                 return;
