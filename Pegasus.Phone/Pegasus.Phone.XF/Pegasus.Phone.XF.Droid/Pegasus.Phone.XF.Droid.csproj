@@ -20,7 +20,7 @@
     <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
-    <JavaMaximumHeapSize />
+    <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
     <JavaOptions />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -41,13 +41,10 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <AndroidLinkSkip />
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
-    <BundleAssemblies>False</BundleAssemblies>
-    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
     <AndroidSupportedAbis>armeabi,armeabi-v7a,x86</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
     <Debugger>Xamarin</Debugger>
-    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
     <DevInstrumentationEnabled>True</DevInstrumentationEnabled>
     <AndroidKeyStore>True</AndroidKeyStore>
     <AndroidSigningKeyStore>debug.keystore</AndroidSigningKeyStore>
@@ -67,17 +64,11 @@
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <AndroidLinkSkip />
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
-    <BundleAssemblies>False</BundleAssemblies>
-    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
     <AndroidSupportedAbis>armeabi,x86</AndroidSupportedAbis>
     <AndroidStoreUncompressedFileExtensions />
     <MandroidI18n />
     <JavaMaximumHeapSize>1G</JavaMaximumHeapSize>
     <Debugger>Xamarin</Debugger>
-    <AotAssemblies>False</AotAssemblies>
-    <EnableLLVM>False</EnableLLVM>
-    <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
-    <EnableProguard>False</EnableProguard>
     <DevInstrumentationEnabled>False</DevInstrumentationEnabled>
     <AndroidKeyStore>True</AndroidKeyStore>
     <AndroidSigningKeyStore>debug.keystore</AndroidSigningKeyStore>
@@ -212,6 +203,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Pegasus.Phone.XF\Pegasus.Phone.XF.csproj">
       <Name>Pegasus.Phone.XF</Name>
+      <Project>{1CD058F6-A9F9-4956-98CD-C001E5BEE0BC}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Shared\Pegasus.Data\Pegasus.Data.csproj">
       <Project>{f3033e0c-1db5-406e-b6a7-e1c794fad7f3}</Project>
