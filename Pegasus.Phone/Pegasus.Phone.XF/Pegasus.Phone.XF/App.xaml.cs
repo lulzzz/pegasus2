@@ -18,7 +18,7 @@ using Pegasus.Phone.XF.Utilities;
 
 namespace Pegasus.Phone.XF
 {
-    public class App : Application
+    public partial class App : Application
     {
         private const string SubProtocol = "coap.v1";
         private const string Host = "ws://broker.pegasusmission.io/api/connect";
